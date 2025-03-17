@@ -1,0 +1,52 @@
+.main-layout {
+  display: flex; /* Layout flexível */
+  height: 100vh; /* Ocupa toda a altura da tela */
+  overflow-y: hidden;
+}
+
+/* Container principal (top bar + conteúdo) */
+.main-content {
+  flex-grow: 1; /* Ocupa o espaço restante */
+  display: flex;
+  flex-direction: column; /* Organiza top bar e conteúdo em coluna */
+  overflow-y: auto; /* Habilita o scroll vertical apenas no main-content */
+}
+
+.content {
+  padding: 1rem; /* Espaçamento interno */
+  border: 1px solid var(--gray-200); /* Define a borda com a cor desejada */
+  border-radius: 10px; /* Define o raio das bordas arredondadas */
+  margin: 5px;
+  overflow-y: visible; /* Garante que o conteúdo não tenha barra de rolagem */
+}
+
+/* Estilização da barra de rolagem para o main-content */
+.main-content::-webkit-scrollbar {
+  width: 12px; /* Largura da barra de rolagem */
+}
+
+/* Estilização do "trilho" da barra de rolagem (fundo) */
+.main-content::-webkit-scrollbar-track {
+  background-color: var(--gray-200); /* Cor de fundo do trilho */
+  border-radius: 10px; /* Bordas arredondadas */
+  margin: 5px; /* Adiciona margem ao redor do trilho */
+}
+
+/* Estilização do "thumb" (a parte que você arrasta) */
+.main-content::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary); /* Cor azul primária */
+  border-radius: 10px; /* Bordas arredondadas */
+  border: 3px solid var(--gray-200); /* Adiciona uma borda ao redor do thumb */
+}
+
+/* Efeito ao passar o mouse sobre o thumb */
+.main-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary-dark); /* Cor azul mais escura ao passar o mouse */
+}
+
+/* Oculta os botões de rolagem (setas para cima e para baixo) */
+.main-content::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}

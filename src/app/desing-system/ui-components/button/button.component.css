@@ -1,0 +1,68 @@
+button {
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-family: Arial;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Adicionando animação de transformação */
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center; /* Alinha o texto e os ícones no centro */
+  justify-content: center;
+}
+
+button.primary {
+  background-color: var(--color-primary);
+  border: none;
+  color: var(--text-button-color);
+}
+
+button.secondary {
+  background-color: transparent;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+}
+
+button.primary.buttonColor {
+  background-color: var(--button-color); /* cor personalizada para background */
+}
+
+button.secondary.buttonColor {
+  border: 1px solid var(--button-color); /* borda colorida personalizada */
+  color: var(--button-color); /* cor da fonte personalizada */
+}
+
+button.small {
+  height: 30px;
+}
+
+button.medium {
+  height: 40px;
+}
+
+button.large {
+  height: 50px;
+}
+
+button:disabled {
+  background-color: #aaa;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button .icon {
+  width: 18px;
+  color: var(--text-button-color);
+  height: 18px;
+  margin: 0 8px; /* Adiciona espaçamento entre os ícones e o texto */
+}
+

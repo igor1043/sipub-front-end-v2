@@ -1,0 +1,40 @@
+.top-bar {
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  margin: 5px;
+  height: 50px;
+  display: flex;
+  background-color: var(--background-color);
+}
+
+/* Botão de menu alinhado à esquerda e centralizado verticalmente */
+.button_menu {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 20px; /* Largura fixa */
+  height: 20px; /* Altura fixa */
+}
+
+/* Breadcrumb com margem à esquerda de 20px */
+.breadcrumb {
+  gap: 8px;
+  margin-left: 20px; /* Margem à esquerda */
+  flex-grow: 1; /* Ocupa o espaço restante */
+}
+
+/* Actions ancorados à direita */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Estilos para os botões de tema e logout */
+.theme-toggle, .logout-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 24px; /* Largura fixa */
+  height: 24px; /* Altura fixa */
+}

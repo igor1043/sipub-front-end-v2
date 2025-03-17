@@ -1,0 +1,35 @@
+.switch-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+::ng-deep.custom-slide-toggle {
+
+  /* Cor do fundo quando DESLIGADO */
+  .mat-slide-toggle-bar {
+    background-color: var(--deep-orange-900)
+  }
+
+  /* Cor do fundo quando LIGADO */
+  &.mat-checked .mat-slide-toggle-bar {
+    background-color: var(--deep-orange-900)
+  }
+
+  /* Cor do botão deslizante */
+  .mat-slide-toggle-thumb-container {
+    .mat-slide-toggle-thumb {
+      background-color: var(--deep-orange-900)
+    }
+  }
+
+  /* Cor do ícone de check (se aplicável) */
+  .mat-slide-toggle-content {
+    color: var(--deep-orange-900);
+  }
+}
+
+.label {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}

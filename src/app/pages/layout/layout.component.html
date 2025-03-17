@@ -1,0 +1,15 @@
+<div class="main-layout" [class.minimized]="isSidebarMinimized">
+  <!-- Sidebar -->
+  <app-sidebar [minimized]="isSidebarMinimized"></app-sidebar>
+
+  <!-- Container para top bar e conteúdo -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <app-top-bar (toggleSidebarEvent)="toggleSidebar()"></app-top-bar>
+
+    <!-- Conteúdo da Página -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

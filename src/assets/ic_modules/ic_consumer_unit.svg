@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <g id="Grupo_2134" data-name="Grupo 2134" transform="translate(-20.492 16610.543)">
+    <g id="Grupo_2077" data-name="Grupo 2077" transform="translate(1671.214 535.92)">
+      <g id="Grupo_2023" data-name="Grupo 2023" transform="translate(6020.007 402.587)">
+        <g id="Grupo_1969" data-name="Grupo 1969" transform="translate(-7670.729 -17549.051)">
+          <g id="Grupo_1371" data-name="Grupo 1371" transform="translate(1.618 0.146)">
+            <path id="Caminho_221" data-name="Caminho 221" d="M4.263,0H40.5a4.538,4.538,0,0,1,4.263,4.771V42.937A4.538,4.538,0,0,1,40.5,47.707H4.263A4.538,4.538,0,0,1,0,42.937V4.771A4.538,4.538,0,0,1,4.263,0Z" transform="translate(0 0)" fill="#ff9800"/>
+          </g>
+          <g id="water_drop_black_24dp" transform="translate(0 0)">
+            <rect id="Retângulo_45" data-name="Retângulo 45" width="48" height="48" transform="translate(0 0)" fill="none"/>
+          </g>
+        </g>
+      </g>
+      <g id="lightbulb_black_24dp" transform="translate(-1642.182 -17137.926)">
+        <path id="Caminho_25" data-name="Caminho 25" d="M0,0H30.919V30.919H0Z" fill="none"/>
+      </g>
+    </g>
+    <g id="Grupo_2131" data-name="Grupo 2131" transform="translate(1820.036 438.567)">
+      <path id="Caminho_351" data-name="Caminho 351" d="M18.015,11.5V3H7.29V7.249H3V22.122h8.58V17.873h2.145v4.249H22.3V11.5ZM7.29,20H5.145V17.873H7.29Zm0-4.249H5.145V13.624H7.29Zm0-4.249H5.145V9.374H7.29Zm4.29,4.249H9.435V13.624H11.58Zm0-4.249H9.435V9.374H11.58Zm0-4.249H9.435V5.125H11.58Zm4.29,8.5H13.725V13.624H15.87Zm0-4.249H13.725V9.374H15.87Zm0-4.249H13.725V5.125H15.87ZM20.16,20H18.015V17.873H20.16Zm0-4.249H18.015V13.624H20.16Z" transform="translate(-1788.928 -17035.697)" fill="#fff"/>
+      <path id="bolt_black_24dp" d="M9.238,13.412H8.679l.559-4.049H7.281c-.324,0-.319-.185-.212-.382s.028-.046.039-.069Q8.19,6.933,10.356,3h.559l-.559,4.049h1.957c.274,0,.313.191.263.3l-.039.087Q9.233,13.409,9.238,13.412Z" transform="translate(-1777.755 -17039.65)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,239 @@
+/* Container principal do sidebar */
+.sidebar {
+  width: 250px; 
+  height: 100vh;
+  background-color: var(--background-color); /* Cor de fundo do sidebar */
+  padding-left: 5px;
+  padding-right: 5px;
+  border-right: 1px solid var(--gray-200); /* Borda direita do sidebar */
+  border-bottom: 1px solid var(--gray-200);
+  transition: width 0.3s ease; /* Transição suave para minimizar */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container do logo no topo do sidebar */
+.sidebar-logo {
+  position: relative; /* Posicionamento relativo */
+  text-align: left; /* Alinha o conteúdo à esquerda */
+  height: 40px; /* Altura do container do logo */
+  padding-left: 10px; /* Espaçamento interno à esquerda */
+  padding-top: 10px; /* Espaçamento interno no topo */
+  margin-left: 0; /* Remove margem à esquerda */
+}
+
+/* Estilo do logo normal */
+.sidebar-logo .logo {
+  width: 100px; /* Largura do logo */
+  height: auto; /* Altura automática para manter a proporção */
+  display: block; /* Exibe o logo como um bloco */
+  margin-left: 0; /* Remove margem à esquerda */
+}
+
+/* Estilo do logo mini */
+.sidebar-logo .logo-mini {
+  width: 30px; /* Largura do logo mini */
+  height: auto; /* Altura automática para manter a proporção */
+  display: block; /* Exibe o logo como um bloco */
+  margin-left: 0; /* Remove margem à esquerda */
+}
+
+/* Remove as bolinhas da lista principal e dos subitens */
+.sidebar-nav-list,
+.sidebar-submenu {
+  list-style: none; /* Remove os marcadores de lista */
+  padding-left: 0; /* Remove o padding à esquerda */
+}
+
+/* Estilo do título "Módulos" */
+.sidebar-module-title {
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Remove o padding padrão dos itens da lista */
+.sidebar-submenu li {
+  padding-left: 0; /* Remove o padding à esquerda */
+  margin-bottom: 10px; 
+}
+
+.sidebar-nav-list > li {
+  margin-bottom: 10px; /* Ajuste o valor conforme necessário */
+}
+
+.sidebar-nav-item {
+  margin-bottom: 20px; /* Aumentei o espaçamento entre os itens */
+}
+
+/* Link do item do menu */
+.sidebar-nav-link {
+  display: flex;
+  align-items: flex-start;
+  text-decoration: none; /* Remove o sublinhado do link */
+  color: var(--gray-900); /* Cor do texto (cinza escuro) */
+  display: flex; /* Exibe os elementos em linha (flexbox) */
+  align-items: center; /* Centraliza os elementos verticalmente */
+  padding: 8px; /* Espaçamento interno menor */
+  border-radius: 5px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+  transition: all 0.3s ease; /* Transição suave para hover e estados ativos */
+  font-size: 14px; /* Tamanho do texto menor */
+  word-break: break-word; /* Quebra o texto em várias linhas */
+  white-space: normal; /* Permite que o texto quebre em várias linhas */
+}
+
+/* Efeito ao passar o mouse sobre o link */
+.sidebar-nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Fundo levemente escurecido */
+}
+
+/* Estilo do link ativo (selecionado) */
+.sidebar-nav-link.sidebar-active {
+  background-color: var(--color-primary); /* Fundo azul */
+  color: var(--white); /* Texto branco */
+  border: 1px solid var(--color-primary); /* Borda azul */
+}
+
+/* Estilo do ícone dentro do link */
+.sidebar-icon {
+  margin-right: 10px; /* Espaçamento à direita do ícone */
+  width: 27px; /* Define a largura do ícone */
+  height: 27px; /* Define a altura do ícone */
+}
+
+/* Estilo do ícone quando o link está ativo */
+.sidebar-active .sidebar-icon {
+  fill: var(--text-color); /* Ícone branco quando o link está ativo */
+}
+
+/* Container dos subitens */
+.sidebar-has-submenu .sidebar-submenu {
+  padding-left: 13px; /* Margem à esquerda para subitens */
+}
+
+/* Exibe os subitens quando o item está ativo */
+.sidebar-has-submenu.active .sidebar-submenu {
+  display: block; /* Exibe o submenu */
+}
+
+/* Estilo dos links dos subitens quando ativos */
+.sidebar-submenu .sidebar-nav-link.sidebar-active {
+  background-color: var(--color-primary); /* Fundo azul */
+  color: var(--text-color); /* Texto branco */
+  border: 1px solid var(--color-primary); /* Borda azul */
+}
+
+/* Estilo da seta (ícone de expansão) */
+.sidebar-arrow {
+  margin-left: auto; /* Alinha a seta à direita */
+  transition: transform 0.3s ease; /* Animação de rotação suave */
+  fill: var(--gray-900); /* Cor da seta (cinza escuro) */
+}
+
+/* Rotaciona a seta quando o submenu está aberto */
+.sidebar-has-submenu.active .sidebar-arrow {
+  transform: rotate(180deg); /* Gira a seta 180 graus */
+}
+
+/* Área do usuário na parte inferior */
+.sidebar-user {
+  padding: 15px; /* Espaçamento interno */
+  border-top: 1px solid var(--gray-200); /* Linha divisória no topo */
+  display: flex; /* Layout flexível */
+  gap: 10px; /* Espaçamento entre a foto e as informações */
+  margin-top: auto; /* Empurra a área do usuário para a parte inferior */
+}
+
+/* Foto do usuário */
+.sidebar-user-photo img {
+  width: 20px; /* Tamanho da foto */
+  height: 20px; /* Tamanho da foto */
+  border-radius: 50%; /* Foto redonda */
+  object-fit: cover; /* Garante que a imagem cubra o espaço */
+}
+
+/* Informações do usuário */
+.sidebar-user-info {
+  display: flex;
+  flex-direction: column; /* Organiza o nome e a função em coluna */
+}
+
+/* Nome do usuário */
+.sidebar-user-name {
+  font-size: 14px; /* Tamanho do texto */
+  font-weight: 500; /* Peso da fonte */
+  color: var(--gray-900); /* Cor do texto */
+}
+
+/* Função do usuário */
+.sidebar-user-role {
+  font-size: 12px; /* Tamanho do texto menor */
+  color: var(--gray-600); /* Cor mais clara para a função */
+}
+
+/* Estilo quando a sidebar está minimizada */
+.sidebar.minimized {
+  width: 50px; /* Largura minimizada */
+  transition: width 0.3s ease; /* Transição suave para minimizar */
+}
+
+/* Esconde elementos quando a sidebar está minimizada */
+.sidebar.minimized .sidebar-logo .logo,
+.sidebar.minimized .sidebar-nav-link span,
+.sidebar.minimized .sidebar-arrow,
+.sidebar.minimized .sidebar-user-info,
+.sidebar.minimized .sidebar-module-title {
+  display: none; /* Esconde o texto e outros elementos */
+}
+
+/* Centraliza os ícones quando a sidebar está minimizada */
+.sidebar.minimized .sidebar-nav-link {
+  justify-content: center; /* Centraliza os ícones */
+}
+
+/* Remove o espaçamento à direita do ícone quando a sidebar está minimizada */
+.sidebar.minimized .sidebar-icon {
+  margin-right: 0; /* Remove o espaçamento à direita do ícone */
+}
+
+/* Ajuste para o scroll interno do sidebar-nav */
+.sidebar-nav {
+  flex: 1; /* Faz o sidebar-nav ocupar o espaço restante */
+  overflow-y: auto; /* Habilita o scroll vertical */
+  max-height: calc(100vh - 150px); /* Define uma altura máxima para o sidebar-nav */
+}
+
+/* Estilização da barra de rolagem */
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px; /* Largura da barra de rolagem */
+}
+
+/* Oculta os botões de rolagem (setas para cima e para baixo) */
+.sidebar-nav::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* Estilização do "trilho" da barra de rolagem (fundo) */
+.sidebar-nav::-webkit-scrollbar-track {
+  background-color: var(--gray-200); /* Cor de fundo do trilho */
+  border-radius: 10px; /* Bordas arredondadas */
+}
+
+/* Estilização do "thumb" (a parte que você arrasta) */
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary); /* Cor azul primária */
+  border-radius: 10px; /* Bordas arredondadas */
+}
+
+/* Efeito ao passar o mouse sobre o thumb */
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary-dark); /* Cor azul mais escura ao passar o mouse */
+}

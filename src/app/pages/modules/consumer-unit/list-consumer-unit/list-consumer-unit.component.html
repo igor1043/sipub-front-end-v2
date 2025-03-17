@@ -1,0 +1,12 @@
+<h1>Lista de Unidades Consumidoras</h1>
+
+<app-simple-table
+[data]="consumerUnitData"
+  [columns]="tableColumns"
+  [pageSizeOptions]="[5, 10, 25]"
+  (onAdd)="handleAdd()"
+  (onEdit)="handleEdit($event)"
+  (onDelete)="handleDelete($event)"
+  (onSelect)="handleSelect($event)"
+  (onPageChange)="handlePageChange($event)">
+</app-simple-table>

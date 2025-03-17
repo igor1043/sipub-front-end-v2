@@ -1,0 +1,23 @@
+<div class="top-bar">
+  <!-- Botão para alternar o menu lateral -->
+  <button class="button_menu" (click)="toggleSidebar()" aria-label="Alternar Menu">
+    <img src="/assets/icons/ic_menu.svg" alt="Menu" />
+  </button>
+
+  <!-- Container para o ícone de casa e o caminho da URL -->
+  <div class="breadcrumb">
+    <img src="/assets/icons/ic_home.svg" alt="Home" />
+    <span>{{ currentUrl }}</span>
+  </div>
+
+  <!-- Botões de tema e logout -->
+  <div class="actions">
+    <button class="theme-toggle" (click)="toggleTheme()" aria-label="Alterar Tema">
+      <img *ngIf="isDarkTheme" src="/assets/images/ic_light.svg" alt="Light Theme" width="24" height="20" />
+      <img *ngIf="!isDarkTheme" src="/assets/images/ic_dark.svg" alt="Dark Theme" width="24" height="20" />
+    </button>
+    <button class="logout-button" (click)="logout()" aria-label="Logout">
+      <img src="/assets/icons/ic_logout.svg" alt="Logout" />
+    </button>
+  </div>
+</div>

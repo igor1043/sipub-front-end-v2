@@ -1,0 +1,281 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container principal */
+.login-container {
+  display: flex;
+  height: 100vh;
+  flex-wrap: wrap; /* Permite que os itens se reorganizem quando necessário */
+}
+
+/* Lado esquerdo */
+.left-side {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: flex-end; /* Move o conteúdo para a parte inferior */
+  justify-content: center;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right; /* Move a imagem para a direita */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.overlay-text {
+  text-align: left;
+  padding: 20px;
+  width: 100%;
+  font-size: 1rem;
+  font-family: Arial;
+}
+
+.overlay-title {
+  font-size: 50px;
+  color: white;
+  font-family: Arial;
+}
+
+.overlay-description {
+  font-size: 25px; 
+  margin-top: 20px;
+  color: white; 
+  font-family: Arial;
+}
+
+.overlay-footer {
+  color: white; 
+  position: absolute;
+  font-family: Arial;
+  bottom: 0;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Lado direito */
+.right-side {
+  position: relative; 
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+/* Botão de alternância de tema */
+.theme-toggle {
+  position: absolute; 
+  top: 20px;
+  right: 20px;
+  background: none;
+  cursor: pointer;
+  width: 24px;      /* Largura do botão */
+  height: 24px;     /* Altura do botão */
+  padding: 0;       /* Remove o padding adicional */
+  border: none;     /* Remove a borda, caso tenha */
+  display: flex;    /* Utiliza flexbox para garantir que o conteúdo centralize */
+  justify-content: center; /* Centraliza horizontalmente o conteúdo */
+  align-items: center;     /* Centraliza verticalmente o conteúdo */
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+}
+
+/* Efeito de hover para o botão */
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.register-text {
+  margin-top: 20px;
+  font-size: 16px;
+  font-family: Arial;
+}
+
+.register-text a {
+  color: var(--color-primary);
+  font-weight: bold;
+  font-family: Arial;
+  text-decoration: none;
+}
+
+.clickable-link {
+  font-family: Arial;
+  margin-top: 15px;
+  text-decoration: none; /* Remove o sublinhado padrão */
+  cursor: pointer; /* Altera o cursor para indicar que é clicável */
+}
+
+.clickable-link:hover {
+  text-decoration: underline; /* Adiciona o sublinhado ao passar o mouse */
+}
+
+/* Ajuste do logo */
+.logo {
+  width: 180px;
+  margin-bottom: 10px;
+  align-self: center;
+  margin-top: 80px; /* Ajustado para ficar mais equilibrado */
+  transition: all 0.3s ease;
+}
+
+
+/* Título alinhado ao início dos campos */
+h2 {
+  align-self: flex-start;
+  margin-top: 60px;
+  text-align: left;
+  font-family: Arial;
+  font-size: 1.5rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* Ajuste dos inputs */
+.full-width {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Botão de acesso azul, com bordas menores */
+button[type="submit"] {
+  border-radius: 6px;
+  background-color: #2A3C56;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  font-family: Arial;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #1d2b3b;
+}
+
+.right-side small {
+  position: absolute;
+  bottom: 15px;
+  font-family: Arial;
+  text-align: center;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.forgot-password-link {
+  font-size: 16px; 
+  color: var(--color-primary);
+  font-family: Arial;
+  text-decoration: none; 
+  cursor: pointer;
+}
+
+.forgot-password-link:hover {
+  font-family: Arial;
+  text-decoration: underline; 
+}
+
+.company-text {
+  position: absolute;
+  align-self: center;
+  bottom: 0;
+  font-family: Arial;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.company-text a {
+  color: var(--color-primary);
+}
+
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .login-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-side {
+    height: 250px; /* Ajuste para uma altura mais baixa em telas menores */
+    justify-content: flex-end;
+  }
+
+
+  .right-side {
+    padding: 25px;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .logo {
+    width: 150px; /* Menor em telas médias */
+  }
+}
+
+@media (max-width: 600px) {
+  .left-side {
+    display: none; /* Esconde a imagem em telas muito pequenas */
+  }
+
+  .right-side {
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+  }
+
+  .logo {
+    width: 140px;
+    margin-top: 80px;
+  }
+
+  h2 {
+    align-self: flex-start;
+    margin-top: 60px;
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: 600;
+    width: 100%;
+  }
+
+  .register-text {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    font-size: 14px; /* Diminui o tamanho do texto */
+  }
+
+  .register-text a {
+    font-size: 14px; /* Ajuste no tamanho da fonte */
+  }
+
+  .right-side small {
+    font-size: 0.8rem; /* Diminui o tamanho do texto */
+  }
+  .text-component {
+    font-size: 14px; /* Ajuste no tamanho da fonte */
+  }
+
+  button[type="submit"] {
+    font-size: 14px; /* Ajuste no tamanho da fonte do botão */
+    padding: 12px; /* Aumenta o espaço no botão */
+  }
+}

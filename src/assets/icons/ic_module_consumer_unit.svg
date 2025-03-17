@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22.102" height="22.999" viewBox="0 0 22.102 22.999" fill="#404040">
+  <g id="Grupo_1846" data-name="Grupo 1846" transform="translate(-4033.951 -3033.765)">
+    <g id="apartment_black_24dp" transform="translate(4033.951 3034.826)">
+      <g id="Grupo_1635" data-name="Grupo 1635" transform="translate(0 0)">
+        <rect id="Retângulo_160" data-name="Retângulo 160" width="22.102" height="21.938" fill="none"/>
+      </g>
+      <g id="Grupo_1636" data-name="Grupo 1636" transform="translate(2.318 2.503)">
+        <path id="Caminho_351" data-name="Caminho 351" d="M16.537,10.662V3H6.868V6.831H3V20.24h7.735V16.409h1.934V20.24H20.4V10.662ZM6.868,18.324H4.934V16.409H6.868Zm0-3.831H4.934V12.578H6.868Zm0-3.831H4.934V8.747H6.868Zm3.868,3.831H8.8V12.578h1.934Zm0-3.831H8.8V8.747h1.934Zm0-3.831H8.8V4.916h1.934ZM14.6,14.493H12.669V12.578H14.6Zm0-3.831H12.669V8.747H14.6Zm0-3.831H12.669V4.916H14.6Zm3.868,11.493H16.537V16.409h1.934Zm0-3.831H16.537V12.578h1.934Z" transform="translate(-3 -3)" />
+      </g>
+    </g>
+    <path id="bolt_black_24dp" d="M9.018,12.387h-.5l.5-3.651H7.254c-.292,0-.287-.167-.192-.344s.025-.042.035-.063Q8.073,6.546,10.026,3h.5l-.5,3.651h1.764c.247,0,.282.172.237.266l-.035.078Q9.013,12.385,9.018,12.387Z" transform="translate(4042.948 3030.765)" />
+  </g>
+</svg>

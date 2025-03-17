@@ -1,0 +1,23 @@
+.container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  h1 {
+    font-size: 3em;
+    color: #ff0000;
+  }
+  
+  p {
+    font-size: 1.5em;
+  }
+  
+  a {
+    font-size: 1.2em;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }

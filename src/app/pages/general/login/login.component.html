@@ -1,0 +1,64 @@
+<div class="login-container">
+  <!-- Lado esquerdo - Imagem e Texto -->
+  <div class="left-side">
+    <img src="/assets/images/background.png" alt="Cidade" class="background-image" />
+    <div class="overlay-text">
+      <h1 class="overlay-title">Gestor Público</h1>
+      <p class="overlay-description">
+        Conheça melhor a sua cidade, conheça o Sipub<br />
+        Sistema de Informação Pública.
+      </p>
+    </div>
+    <small class="overlay-footer">Sipub.tech©2025</small>
+  </div>
+
+  <!-- Lado direito - Formulário de Login -->
+  <div class="right-side">
+    <button class="theme-toggle" (click)="toggleTheme()" aria-label="Alterar Tema">
+      <img *ngIf="isDarkTheme" src="/assets/images/ic_light.svg" alt="Light Theme" width="24" height="24" />
+      <img *ngIf="!isDarkTheme" src="/assets/images/ic_dark.svg" alt="Dark Theme" width="24" height="24" />
+    </button>
+
+    <app-svg-icon class="logo" [color]="'var(--color-primary)'" [svgUrl]="'/assets/images/logo-light.svg'"></app-svg-icon>
+
+    <ng-template #lightTheme>
+      <img src="/assets/images/logo-light.svg" alt="Logo Sipub - Light Theme" class="logo" />
+    </ng-template>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h2>Bem-vindo ao Sipub</h2>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" type="email" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required />
+        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <a href="#" class="forgot-password-link" (click)="onForgotPasswordClick()">Esqueceu a senha?</a>
+
+      <app-button 
+        class="bottom" 
+        mode="primary" 
+        size="large" 
+        [disabled]="!loginForm.valid || isLoading" 
+        [text]="'Acessar'"
+        (clicked)="onLogin()">
+      </app-button>
+
+      <p class="register-text">
+        Não tem conta? <a href="#">Cadastre-se</a>
+      </p>
+
+    </form>
+
+    <p class="company-text">
+      Não tem acesso? Conheça a <a href="#">Sipub.tech©2025</a>
+    </p>
+  </div>
+</div>

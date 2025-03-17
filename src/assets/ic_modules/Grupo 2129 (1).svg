@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <g id="Grupo_2129" data-name="Grupo 2129" transform="translate(-20.428 16789.543)">
+    <g id="Grupo_2075" data-name="Grupo 2075" transform="translate(1671.15 356.92)">
+      <g id="Grupo_2023" data-name="Grupo 2023" transform="translate(6020.007 402.587)">
+        <g id="Grupo_1969" data-name="Grupo 1969" transform="translate(-7670.729 -17549.051)">
+          <g id="Grupo_1371" data-name="Grupo 1371" transform="translate(1.618 0.146)">
+            <path id="Caminho_221" data-name="Caminho 221" d="M4.263,0H40.5a4.538,4.538,0,0,1,4.263,4.771V42.937A4.538,4.538,0,0,1,40.5,47.707H4.263A4.538,4.538,0,0,1,0,42.937V4.771A4.538,4.538,0,0,1,4.263,0Z" transform="translate(0 0)" fill="#d81b60"/>
+          </g>
+          <g id="water_drop_black_24dp" transform="translate(0 0)">
+            <rect id="Retângulo_45" data-name="Retângulo 45" width="48" height="48" transform="translate(0 0)" fill="none"/>
+          </g>
+        </g>
+      </g>
+      <g id="lightbulb_black_24dp" transform="translate(-1642.182 -17137.926)">
+        <path id="Caminho_25" data-name="Caminho 25" d="M0,0H30.919V30.919H0Z" fill="none"/>
+      </g>
+    </g>
+    <g id="Grupo_2126" data-name="Grupo 2126" transform="translate(1872.639 326.335)">
+      <ellipse id="Elipse_30" data-name="Elipse 30" cx="3.154" cy="2.703" rx="3.154" ry="2.703" transform="translate(-1840.827 -17098.053)" fill="#fff"/>
+      <ellipse id="Elipse_31" data-name="Elipse 31" cx="3.164" cy="3.164" rx="3.164" ry="3.164" transform="translate(-1835.303 -17103.908)" fill="#fff"/>
+      <ellipse id="Elipse_32" data-name="Elipse 32" cx="3.164" cy="3.164" rx="3.164" ry="3.164" transform="translate(-1827.708 -17103.908)" fill="#fff"/>
+      <ellipse id="Elipse_33" data-name="Elipse 33" cx="3.604" cy="2.703" rx="3.604" ry="2.703" transform="translate(-1822.804 -17098.053)" fill="#fff"/>
+      <path id="Caminho_253" data-name="Caminho 253" d="M20.887,16.019c-1.1-1.291-2.025-2.392-3.139-3.683a5.37,5.37,0,0,0-2.215-1.671,2.563,2.563,0,0,0-.418-.114,6.37,6.37,0,0,0-.987-.051,5.31,5.31,0,0,0-1,.063,2.563,2.563,0,0,0-.418.114A5.453,5.453,0,0,0,10.5,12.348c-1.1,1.291-2.025,2.392-3.139,3.683C5.7,17.69,3.66,19.525,4.04,22.094a3.974,3.974,0,0,0,2.949,2.937c.924.19,3.873-.557,7.012-.557h.228c3.139,0,6.088.734,7.012.557a3.993,3.993,0,0,0,2.949-2.937c.392-2.582-1.645-4.418-3.3-6.076Z" transform="translate(-1842.469 -17104.914)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

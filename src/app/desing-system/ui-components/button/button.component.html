@@ -1,0 +1,31 @@
+<button 
+  [ngClass]="{
+    'primary': mode === 'primary', 
+    'secondary': mode === 'secondary',
+    'buttonColor': buttonColor,
+    'small': size === 'small',
+    'medium': size === 'medium',
+    'large': size === 'large'
+  }"
+  [style.--button-color]="buttonColor" 
+  [disabled]="disabled || isLoading"
+  (click)="onClick()">
+
+  
+  
+  <!-- Ícone à esquerda (se fornecido) -->
+  <app-svg-icon class="icon left-icon" 
+                [color]="mode === 'secondary' && buttonColor ? buttonColor : (mode === 'secondary' ? 'var(--text-color)' : 'var(--text-button-color)')"
+                [svgUrl]="leftIconPath"></app-svg-icon>
+
+  <!-- Texto do botão -->
+  {{ text }}
+
+  <!-- Ícone à direita (se fornecido) -->
+  <app-svg-icon class="icon right-icon" 
+                [color]="mode === 'secondary' && buttonColor ? buttonColor : (mode === 'secondary' ? 'var(--text-color)' : 'var(--text-button-color)')"
+                [svgUrl]="rightIconPath"></app-svg-icon>
+            
+          
+
+</button>

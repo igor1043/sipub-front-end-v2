@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <g id="Grupo_2101" data-name="Grupo 2101" transform="translate(1535.428 16616.844)">
+    <g id="Grupo_2053" data-name="Grupo 2053" transform="translate(115.294 529.619)">
+      <g id="Grupo_2023" data-name="Grupo 2023" transform="translate(6020.007 402.587)">
+        <g id="Grupo_1969" data-name="Grupo 1969" transform="translate(-7670.729 -17549.051)">
+          <g id="Grupo_1371" data-name="Grupo 1371" transform="translate(1.618 0.146)">
+            <path id="Caminho_221" data-name="Caminho 221" d="M4.263,0H40.5a4.538,4.538,0,0,1,4.263,4.771V42.937A4.538,4.538,0,0,1,40.5,47.707H4.263A4.538,4.538,0,0,1,0,42.937V4.771A4.538,4.538,0,0,1,4.263,0Z" transform="translate(0 0)" fill="#2196f3"/>
+          </g>
+          <g id="water_drop_black_24dp" transform="translate(0 0)">
+            <rect id="Retângulo_45" data-name="Retângulo 45" width="48" height="48" transform="translate(0 0)" fill="none"/>
+          </g>
+        </g>
+      </g>
+      <g id="lightbulb_black_24dp" transform="translate(-1642.182 -17137.926)">
+        <path id="Caminho_25" data-name="Caminho 25" d="M0,0H30.919V30.919H0Z" fill="none"/>
+      </g>
+    </g>
+    <path id="Caminho_632" data-name="Caminho 632" d="M14.448,2Q4.007,10.914,4,17.411a10.451,10.451,0,1,0,20.9,0Q24.9,10.907,14.448,2ZM9,17.672a.981.981,0,0,1,.966.81,4.425,4.425,0,0,0,4.754,3.748.981.981,0,1,1,.091,1.959,6.364,6.364,0,0,1-6.778-5.381A.98.98,0,0,1,9,17.672Z" transform="translate(-1525.876 -16607.906)" fill="#fff"/>
+  </g>
+</svg>

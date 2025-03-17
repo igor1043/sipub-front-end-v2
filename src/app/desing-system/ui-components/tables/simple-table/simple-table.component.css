@@ -1,0 +1,129 @@
+/* Container principal da tabela */
+.table-container {
+  width: 100%;
+  background-color: white; /* Fundo branco garantido */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.myTable {
+  background: transparent;
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  overflow: auto;
+}
+
+/* Wrapper da tabela */
+.mat-table-wrapper {
+  background: white; /* Fundo branco garantido */
+  overflow: auto;
+}
+
+/* Ajuste das células e linhas */
+::ng-deep .mat-table {
+  background-color: white !important; /* Força fundo branco na tabela */
+}
+
+::ng-deep .mat-header-cell, 
+::ng-deep .mat-cell, 
+::ng-deep .mat-row, 
+::ng-deep .mat-header-row {
+  background-color: inherit !important; /* Herda o fundo branco do container */
+}
+
+/* Linhas da tabela com fundo cinza */
+::ng-deep .mat-row {
+  background-color: var(--gray-200) !important;
+}
+
+/* Ajuste adicional para linhas selecionadas */
+::ng-deep .mat-row.selected {
+  background-color: var(--gray-400) !important;
+}
+
+/* Botões no canto superior direito */
+.table-header-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+}
+
+.table-header {
+  display: flex;
+  gap: 8px;
+}
+
+/* Alinhar botões de ações ao centro */
+::ng-deep .mat-column-actions {
+  text-align: center !important;
+}
+
+::ng-deep .mat-column-actions .mat-cell {
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilo para o cabeçalho de ações */
+.actions-header {
+  text-align: center !important;
+}
+
+/* Estilo para as células do cabeçalho */
+.myTable th {
+  border-bottom: 1px solid var(--gray-200); /* Cor e espessura da linha de separação do cabeçalho */
+  color: var(--gray-800); /* Cor do texto do cabeçalho */
+  font-weight: bold; /* Estilo da fonte do cabeçalho */
+}
+
+/* Estilo para as células do corpo da tabela */
+.myTable td {
+  border-bottom: 1px solid var(--gray-200); /* Cor e espessura da linha de separação das células */
+}
+
+/* Oculta a última linha da tabela */
+.myTable .mat-row:last-child {
+  display: none;
+}
+
+/* Estilo para o paginador */
+.custom-paginator {
+  background-color: white;
+}
+
+/* Estilo para a coluna do checkbox */
+::ng-deep .checkbox-column {
+  width: 60px;
+  min-width: 55px;
+  max-width: 55px;
+  text-align: center;
+  border: none;
+  padding: 0;
+}
+
+/* Estilo para o checkbox */
+::ng-deep .checkbox-column .mat-checkbox {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove bordas e espaçamento das células */
+::ng-deep .checkbox-column.mat-cell,
+::ng-deep .checkbox-column.mat-header-cell {
+  border: none;
+  padding: 0;
+}
+
+/* Remove possíveis pontos ou resíduos */
+::ng-deep .mat-table .mat-row .mat-cell.checkbox-column::after,
+::ng-deep .mat-table .mat-header-row .mat-header-cell.checkbox-column::after {
+  content: none;
+}
+
+/* Estilo para truncar o texto das células */
+.truncate-cell {
+  white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+  overflow: hidden; /* Esconde o texto que ultrapassar o tamanho da célula */
+  text-overflow: ellipsis; /* Adiciona reticências ao final do texto truncado */
+  max-width: 200px; /* Define um tamanho máximo para a célula (ajuste conforme necessário) */
+}

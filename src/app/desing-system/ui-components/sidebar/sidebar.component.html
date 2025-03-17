@@ -1,0 +1,56 @@
+<div class="sidebar" [class.minimized]="minimized">
+  <!-- Conteúdo da sidebar -->
+  <div class="sidebar-logo">
+    <app-svg-icon *ngIf="!minimized" class="logo" [color]="'var(--color-primary)'" [svgUrl]="'/assets/images/side-menu-logo.svg'"></app-svg-icon>
+    <app-svg-icon *ngIf="minimized" class="logo-mini" [color]="'var(--color-primary)'" [svgUrl]="'/assets/icons/ic_logo_sipub_mini.svg'"></app-svg-icon>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="sidebar-nav-list">
+      <!-- Renderiza os itens do menu dinamicamente -->
+      <ng-container *ngFor="let item of menuItems; trackBy: trackByFn">
+        <!-- Verifica se o item é um módulo e renderiza o texto "Módulos" antes do primeiro módulo -->
+        <ng-container *ngIf="item.isModule && !menuItems[menuItems.indexOf(item) - 1]?.isModule && !minimized">
+          <li class="sidebar-module-title">Módulos</li>
+        </ng-container>
+        
+        <li [class.sidebar-has-submenu]="item.subItems">
+          <a
+            (click)="item.subItems ? toggleSubmenu(item) : (item.route ? navigateTo(item.route) : null)"
+            [class.sidebar-active]="isActive(item.route || '')"
+            class="sidebar-nav-link"
+          >
+            <app-svg-icon class="sidebar-icon" [color]="isActive(item.route || '') ? 'var(--text-color)' : 'var(--gray-900)'" [svgUrl]="item.icon"></app-svg-icon>
+            <span *ngIf="!minimized">{{ item.title }}</span>
+            <span class="sidebar-arrow" *ngIf="item.subItems && !minimized">
+              <app-svg-icon [color]="isActive(item.route || '') ? 'var(--text-color)' : 'var(--gray-900)'" [svgUrl]="'/assets/icons/arrow_down.svg'"></app-svg-icon>
+            </span>
+          </a>
+          <!-- Subitens -->
+          <ul class="sidebar-submenu" *ngIf="item.subItems && item.isOpen && !minimized">
+            <li *ngFor="let subItem of item.subItems">
+              <a
+                (click)="navigateTo(subItem.route || '')"
+                [class.sidebar-active]="isActive(subItem.route || '')"
+                class="sidebar-nav-link"
+              >
+                {{ subItem.title }}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+  </nav>
+
+  <!-- Área do usuário na parte inferior -->
+  <div class="sidebar-user" *ngIf="!minimized">
+    <div class="sidebar-user-photo">
+      <app-svg-icon class="user-icon" [color]="'var(--text-color)'"  [svgUrl]="'/assets/icons/ic_user_profile.svg'"></app-svg-icon>
+    </div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name">João Silva</div>
+      <div class="sidebar-user-role">Administrador</div>
+    </div>
+  </div>
+</div>
