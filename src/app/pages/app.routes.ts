@@ -7,6 +7,7 @@ import { LayoutComponent } from '../pages/layout/layout.component';
 import { LoginComponent } from './general/login/login.component';
 import { ListConsumerUnitComponent } from './modules/consumer-unit/list-consumer-unit/list-consumer-unit.component';
 import { CreateConsumerUnitComponent } from './modules/consumer-unit/create-consumer-unit/create-consumer-unit.component';
+import { AuthGuard } from './auth.guard'; // Importe o AuthGuard
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,10 +16,10 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'admin/account', component: AccountComponent },
-      { path: 'consumer-unit/list', component: ListConsumerUnitComponent },
-      {path: 'consumer-unit/add', component: CreateConsumerUnitComponent},
+      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+      { path: 'admin/account', component: AccountComponent, canActivate: [AuthGuard] },
+      { path: 'consumer-unit/list', component: ListConsumerUnitComponent, canActivate: [AuthGuard] },
+      { path: 'consumer-unit/add', component: CreateConsumerUnitComponent, canActivate: [AuthGuard] },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Rota padrão para o layout
     ],
   },
@@ -29,5 +30,6 @@ export const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

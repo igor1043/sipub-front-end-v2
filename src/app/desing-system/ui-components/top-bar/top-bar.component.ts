@@ -42,7 +42,7 @@ export class TopBarComponent implements OnInit {
   }
 
   logout() {
-    // Aqui você pode adicionar a lógica para logout
-    console.log('Logout');
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
   }
 }
