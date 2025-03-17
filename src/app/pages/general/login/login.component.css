@@ -279,3 +279,9 @@ button[type="submit"]:hover {
     padding: 12px; /* Aumenta o espaço no botão */
   }
 }
+.error-message {
+  color: var(--red-500);
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}

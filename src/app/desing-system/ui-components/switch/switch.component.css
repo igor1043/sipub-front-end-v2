@@ -4,32 +4,25 @@
   gap: 8px;
 }
 
-::ng-deep.custom-slide-toggle {
-
-  /* Cor do fundo quando DESLIGADO */
-  .mat-slide-toggle-bar {
-    background-color: var(--deep-orange-900)
-  }
-
-  /* Cor do fundo quando LIGADO */
-  &.mat-checked .mat-slide-toggle-bar {
-    background-color: var(--deep-orange-900)
-  }
-
-  /* Cor do botão deslizante */
-  .mat-slide-toggle-thumb-container {
-    .mat-slide-toggle-thumb {
-      background-color: var(--deep-orange-900)
-    }
-  }
-
-  /* Cor do ícone de check (se aplicável) */
-  .mat-slide-toggle-content {
-    color: var(--deep-orange-900);
-  }
-}
-
 .label {
   font-family: Arial, sans-serif;
   font-size: 14px;
+  color: red;
+}
+
+/* Usando ::ng-deep para quebrar o encapsulamento de estilo */
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: red !important; /* Fundo vermelho quando marcado */
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: red !important; /* Thumb vermelho quando marcado */
+}
+
+::ng-deep .mat-slide-toggle .mat-slide-toggle-bar {
+  background-color: #f44336 !important; /* Fundo vermelho quando não marcado */
+}
+
+::ng-deep .mat-slide-toggle .mat-slide-toggle-thumb {
+  background-color: #f44336 !important; /* Thumb vermelho quando não marcado */
 }

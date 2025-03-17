@@ -1,5 +1,13 @@
 <p>create-consumer-unit works!</p>
 
+<app-switch 
+  label="Ativar função" 
+  [color]="'primary'" 
+  [checked]="true" 
+  (toggleChanged)="onToggle($event)">
+</app-switch>
+
+
 <app-button 
 class="bottom" 
 mode="primary" 
