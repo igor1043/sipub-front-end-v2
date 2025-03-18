@@ -8,13 +8,19 @@
   <ng-template #appCustomTab>
   
     
+
+
   <app-input-text
-    placeholder="Nome da Unidade"
-    alertText="Este campo é obrigatório"
-    [isRequired]="true"
-    [(ngModel)]="unitName"
-    name="unitName"
-  ></app-input-text>
+  placeholder="Digite seu nome"
+  hintText="O nome deve conter pelo menos 3 caracteres"
+  alertText="Nome inválido"
+  size="medium"
+  [isRequired]="true"
+  type="text"
+  [(ngModel)]="unitName"
+></app-input-text>
+
+
       <!-- Switch -->
       <app-switch label="Textinho" (toggleChanged)="onToggle($event)"></app-switch>
 

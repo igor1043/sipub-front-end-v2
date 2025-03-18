@@ -1,27 +1,88 @@
 .input-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-  
-  input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-  }
-  
-  input.required {
-    border-color: red;
-  }
-  
-  .alert-text {
-    margin-top: 0.25rem;
-    font-size: 0.875rem;
-    color: gray;
-  }
-  
-  .alert-text.required {
-    color: red;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 99%;
+  max-width: 99%;
+  position: relative;
+}
+
+.floating-label {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  padding: 8px 8px 8px 12px; /* Margem à esquerda */
+  background: transparent;
+  width: 100%;
+  outline: none;
+}
+
+label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  background: var(--background-color); /* Fundo para cobrir a borda do input */
+  padding: 0 4px;
+}
+
+label.float {
+  top: -8px; /* Ajuste para subir um pouco mais */
+  font-size: 0.75rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transform: translateY(0);
+}
+
+.hint-container {
+  margin-top: 4px;
+}
+
+.hint-text {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.footer-container {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.ic-alert {
+  margin-right: 4px;
+}
+
+.alert-text {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.required-text {
+  font-size: 0.75rem;
+  color: var(--red-500);
+}
+
+/* Tamanhos */
+.input-container.small input {
+  height: 32px;
+  font-size: 0.875rem;
+}
+
+.input-container.medium input {
+  height: 40px;
+}
+
+.input-container.large input {
+  height: 48px;
+  font-size: 1.125rem;
+}

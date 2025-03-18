@@ -1,17 +1,20 @@
-<div class="input-container">
-  <input
-    type="text"
-    [placeholder]="placeholder"
-    [value]="value"
-    (input)="onInputChange($event)"
-    (blur)="onTouched()"
-    [class.invalid]="ngControl.control?.invalid && ngControl.control?.touched"
-  >
-  <div 
-    *ngIf="alertText" 
-    class="alert-text"
-    [class.invalid]="ngControl.control?.invalid && ngControl.control?.touched"
-  >
-    {{ alertText }}
+<div class="input-container" [class]="size">
+  <div class="floating-label">
+    <input
+      [type]="type"
+      [value]="value"
+      (input)="onInputChange($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      [class.invalid]="ngControl.control?.invalid && ngControl.control?.touched"
+    />
+    <label [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
+  </div>
+
+  <div class="footer-container" *ngIf="alertText || isRequired">
+    <app-svg-icon class="ic-alert" [svgUrl]="'/assets/images/ic_dark.svg'"></app-svg-icon>
+    <span [class.alert-text]="!isRequired" [class.required-text]="isRequired">
+      {{ isRequired ? 'Campo obrigatório' : alertText }}
+    </span>
   </div>
 </div>
