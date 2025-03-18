@@ -1,0 +1,17 @@
+<div class="input-container">
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="onInputChange($event)"
+    (blur)="onTouched()"
+    [class.invalid]="ngControl.control?.invalid && ngControl.control?.touched"
+  >
+  <div 
+    *ngIf="alertText" 
+    class="alert-text"
+    [class.invalid]="ngControl.control?.invalid && ngControl.control?.touched"
+  >
+    {{ alertText }}
+  </div>
+</div>

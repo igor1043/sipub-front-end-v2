@@ -1,0 +1,27 @@
+.input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  input.required {
+    border-color: red;
+  }
+  
+  .alert-text {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: gray;
+  }
+  
+  .alert-text.required {
+    color: red;
+  }
