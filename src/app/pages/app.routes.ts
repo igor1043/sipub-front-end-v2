@@ -7,7 +7,7 @@ import { LayoutComponent } from '../pages/layout/layout.component';
 import { LoginComponent } from './general/login/login.component';
 import { ListConsumerUnitComponent } from './modules/consumer-unit/list-consumer-unit/list-consumer-unit.component';
 import { CreateConsumerUnitComponent } from './modules/consumer-unit/create-consumer-unit/create-consumer-unit.component';
-import { AuthGuard } from './auth.guard'; // Importe o AuthGuard
+import { AuthGuard } from './auth.guard'; 
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

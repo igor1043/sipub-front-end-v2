@@ -1,20 +1,20 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-switch',
-  imports: [MatSlideToggleModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './switch.component.html',
   styleUrl: './switch.component.css'
 })
 export class SwitchComponent {
-  @Input() label = '';
-  @Input() color = 'primary';
-  @Input() checked = false;
-  @Output() toggleChanged = new EventEmitter<boolean>();
+  @Input() label: string = '';
+  @Input() isChecked: boolean = false;
+  @Output() toggleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  onToggleChange(event: MatSlideToggleChange): void {
-    this.checked = event.checked;
-    this.toggleChanged.emit(event.checked);
+  onToggle() {
+    this.toggleChange.emit(this.isChecked);
   }
 }

@@ -1,0 +1,24 @@
+.tabs-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tabs-header {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .tab-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .tab-item.active {
+    border-bottom: 2px solid #007bff;
+    font-weight: bold;
+  }
+  
+  .tabs-content {
+    padding: 20px;
+  }

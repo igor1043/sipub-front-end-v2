@@ -1,6 +1,7 @@
-<div class="switch-container">
-  <mat-slide-toggle [color]="color" [checked]="checked" (change)="onToggleChange($event)"
-    class="custom-slide-toggle"></mat-slide-toggle>
-  <span class="label">{{ label }}</span>
-  <ng-content></ng-content>
-</div>
+<div class="toggle-container">
+    <label class="switch">
+      <input type="checkbox" [(ngModel)]="isChecked" (change)="onToggle()">
+      <span class="slider round"></span>
+    </label>
+    <span class="toggle-text">{{ label }}</span>
+  </div>

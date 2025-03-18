@@ -10,6 +10,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { ThemeService } from '../../../services/theme.service'; // Importe o serviço de tema
 import { AuthResponse } from 'app/core/services/auth/models/auth.model';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -86,28 +87,39 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-
+  
     this.isLoading = true;
     this.loginError = null;
-
+  
     const loginData = {
       username: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value,
       id_api: 'a7482566-f66e-4211-b8a9-700ee58960e3',
     };
-
+  
     try {
-      const response = await this.authService.login(loginData).toPromise();
+      // Usando firstValueFrom para converter o Observable em uma Promise
+      const response = await firstValueFrom(this.authService.login(loginData));
       if (response) {
-        localStorage.setItem('authToken', response.token)
+        localStorage.setItem('authToken', response.token);
         this.router.navigate(['/dashboard']);
         this.resetPage();
       } else {
         throw new Error('Login response is undefined');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login falhou:', error);
-      this.loginError = 'Usuário ou senha incorretos';
+  
+      // Verifica o status do erro para definir a mensagem apropriada
+      if (error.status === 503) {
+        this.loginError = 'Sistema temporariamente fora do ar. Tente novamente mais tarde.';
+      } else if (error.status === 401) {
+        this.loginError = 'Usuário ou senha incorretos.';
+      } else if (error.status === 500) {
+        this.loginError = 'Erro interno do servidor. Tente novamente mais tarde.';
+      } else {
+        this.loginError = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+      }
     } finally {
       this.isLoading = false;
     }

@@ -1,0 +1,13 @@
+<div class="tabs-container">
+    <div class="tabs-header">
+      <div *ngFor="let tab of tabs; let i = index" 
+           (click)="selectTab(i)" 
+           [class.active]="i === selectedIndex" 
+           class="tab-item">
+        {{ tab }}
+      </div>
+    </div>
+    <div class="tabs-content">
+      <ng-container *ngTemplateOutlet="getSelectedTemplate()"></ng-container>
+    </div>
+  </div>
