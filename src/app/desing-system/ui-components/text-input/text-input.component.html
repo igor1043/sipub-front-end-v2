@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" class="input-container">
+    <mat-label>{{ label }}</mat-label>
+    <input matInput [type]="type" [value]="value" (input)="onInput($event)" (focus)="isFocused = true"
+        (blur)="isFocused = false; onTouched()" />
+    <span matSuffix *@if="required">(Obrigatório)</span>
+    <mat-error *@if="required && !value && !isFocused">
+        Campo obrigatório
+    </mat-error>
+</mat-form-field>

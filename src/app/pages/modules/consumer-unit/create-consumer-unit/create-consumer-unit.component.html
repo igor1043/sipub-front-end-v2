@@ -1,12 +1,18 @@
 <p>create-consumer-unit works!</p>
 
+<app-text-input
+  label="Nome"
+  type="number"
+  maskType="cpf"
+  [required]="true">
+</app-text-input>
+
 <app-switch 
   label="Ativar função" 
   [color]="'primary'" 
   [checked]="true" 
   (toggleChanged)="onToggle($event)">
 </app-switch>
-
 
 <app-button 
 class="bottom" 
