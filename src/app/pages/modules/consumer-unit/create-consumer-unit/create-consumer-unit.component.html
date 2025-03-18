@@ -1,15 +1,23 @@
-<p>create-consumer-unit works!</p>
+<app-text 
+  text="Unidade Consumidora" 
+  size="large"
+   >
+</app-text>
 
-<app-switch 
-  label="Textinho" 
-  (toggleChanged)="onToggle($event)">
-</app-switch>
-
-
-<app-button 
-class="bottom" 
-mode="primary" 
-size="large" 
-[text]="'Acessar'"
-(clicked)="onClickLogin()">
+<app-tabs [tabs]="['Informações Básicas', 'Monitoramento Mensal', 'Carga e Consumo','Geração']" size="medium">
+  <ng-template #appCustomTab>
+    <p>Conteúdo da Tab 1</p>
+    <app-switch label="Textinho" (toggleChanged)="onToggle($event)">
+    </app-switch>
+    <app-divider type="small"></app-divider>
+    
+  </ng-template>
+  <ng-template #appCustomTab>
+    <p>Conteúdo da Tab 2</p>
+  </ng-template>
+  <ng-template #appCustomTab>
+    <p>Conteúdo da Tab 3</p>
+  </ng-template>
+</app-tabs>
+<app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onClickLogin()">
 </app-button>

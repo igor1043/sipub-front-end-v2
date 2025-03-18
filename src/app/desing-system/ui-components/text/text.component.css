@@ -1,0 +1,27 @@
+p {
+  color: var(--text-color); /* Cor padrão */
+}
+
+.xsmall {
+  font-size: 0.75rem;
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.medium {
+  font-size: 1rem;
+}
+
+.large {
+  font-size: 1.25rem;
+}
+
+.xlarge {
+  font-size: 1.5rem;
+}
+
+.bold {
+  font-weight: bold;
+}

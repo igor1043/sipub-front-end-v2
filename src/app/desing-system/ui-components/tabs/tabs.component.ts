@@ -1,31 +1,30 @@
-import { Component, Input, ContentChildren, QueryList, AfterContentInit, TemplateRef } from '@angular/core';
-import { CustomTabDirective } from './tab.directive';
+import { Component, ContentChildren, Input, QueryList, TemplateRef, AfterContentInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tabs',
-  imports: [CommonModule],
   templateUrl: './tabs.component.html',
-  styleUrl: './tabs.component.css'
+  styleUrls: ['./tabs.component.css'],
+  imports: [CommonModule]
 })
 export class TabsComponent implements AfterContentInit {
   @Input() tabs: string[] = [];
-  @ContentChildren(CustomTabDirective) templates!: QueryList<CustomTabDirective>;
-
-  selectedIndex = 0;
-
-  selectTab(index: number): void {
-    this.selectedIndex = index;
-  }
+  @Input() size: 'large' | 'medium' | 'small' = 'medium'; // Propriedade size com valor padrão 'medium'
+  @ContentChildren('appCustomTab') tabTemplates!: QueryList<TemplateRef<any>>;
+  activeTab = 0;
+  activeTabTemplate?: TemplateRef<any>;
 
   ngAfterContentInit(): void {
-    if (this.tabs.length > 0 && this.templates.length === this.tabs.length) {
-      this.selectTab(0);
-    }
+    this.setActiveTab(0);
   }
 
-  getSelectedTemplate(): TemplateRef<any> | null {
-    const selectedTemplate = this.templates.get(this.selectedIndex);
-    return selectedTemplate ? selectedTemplate.templateRef : null;
+  selectTab(index: number): void {
+    this.setActiveTab(index);
+  }
+
+  private setActiveTab(index: number): void {
+    this.activeTab = index;
+    const templates = this.tabTemplates.toArray();
+    this.activeTabTemplate = templates[index];
   }
 }

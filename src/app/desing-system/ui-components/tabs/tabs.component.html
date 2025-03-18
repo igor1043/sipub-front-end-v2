@@ -1,13 +1,14 @@
-<div class="tabs-container">
-    <div class="tabs-header">
-      <div *ngFor="let tab of tabs; let i = index" 
-           (click)="selectTab(i)" 
-           [class.active]="i === selectedIndex" 
-           class="tab-item">
-        {{ tab }}
-      </div>
-    </div>
-    <div class="tabs-content">
-      <ng-container *ngTemplateOutlet="getSelectedTemplate()"></ng-container>
-    </div>
+<div class="tabs-container" [ngClass]="size">
+  <ul class="tabs-header">
+    <li *ngFor="let tab of tabs; let i = index" 
+        [class.active]="i === activeTab"
+        (click)="selectTab(i)">
+      {{ tab }}
+    </li>
+  </ul>
+  <div class="tabs-content">
+    <ng-container *ngIf="activeTabTemplate">
+      <ng-container *ngTemplateOutlet="activeTabTemplate"></ng-container>
+    </ng-container>
   </div>
+</div>

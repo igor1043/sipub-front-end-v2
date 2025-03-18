@@ -1,24 +1,73 @@
 .tabs-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .tabs-header {
-    display: flex;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .tab-item {
-    padding: 10px 20px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-  }
-  
-  .tab-item.active {
-    border-bottom: 2px solid #007bff;
-    font-weight: bold;
-  }
-  
-  .tabs-content {
-    padding: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  background: var(--background-color); /* Fundo branco */
+  border-radius: 8px; /* Bordas arredondadas no container */
+  overflow: hidden; /* Garante que as bordas arredondadas funcionem corretamente */
+}
+
+.tabs-header {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: var(--background-color); /* Fundo branco */
+  border-bottom: 1px solid var(--gray-400); /* Linha cinza na parte inferior */
+}
+
+.tabs-header li {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  border: 1px solid transparent; /* Borda transparente por padrão */
+  border-bottom: none; /* Remove a borda inferior */
+  margin-bottom: -1px; /* Alinha a borda inferior com a linha cinza */
+  border-radius: 8px 8px 0 0; /* Bordas arredondadas apenas no topo */
+}
+
+.tabs-header li.active {
+  background: var(--background-color); /* Fundo branco para a tab ativa */
+  color: var(--text-color); /* Cor do texto da tab ativa */
+  border: 1px solid var(--gray-400); /* Borda ao redor da tab ativa */
+  border-bottom: 1px solid var(--background-color); /* Remove a borda inferior da tab ativa */
+  position: relative; /* Para garantir que a borda inferior não apareça */
+}
+
+.tabs-header li.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; /* Posiciona a borda abaixo da tab */
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--background-color); /* Cobre a linha cinza na parte inferior */
+}
+
+.tabs-content {
+  padding: 16px;
+  background: var(--background-color); /* Fundo branco para o conteúdo */
+  border-radius: 0 0 5px 5px; /* Bordas arredondadas apenas na parte inferior */
+  transition: opacity 0.3s ease; /* Transição suave para o conteúdo */
+}
+
+/* Classes para diferentes tamanhos */
+.tabs-container.large .tabs-header li {
+  padding: 14px 22px; /* Reduzido o padding */
+  font-size: 16px; /* Reduzido o font-size */
+}
+
+.tabs-container.medium .tabs-header li {
+  padding: 10px 18px; /* Reduzido o padding */
+  font-size: 14px; /* Reduzido o font-size */
+}
+
+.tabs-container.small .tabs-header li {
+  padding: 6px 14px; /* Reduzido o padding */
+  font-size: 12px; /* Reduzido o font-size */
+}
+
+/* Efeito de hover suave */
+.tabs-header li:hover {
+  background-color: var(--gray-50); /* Cor de fundo ao passar o mouse */
+  color: var(--text-color-hover); /* Cor do texto ao passar o mouse */
+}
