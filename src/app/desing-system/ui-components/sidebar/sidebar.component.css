@@ -125,7 +125,7 @@
 /* Estilo dos links dos subitens quando ativos */
 .sidebar-submenu .sidebar-nav-link.sidebar-active {
   background-color: var(--color-primary); /* Fundo azul */
-  color: var(--text-color); /* Texto branco */
+  color: var(--white); /* Texto branco */
   border: 1px solid var(--color-primary); /* Borda azul */
 }
 
