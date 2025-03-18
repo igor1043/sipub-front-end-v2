@@ -4,12 +4,15 @@ import { SwitchComponent } from 'app/desing-system/ui-components/switch/switch.c
 import { TabsComponent } from 'app/desing-system/ui-components/tabs/tabs.component';
 import { TextComponent } from 'app/desing-system/ui-components/text/text.component';
 import { DividerComponent } from 'app/desing-system/ui-components/divider/divider.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextComponent } from 'app/desing-system/ui-components/inputs/input-text/input-text.component';
 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 export class CreateConsumerUnitModule { }
 @Component({
@@ -18,6 +21,7 @@ export class CreateConsumerUnitModule { }
   imports: [
     ButtonComponent,
     CommonModule,
+    ReactiveFormsModule,
     FormsModule,
     SwitchComponent,
     TabsComponent,
@@ -30,14 +34,18 @@ export class CreateConsumerUnitModule { }
 })
 export class CreateConsumerUnitComponent {
   form: FormGroup;
-unitName: any;
+
 
   constructor(private fb: FormBuilder) {
-    // Inicializa o formulário
     this.form = this.fb.group({
-      unitName: ['', Validators.required], // Nome da unidade (obrigatório)
-
+      optionalField: [''],
+      requiredField: ['', [Validators.required, Validators.minLength(3)]],
+      batataField: ['', [this.batataValidator]]
     });
+  }
+  
+  batataValidator(control: FormControl) {
+    return control.value === 'batata' ? null : { batata: true };
   }
   
   onToggle(event: any) {
@@ -48,6 +56,13 @@ unitName: any;
     if (this.form.valid) {
       console.log('Formulário válido:', this.form.value);
       // Aqui você pode enviar os dados para o servidor
+    } else {
+      console.log('Formulário inválido');
+    }
+  }
+  onSubmit() {
+    if (this.form.valid) {
+      console.log('Formulário válido', this.form.value);
     } else {
       console.log('Formulário inválido');
     }

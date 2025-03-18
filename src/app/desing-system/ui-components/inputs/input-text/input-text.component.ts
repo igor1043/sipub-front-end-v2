@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef, Self, Optional } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, FormControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
 
@@ -16,6 +16,7 @@ export class InputTextComponent implements ControlValueAccessor {
   @Input() isRequired: boolean = false;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() type: string = 'text';
+  @Input() control!: AbstractControl;
 
   value: string = '';
   isFocused: boolean = false;
@@ -42,6 +43,7 @@ export class InputTextComponent implements ControlValueAccessor {
     const value = (event.target as HTMLInputElement).value;
     this.value = value;
     this.onChange(value);
+    this.control.setValue(value);
   }
 
   onFocus(): void {

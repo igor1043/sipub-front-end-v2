@@ -6,12 +6,12 @@
       (input)="onInputChange($event)"
       (focus)="onFocus()"
       (blur)="onBlur()"
-      [class.invalid]="ngControl.control?.invalid && ngControl.control?.touched"
+      [class.invalid]="control.invalid && control.touched"
     />
     <label [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
   </div>
 
-  <div class="footer-container" *ngIf="alertText || isRequired">
+  <div class="footer-container" *ngIf="(control.invalid && control.touched) || isRequired">
     <app-svg-icon class="ic-alert" [svgUrl]="'/assets/images/ic_dark.svg'"></app-svg-icon>
     <span [class.alert-text]="!isRequired" [class.required-text]="isRequired">
       {{ isRequired ? 'Campo obrigatório' : alertText }}
