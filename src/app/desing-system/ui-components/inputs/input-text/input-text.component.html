@@ -1,4 +1,4 @@
-<div class="input-container" [class]="size">
+<div class="input-container" [class]="size" style="margin: 16px 0;">
   <div class="floating-label">
     <input
       [type]="type"
@@ -12,7 +12,7 @@
   </div>
 
   <div class="footer-container" *ngIf="(control.invalid && control.touched) || isRequired">
-    <app-svg-icon class="ic-alert" [svgUrl]="'/assets/images/ic_dark.svg'"></app-svg-icon>
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-300)'></app-svg-icon>
     <span [class.alert-text]="!isRequired" [class.required-text]="isRequired">
       {{ isRequired ? 'Campo obrigatório' : alertText }}
     </span>
