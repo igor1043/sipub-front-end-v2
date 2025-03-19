@@ -54,7 +54,8 @@ listaOpcoes = [
       requiredField: ['', [Validators.required, Validators.minLength(3)]],
       batataField: ['', [this.batataValidator]],
       campo: [''],
-      document: ['']
+      images: [''],
+      documents: ['']
     });
   }
   
