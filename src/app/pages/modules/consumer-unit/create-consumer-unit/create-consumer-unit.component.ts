@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DropdownComponent } from "../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
 import { ImageUploadComponent } from 'app/desing-system/ui-components/image-upload/image-upload.component';
 import { PdfUploadComponent } from 'app/desing-system/ui-components/pdf-upload/pdf-upload.component';
+import { MapPickerComponent } from 'app/desing-system/ui-components/map-picker/map-picker.component';
 
 
 export class CreateConsumerUnitModule { }
@@ -33,7 +34,8 @@ export class CreateConsumerUnitModule { }
     InputTextComponent,
     DropdownComponent,
     ImageUploadComponent,
-    PdfUploadComponent
+    PdfUploadComponent,
+    MapPickerComponent
 ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css'] // Corrigido: styleUrls em vez de styleUrl

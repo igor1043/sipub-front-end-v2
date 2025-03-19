@@ -24,12 +24,14 @@
         [control]="form.get('campo')!"></app-dropdown>
 
 
-       <app-image-upload [maxFiles]="5" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
+      <app-image-upload [maxFiles]="5" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
         formControlName="images"></app-image-upload>
 
 
       <app-pdf-upload [maxFiles]="3" [maxFileSize]="10" formControlName="documents"></app-pdf-upload>
 
+      <!-- <app-map-picker [apiKey]="'AIzaSyAhz_AmDU4BhHwucHxkVd-4OO_psNclxHg'"
+      [initialCenter]="{ lat: -23.5505, lng: -46.6333 }" formControlName="location"></app-map-picker> -->
     </form>
     <!-- Switch -->
     <app-switch label="Textinho" (toggleChanged)="onToggle($event)"></app-switch>
@@ -42,6 +44,9 @@
   <!-- Tab 2: Monitoramento Mensal -->
   <ng-template #appCustomTab>
     <p>Conteúdo da Tab 2</p>
+
+
+
   </ng-template>
 
   <!-- Tab 3: Carga e Consumo -->

@@ -34,6 +34,11 @@ export class MenuService {
         route: '/gestor',
       },
       {
+        title: 'Perfil de Usuário',
+        icon: '/assets/icons/ic_manager.svg',
+        route: '/user-profile',
+      },
+      {
         title: 'Iluminação Pública',
         icon: '/assets/ic_modules/ic_public_illumination.svg',
         subItems: [

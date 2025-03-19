@@ -20,10 +20,10 @@
             [class.sidebar-active]="isActive(item.route || '')"
             class="sidebar-nav-link"
           >
-            <app-svg-icon class="sidebar-icon" [color]="isActive(item.route || '') ? 'var(--white)': 'var(--text-color)'" [svgUrl]="item.icon"></app-svg-icon>
+            <app-svg-icon class="sidebar-icon" [color]="'var(--gray-900)'"  [svgUrl]="item.icon"></app-svg-icon>
             <span *ngIf="!minimized">{{ item.title }}</span>
             <span class="sidebar-arrow" *ngIf="item.subItems && !minimized">
-              <app-svg-icon [color]="isActive(item.route || '') ? 'var(--text-color)' : 'var(--gray-900)'" [svgUrl]="'/assets/icons/arrow_down.svg'"></app-svg-icon>
+              <app-svg-icon [color]="'var(--gray-900)'"  [svgUrl]="'/assets/icons/arrow_down.svg'"></app-svg-icon>
             </span>
           </a>
           <!-- Subitens -->

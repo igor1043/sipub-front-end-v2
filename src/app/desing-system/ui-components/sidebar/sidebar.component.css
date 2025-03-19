@@ -31,11 +31,14 @@
 }
 
 /* Estilo do logo mini */
-.sidebar-logo .logo-mini {
+.sidebar-logo {
   width: 30px; /* Largura do logo mini */
   height: auto; /* Altura automática para manter a proporção */
   display: block; /* Exibe o logo como um bloco */
   margin-left: 0; /* Remove margem à esquerda */
+}
+.logo-mini {
+  width: 40px; /* Largura do logo mini */
 }
 
 /* Remove as bolinhas da lista principal e dos subitens */
@@ -90,14 +93,16 @@
 
 /* Efeito ao passar o mouse sobre o link */
 .sidebar-nav-link:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Fundo levemente escurecido */
+  background-color: var(--gray-300); /* Fundo levemente escurecido */
 }
 
-/* Estilo do link ativo (selecionado) */
 .sidebar-nav-link.sidebar-active {
-  background-color: var(--color-primary); /* Fundo azul */
-  color: var(--white); /* Texto branco */
-  border: 1px solid var(--color-primary); /* Borda azul */
+  background-color: var(--color-primary);
+  color: var(--gray-50) !important; /* Força a cor do texto */
+}
+
+.sidebar-nav-link.sidebar-active ::ng-deep app-svg-icon svg {
+  fill: var(--gray-50) !important;
 }
 
 /* Estilo do ícone dentro do link */
@@ -107,10 +112,6 @@
   height: 27px; /* Define a altura do ícone */
 }
 
-/* Estilo do ícone quando o link está ativo */
-.sidebar-active .sidebar-icon {
-  fill: var(--text-color); /* Ícone branco quando o link está ativo */
-}
 
 /* Container dos subitens */
 .sidebar-has-submenu .sidebar-submenu {
@@ -132,13 +133,6 @@
 /* Estilo da seta (ícone de expansão) */
 .sidebar-arrow {
   margin-left: auto; /* Alinha a seta à direita */
-  transition: transform 0.3s ease; /* Animação de rotação suave */
-  fill: var(--gray-900); /* Cor da seta (cinza escuro) */
-}
-
-/* Rotaciona a seta quando o submenu está aberto */
-.sidebar-has-submenu.active .sidebar-arrow {
-  transform: rotate(180deg); /* Gira a seta 180 graus */
 }
 
 /* Área do usuário na parte inferior */

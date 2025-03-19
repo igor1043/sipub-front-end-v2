@@ -1,0 +1,33 @@
+<div class="map-container">
+    @if (!apiKey) {
+      <div class="error-message">
+        Chave da API do Google Maps não configurada
+      </div>
+    }
+    @else {
+      <google-map 
+        [center]="center"
+        [zoom]="zoom"
+        (mapInitialized)="onMapReady($event)"
+        height="100%"
+        width="100%"
+      >
+        @if (marker) {
+          <map-marker
+            [position]="marker.position"
+            [options]="markerOptions"
+          ></map-marker>
+        }
+      </google-map>
+      
+      <div class="coordinates-display">
+        @if (marker) {
+          <span>Latitude: {{ marker.position.lat | number:'1.4-4' }}</span>
+          <span>Longitude: {{ marker.position.lng | number:'1.4-4' }}</span>
+        }
+        @else {
+          <span>Clique no mapa para selecionar uma posição</span>
+        }
+      </div>
+    }
+  </div>
