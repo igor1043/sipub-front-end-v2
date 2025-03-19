@@ -12,6 +12,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { DropdownComponent } from "../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
+import { ImageUploadComponent } from 'app/desing-system/ui-components/image-upload/image-upload.component';
+import { PdfUploadComponent } from 'app/desing-system/ui-components/pdf-upload/pdf-upload.component';
 
 
 export class CreateConsumerUnitModule { }
@@ -27,20 +30,31 @@ export class CreateConsumerUnitModule { }
     TabsComponent,
     TextComponent,
     DividerComponent,
-    InputTextComponent
-  ],
+    InputTextComponent,
+    DropdownComponent,
+    ImageUploadComponent,
+    PdfUploadComponent
+],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css'] // Corrigido: styleUrls em vez de styleUrl
 })
 export class CreateConsumerUnitComponent {
   form: FormGroup;
 
+// No componente pai
+listaOpcoes = [
+  { id: 1, name: 'Opção 1' },
+  { id: 2, name: 'Opção 2' },
+  { id: 3, name: 'Opção 3' }
+];
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       optionalField: [''],
       requiredField: ['', [Validators.required, Validators.minLength(3)]],
-      batataField: ['', [this.batataValidator]]
+      batataField: ['', [this.batataValidator]],
+      campo: [''],
+      document: ['']
     });
   }
   

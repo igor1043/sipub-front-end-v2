@@ -9,32 +9,27 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Campo não obrigatório -->
-      <app-input-text
-        placeholder="Campo opcional"
-        size="medium"
-        type="text"
-        [control]="form.get('optionalField')!"
-      ></app-input-text>
-    
+      <app-input-text placeholder="Campo opcional" size="medium" type="text"
+        [control]="form.get('optionalField')!"></app-input-text>
+
       <!-- Campo obrigatório com mais de 3 caracteres -->
-      <app-input-text
-        placeholder="Campo obrigatório"
-        alertText="Deve ter mais de 3 caracteres"
-        size="medium"
-        type="text"
-        [isRequired]="true"
-        [control]="form.get('requiredField')!"
-      ></app-input-text>
-    
+      <app-input-text placeholder="Campo obrigatório" alertText="Deve ter mais de 3 caracteres" size="medium"
+        type="text" [isRequired]="true" [control]="form.get('requiredField')!"></app-input-text>
+
       <!-- Campo com validação personalizada (deve ser 'batata') -->
-      <app-input-text
-        placeholder="Digite 'batata'"
-        alertText="Deve ser 'batata'"
-        size="medium"
-        type="text"
-        [control]="form.get('batataField')!"
-      ></app-input-text>
-    
+      <app-input-text placeholder="Digite 'batata'" alertText="Deve ser 'batata'" size="medium" type="text"
+        [control]="form.get('batataField')!"></app-input-text>
+
+      <app-dropdown [options]="listaOpcoes" placeholder="Selecione" [isRequired]="true"
+        [control]="form.get('campo')!"></app-dropdown>
+
+
+      <!-- <app-image-upload [maxFiles]="5" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
+        formControlName="images"></app-image-upload>
+
+
+      <app-pdf-upload [maxFiles]="3" [maxFileSize]="10" formControlName="documents"></app-pdf-upload>-->
+
     </form>
     <!-- Switch -->
     <app-switch label="Textinho" (toggleChanged)="onToggle($event)"></app-switch>

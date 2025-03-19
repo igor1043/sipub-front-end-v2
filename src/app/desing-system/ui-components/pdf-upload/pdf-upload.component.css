@@ -1,0 +1,84 @@
+.upload-container {
+    width: 100%;
+    margin: 1rem 0;
+  }
+  
+  .drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    background-color: #f8f9fa;
+  }
+  
+  .drop-zone:hover,
+  .drop-zone.dragover {
+    border-color: #2196F3;
+    background-color: #e3f2fd;
+  }
+  
+  .preview-container {
+    margin-top: 1rem;
+  }
+  
+  .preview-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    background: #fff;
+  }
+  
+  .pdf-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+  }
+  
+  .file-info {
+    flex-grow: 1;
+  }
+  
+  .file-name {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+  
+  .file-size {
+    color: #666;
+    font-size: 0.875rem;
+  }
+  
+  .remove-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: 1rem;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .hidden-input {
+    display: none;
+  }
+  
+  .upload-instructions {
+    margin: 0;
+    color: #666;
+  }
+  
+  .upload-instructions strong {
+    color: #2196F3;
+  }
