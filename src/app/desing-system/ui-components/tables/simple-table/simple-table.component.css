@@ -1,7 +1,7 @@
 /* Container principal da tabela */
 .table-container {
   width: 100%;
-  background-color: white; /* Fundo branco garantido */
+  background-color: var(--background-color); /* Fundo branco garantido */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -16,13 +16,13 @@
 
 /* Wrapper da tabela */
 .mat-table-wrapper {
-  background: white; /* Fundo branco garantido */
+  background:  var(--background-color); /* Fundo branco garantido */
   overflow: auto;
 }
 
 /* Ajuste das células e linhas */
 ::ng-deep .mat-table {
-  background-color: white !important; /* Força fundo branco na tabela */
+  background-color:  var(--background-color) !important; /* Força fundo branco na tabela */
 }
 
 ::ng-deep .mat-header-cell, 
@@ -88,7 +88,7 @@
 
 /* Estilo para o paginador */
 .custom-paginator {
-  background-color: white;
+  background-color:  var(--background-color);
 }
 
 /* Estilo para a coluna do checkbox */
@@ -127,3 +127,28 @@
   text-overflow: ellipsis; /* Adiciona reticências ao final do texto truncado */
   max-width: 200px; /* Define um tamanho máximo para a célula (ajuste conforme necessário) */
 }
+
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--gray-400);
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox.checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.custom-checkbox mat-icon {
+  color:  var(--background-color);
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
