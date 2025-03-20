@@ -52,7 +52,7 @@ export class CreateConsumerUnitComponent {
       optionalField: [''],
       requiredField: ['', [Validators.required, Validators.minLength(3)]],
       batataField: ['', [this.batataValidator]],
-      campo: [''],
+      campo: [null, Validators.required],
       images: [''],
       documents: [''],
       location: ['']

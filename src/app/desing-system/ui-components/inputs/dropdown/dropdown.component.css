@@ -1,108 +1,135 @@
 .input-container {
-    display: flex;
-    flex-direction: column;
-    width: 99%;
-    max-width: 99%;
-    position: relative;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 99%;
+  margin-top: 5px;
+  max-width: 99%;
+  position: relative;
+}
+
+.floating-label {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  padding: 8px 8px 8px 12px;
+  background: transparent;
+  width: 100%;
+  outline: none;
+}
+
+label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  background: var(--background-color);
+  padding: 0 4px;
+}
+
+label.float {
+  top: -8px;
+  font-size: 0.75rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transform: translateY(0);
+}
+
+.dropdown-list {
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  z-index: 1000;
+  margin-top: 4px;
+}
+
+.dropdown-option {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background: #f0f0f0;
+}
+
+.hint-container {
+  margin-top: 4px;
+}
+
+.hint-text {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.footer-container {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.ic-alert {
+  margin-right: 4px;
+}
+
+.alert-text {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.required-text {
+  font-size: 0.75rem;
+  color: var(--red-500);
+}
+
+.input-container.small input {
+  height: 32px;
+  font-size: 0.875rem;
+}
+
+.input-container.medium input {
+  height: 40px;
+}
+
+.input-container.large input {
+  height: 48px;
+  font-size: 1.125rem;
+}
+
+/* Performando no modo escuro */
+/* Modo normal */
+.dropdown-list {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Modo escuro */
+body.dark-mode .dropdown-list {
+  background-color: #222;
+  color: white;
+  border-color: #444;
+}
+
+body.dark-mode .dropdown-option {
+  background-color: #222;
+  color: white;
+}
+
+body.dark-mode .dropdown-option:hover {
+  background-color: #333;
   
-  .floating-label {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-  }
-  
-  input {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    padding: 8px 8px 8px 12px;
-    background: transparent;
-    width: 100%;
-    outline: none;
-  }
-  
-  label {
-    position: absolute;
-    top: 50%;
-    left: 12px;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    color: var(--text-color);
-    transition: all 0.3s ease;
-    pointer-events: none;
-    background: var(--background-color);
-    padding: 0 4px;
-  }
-  
-  label.float {
-    top: -8px;
-    font-size: 0.75rem;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    transform: translateY(0);
-  }
-  
-  .dropdown-list {
-    position: absolute;
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: white;
-    z-index: 1000;
-    margin-top: 4px;
-  }
-  
-  .dropdown-option {
-    padding: 8px 12px;
-    cursor: pointer;
-  }
-  
-  .dropdown-option:hover {
-    background: #f0f0f0;
-  }
-  
-  .hint-container {
-    margin-top: 4px;
-  }
-  
-  .hint-text {
-    font-size: 0.75rem;
-    color: #666;
-  }
-  
-  .footer-container {
-    display: flex;
-    align-items: center;
-    margin-top: 4px;
-  }
-  
-  .ic-alert {
-    margin-right: 4px;
-  }
-  
-  .alert-text {
-    font-size: 0.75rem;
-    color: #666;
-  }
-  
-  .required-text {
-    font-size: 0.75rem;
-    color: var(--red-500);
-  }
-  
-  .input-container.small input {
-    height: 32px;
-    font-size: 0.875rem;
-  }
-  
-  .input-container.medium input {
-    height: 40px;
-  }
-  
-  .input-container.large input {
-    height: 48px;
-    font-size: 1.125rem;
-  }
+}

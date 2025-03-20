@@ -54,7 +54,15 @@ export class DropdownComponent implements ControlValueAccessor {
     this.displayText = this.searchTerm;
     this.filterOptions();
     this.isDropdownVisible = true;
-    if (!this.searchTerm) this.onChange(null);
+  
+    if (!this.searchTerm) {
+      this.onChange(null);
+      if (this.control) {
+        this.control.setValue(null);
+        this.control.markAsTouched();
+        this.control.updateValueAndValidity();
+      }
+    }
   }
 
   onFocus(): void {
@@ -67,11 +75,21 @@ export class DropdownComponent implements ControlValueAccessor {
     this.isFocused = false;
     setTimeout(() => {
       this.isDropdownVisible = false;
-      if (!this.selectedId) this.displayText = '';
+      
+      // Se não houver uma opção selecionada, limpar o valor e acionar a validação
+      if (!this.selectedId) {
+        this.displayText = '';
+        this.onChange(null);
+        if (this.control) {
+          this.control.setValue(null);
+          this.control.markAsTouched();
+          this.control.updateValueAndValidity(); // Força a revalidação do campo
+        }
+      }
     }, 200);
+    
     this.onTouched();
   }
-
   filterOptions(): void {
     this.filteredOptions = this.options.filter(option =>
       option.name.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -79,11 +97,29 @@ export class DropdownComponent implements ControlValueAccessor {
   }
 
   selectOption(option: { id: any, name: string }): void {
-    this.selectedId = option.id;
-    this.displayText = option.name;
-    this.isDropdownVisible = false;
-    this.onChange(option.id);
-    if (this.control) this.control.setValue(option.id);
+    if (this.selectedId === option.id) {
+      // Se o usuário clicar na mesma opção, desmarca a seleção
+      this.selectedId = null;
+      this.displayText = '';
+      this.onChange(null);
+      if (this.control) {
+        this.control.setValue(null);
+        this.control.markAsTouched();
+        this.control.updateValueAndValidity();
+      }
+    } else {
+      // Seleciona a nova opção
+      this.selectedId = option.id;
+      this.displayText = option.name;
+      this.onChange(option.id);
+      if (this.control) {
+        this.control.setValue(option.id);
+        this.control.markAsTouched();
+        this.control.updateValueAndValidity();
+      }
+    }
+    
+    this.isDropdownVisible = false; // Fecha o dropdown após a seleção
   }
 
   shouldLabelFloat(): boolean {
