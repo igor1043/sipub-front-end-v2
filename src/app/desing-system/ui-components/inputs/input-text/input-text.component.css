@@ -61,16 +61,20 @@ label.float {
 
 .ic-alert {
   margin-right: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  height: 16px;
+  width: 16px;
 }
 
 .alert-text {
   font-size: 0.75rem;
-  color: #666;
+  color: var(--gray-700);
 }
 
 .required-text {
   font-size: 0.75rem;
-  color: var(--red-500);
+  color: var(--red-700);
 }
 
 /* Tamanhos */
