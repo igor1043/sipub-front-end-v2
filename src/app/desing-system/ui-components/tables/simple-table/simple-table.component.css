@@ -26,7 +26,6 @@
 }
 
 ::ng-deep .mat-header-cell, 
-::ng-deep .mat-cell, 
 ::ng-deep .mat-row, 
 ::ng-deep .mat-header-row {
   background-color: inherit !important; /* Herda o fundo branco do container */
@@ -37,10 +36,6 @@
   background-color: var(--gray-200) !important;
 }
 
-/* Ajuste adicional para linhas selecionadas */
-::ng-deep .mat-row.selected {
-  background-color: var(--gray-400) !important;
-}
 
 /* Botões no canto superior direito */
 .table-header-container {
@@ -120,12 +115,36 @@
   content: none;
 }
 
+
+/* Estilo para o texto das células */
+::ng-deep .mat-cell {
+  color: var(--gray-800)  !important; /* Texto amarelo */
+}
+
+/* Estilo para o texto das células do cabeçalho */
+::ng-deep .mat-header-cell {
+  color: var(--gray-800) !important; /* Mantém a cor original do cabeçalho */
+}
+
+/* Estilo para o texto das linhas selecionadas */
+::ng-deep .mat-row.selected {
+  background-color: var(--gray-400) !important;
+  color: var(--gray-800)  !important; /* Texto amarelo para linhas selecionadas */
+}
+
 /* Estilo para truncar o texto das células */
 .truncate-cell {
+  color: var(--gray-800) !important; /* Texto amarelo para células truncadas */
   white-space: nowrap; /* Impede que o texto quebre em várias linhas */
   overflow: hidden; /* Esconde o texto que ultrapassar o tamanho da célula */
   text-overflow: ellipsis; /* Adiciona reticências ao final do texto truncado */
   max-width: 200px; /* Define um tamanho máximo para a célula (ajuste conforme necessário) */
+}
+
+
+/* Estilo para o ícone de check */
+.check-icon {
+  fill: var(--gray-50) !important; /* Ícone de check amarelo */
 }
 
 .custom-checkbox {
@@ -152,3 +171,23 @@
   height: 16px;
 }
 
+/* Estilo para todos os ícones SVG */
+.icon-red {
+  fill: var(--gray-800); /* Vermelho */
+  width: 24px;
+  height: 24px;
+}
+
+/* Checkbox personalizado */
+.check-icon {
+  fill: white;
+  width: 16px;
+  height: 16px;
+}
+
+.custom-checkbox {
+  /* Mantenha os estilos existentes e adicione: */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
