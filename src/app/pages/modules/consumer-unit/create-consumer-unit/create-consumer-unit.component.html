@@ -30,8 +30,13 @@
 
       <app-pdf-upload [maxFiles]="3" [maxFileSize]="10" formControlName="documents"></app-pdf-upload>
 
-      <!-- <app-map-picker [apiKey]="'AIzaSyAhz_AmDU4BhHwucHxkVd-4OO_psNclxHg'"
-      [initialCenter]="{ lat: -23.5505, lng: -46.6333 }" formControlName="location"></app-map-picker> -->
+      <app-map-picker [title]="'Geo de teste'"
+        [markerIconUrl]="'assets/icons/ic_marker_consumer_unit.svg'"
+        formControlName="location"></app-map-picker>
+
+        <p>Endereço completo: {{ form.get('location')?.value?.address }}</p>
+<p>Coordenadas: {{ form.get('location')?.value?.lat }}, {{ form.get('location')?.value?.lng }}</p>
+
     </form>
     <!-- Switch -->
     <app-switch label="Textinho" (toggleChanged)="onToggle($event)"></app-switch>

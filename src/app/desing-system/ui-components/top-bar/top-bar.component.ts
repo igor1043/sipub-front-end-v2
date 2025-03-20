@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Output, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from '../../../services/theme.service'; // Importe o serviço de tema
+import { ThemeService } from '../../../services/theme.service';
+import { SvgIconComponent } from "../svg-icon/svg-icon.component";
 
 @Component({
   selector: 'app-top-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SvgIconComponent],
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css']
 })

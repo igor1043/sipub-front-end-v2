@@ -1,4 +1,3 @@
-
 import { Component, Input, OnInit, ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
@@ -9,6 +8,8 @@ import { Component, Input, OnInit, ElementRef, Renderer2 } from '@angular/core';
 export class SvgIconComponent implements OnInit {
   @Input() color: string = 'var(--text-button-color)';  // Cor padrão: preto
   @Input() svgUrl?: string = '';
+  @Input() width: string = '100%';  // Largura padrão: 100%
+  @Input() height: string = '100%'; // Altura padrão: 100%
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
@@ -40,12 +41,10 @@ export class SvgIconComponent implements OnInit {
         .catch(error => console.error('Erro ao carregar o SVG:', error));
     }
   }
-  
-  
 
   private applyColor(svgElement: SVGElement): void {
     svgElement.setAttribute('fill', this.color);
-    svgElement.style.width = '100%';
-    svgElement.style.height = '100%';
+    svgElement.style.width = this.width;
+    svgElement.style.height = this.height;
   }
 }

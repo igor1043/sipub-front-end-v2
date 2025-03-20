@@ -1,33 +1,51 @@
+  <!-- Título Dinâmico -->
+  @if (title) {
+    <div class="dynamic-title">
+      {{ title }}
+    </div>
+  }
 <div class="map-container">
-    @if (!apiKey) {
-      <div class="error-message">
-        Chave da API do Google Maps não configurada
+
+  <!-- Mapa -->
+  @if (!apiKey) {
+    <div class="error-message">
+      Chave da API do Google Maps não configurada
+    </div>
+  }
+  @else {
+    <google-map 
+      [center]="center"
+      [zoom]="zoom"
+      [options]="mapOptions"
+      (mapInitialized)="onMapReady($event)"
+      height="400px"
+      width="100%"
+    >
+      @if (marker) {
+        <map-marker
+          [position]="marker.position"
+          [options]="markerOptions"
+        ></map-marker>
+      }
+    </google-map>
+  }
+
+  <!-- Coordenadas -->
+  <div class="coordinates-container">
+    @if (marker) {
+      <div class="coordinates">
+        <div class="coordinate">
+          <label>Latitude:</label>
+          <span>{{ marker.position.lat | number:'1.8-8' }}</span>
+        </div>
+        <div class="coordinate">
+          <label>Longitude:</label>
+          <span>{{ marker.position.lng | number:'1.8-8' }}</span>
+        </div>
       </div>
     }
     @else {
-      <google-map 
-        [center]="center"
-        [zoom]="zoom"
-        (mapInitialized)="onMapReady($event)"
-        height="100%"
-        width="100%"
-      >
-        @if (marker) {
-          <map-marker
-            [position]="marker.position"
-            [options]="markerOptions"
-          ></map-marker>
-        }
-      </google-map>
-      
-      <div class="coordinates-display">
-        @if (marker) {
-          <span>Latitude: {{ marker.position.lat | number:'1.4-4' }}</span>
-          <span>Longitude: {{ marker.position.lng | number:'1.4-4' }}</span>
-        }
-        @else {
-          <span>Clique no mapa para selecionar uma posição</span>
-        }
-      </div>
+      <div class="instruction">Clique no mapa para selecionar uma posição</div>
     }
   </div>
+</div>

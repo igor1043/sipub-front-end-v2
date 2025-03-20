@@ -4,37 +4,32 @@
   margin: 5px;
   height: 50px;
   display: flex;
+  align-items: center; /* Alinha os itens verticalmente ao centro */
   background-color: var(--background-color);
 }
 
 /* Botão de menu alinhado à esquerda e centralizado verticalmente */
 .button_menu {
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 20px; /* Largura fixa */
-  height: 20px; /* Altura fixa */
+  width: 25px; /* Largura fixa */
+  height: 25px;
+  cursor: pointer; 
+  margin-left: 10px;
 }
 
-/* Breadcrumb com margem à esquerda de 20px */
+
+
+/* Estilo para o breadcrumb */
 .breadcrumb {
-  gap: 8px;
-  margin-left: 20px; /* Margem à esquerda */
-  flex-grow: 1; /* Ocupa o espaço restante */
+  display: flex;
+  align-items: center; /* Alinha o ícone e o texto verticalmente */
+  margin-left: 20px; /* Espaçamento à esquerda */
 }
 
-/* Actions ancorados à direita */
 .actions {
   display: flex;
-  gap: 8px;
+  margin-right: 10px;
+  align-items: center;
+  margin-left: auto;
+  gap: 10px; /* Adiciona espaçamento entre os elementos filhos */
 }
 
-/* Estilos para os botões de tema e logout */
-.theme-toggle, .logout-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  width: 24px; /* Largura fixa */
-  height: 24px; /* Altura fixa */
-}

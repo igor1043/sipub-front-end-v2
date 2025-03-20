@@ -21,24 +21,28 @@
 
     <app-svg-icon class="logo" [color]="'var(--color-primary)'" [svgUrl]="'/assets/images/logo-light.svg'"></app-svg-icon>
 
-    <ng-template #lightTheme>
-      <img src="/assets/images/logo-light.svg" alt="Logo Sipub - Light Theme" class="logo" />
-    </ng-template>
-
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h2>Bem-vindo ao Sipub</h2>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>E-mail</mat-label>
-        <input matInput formControlName="email" type="email" required />
-      </mat-form-field>
+      
+      <div class="custom-form-field">
+        <div class="input-container">
+          <input id="email" formControlName="email" type="email" placeholder=" " required />
+          <label for="email">E-mail</label>
+        </div>
+      </div>
+    
+      <div class="custom-form-field password-field">
+        <div class="input-container">
+          <div class="password-input-container">
+            <input id="password" formControlName="password" [type]="hidePassword ? 'password' : 'text'" placeholder=" " required />
+            <label for="password">Senha</label>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Senha</mat-label>
-        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required />
-        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
-          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </button>
-      </mat-form-field>
+              <app-svg-icon *ngIf="hidePassword" class="visible_button"  (click)="togglePasswordVisibility()" [color]="'var(--gray-800)'" [svgUrl]="'/assets/icons/ic_password_visible.svg'"></app-svg-icon>
+              <app-svg-icon *ngIf="!hidePassword" class="invisible_button" (click)="togglePasswordVisibility()" [color]="'var(--gray-800)'" [svgUrl]="'/assets/icons/ic_password_invisible.svg'"></app-svg-icon>
+           
+          </div>
+        </div>
+      </div>
 
       <a class="forgot-password-link" (click)="onForgotPasswordClick()">Esqueceu a senha?</a>
 
@@ -59,7 +63,6 @@
       <p class="register-text">
         Não tem conta? <a (click)="onRegisterClick()">Cadastre-se</a>
       </p>
-
     </form>
 
     <p class="company-text">

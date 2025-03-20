@@ -57,7 +57,8 @@ listaOpcoes = [
       batataField: ['', [this.batataValidator]],
       campo: [''],
       images: [''],
-      documents: ['']
+      documents: [''],
+      location: ['']
     });
   }
   

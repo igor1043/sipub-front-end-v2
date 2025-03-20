@@ -2,50 +2,50 @@
 .sidebar {
   width: 250px; 
   height: 100vh;
-  background-color: var(--background-color); /* Cor de fundo do sidebar */
+  background-color: var(--background-color);
   padding-left: 5px;
   padding-right: 5px;
-  border-right: 1px solid var(--gray-200); /* Borda direita do sidebar */
+  border-right: 1px solid var(--gray-200);
   border-bottom: 1px solid var(--gray-200);
-  transition: width 0.3s ease; /* Transição suave para minimizar */
+  transition: width 0.3s ease;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 /* Container do logo no topo do sidebar */
 .sidebar-logo {
-  position: relative; /* Posicionamento relativo */
-  text-align: left; /* Alinha o conteúdo à esquerda */
-  height: 40px; /* Altura do container do logo */
-  padding-left: 10px; /* Espaçamento interno à esquerda */
-  padding-top: 10px; /* Espaçamento interno no topo */
-  margin-left: 0; /* Remove margem à esquerda */
+  position: relative;
+  text-align: left;
+  height: 40px;
+  padding-left: 10px;
+  padding-top: 10px;
+  margin-left: 0;
 }
 
 /* Estilo do logo normal */
 .sidebar-logo .logo {
-  width: 100px; /* Largura do logo */
-  height: auto; /* Altura automática para manter a proporção */
-  display: block; /* Exibe o logo como um bloco */
-  margin-left: 0; /* Remove margem à esquerda */
+  width: 100px;
+  height: auto;
+  display: block;
+  margin-left: 0;
+  transition: opacity 0.3s ease 0.3s;
 }
 
 /* Estilo do logo mini */
-.sidebar-logo {
-  width: 30px; /* Largura do logo mini */
-  height: auto; /* Altura automática para manter a proporção */
-  display: block; /* Exibe o logo como um bloco */
-  margin-left: 0; /* Remove margem à esquerda */
-}
 .logo-mini {
-  width: 40px; /* Largura do logo mini */
+  width: 30px;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
 }
 
 /* Remove as bolinhas da lista principal e dos subitens */
 .sidebar-nav-list,
 .sidebar-submenu {
-  list-style: none; /* Remove os marcadores de lista */
-  padding-left: 0; /* Remove o padding à esquerda */
+  list-style: none;
+  padding-left: 0;
 }
 
 /* Estilo do título "Módulos" */
@@ -58,47 +58,42 @@
   text-transform: uppercase;
   margin-top: 20px;
   margin-bottom: 10px;
+  transition: opacity 0.3s ease;
 }
 
 /* Remove o padding padrão dos itens da lista */
 .sidebar-submenu li {
-  padding-left: 0; /* Remove o padding à esquerda */
+  padding-left: 0;
   margin-bottom: 10px; 
 }
 
 .sidebar-nav-list > li {
-  margin-bottom: 10px; /* Ajuste o valor conforme necessário */
-}
-
-.sidebar-nav-item {
-  margin-bottom: 20px; /* Aumentei o espaçamento entre os itens */
+  margin-bottom: 10px;
 }
 
 /* Link do item do menu */
 .sidebar-nav-link {
   display: flex;
-  align-items: flex-start;
-  text-decoration: none; /* Remove o sublinhado do link */
-  color: var(--gray-900); /* Cor do texto (cinza escuro) */
-  display: flex; /* Exibe os elementos em linha (flexbox) */
-  align-items: center; /* Centraliza os elementos verticalmente */
-  padding: 8px; /* Espaçamento interno menor */
-  border-radius: 5px; /* Bordas arredondadas */
-  cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
-  transition: all 0.3s ease; /* Transição suave para hover e estados ativos */
-  font-size: 14px; /* Tamanho do texto menor */
-  word-break: break-word; /* Quebra o texto em várias linhas */
-  white-space: normal; /* Permite que o texto quebre em várias linhas */
+  align-items: center;
+  text-decoration: none;
+  color: var(--gray-900);
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  word-break: break-word;
+  white-space: nowrap; /* Impede quebra de linha durante transição */
 }
 
 /* Efeito ao passar o mouse sobre o link */
 .sidebar-nav-link:hover {
-  background-color: var(--gray-300); /* Fundo levemente escurecido */
+  background-color: var(--gray-300);
 }
 
 .sidebar-nav-link.sidebar-active {
   background-color: var(--color-primary);
-  color: var(--gray-50) !important; /* Força a cor do texto */
+  color: var(--gray-50) !important;
 }
 
 .sidebar-nav-link.sidebar-active ::ng-deep app-svg-icon svg {
@@ -107,127 +102,100 @@
 
 /* Estilo do ícone dentro do link */
 .sidebar-icon {
-  margin-right: 10px; /* Espaçamento à direita do ícone */
-  width: 27px; /* Define a largura do ícone */
-  height: 27px; /* Define a altura do ícone */
+  margin-right: 10px;
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
 }
-
 
 /* Container dos subitens */
 .sidebar-has-submenu .sidebar-submenu {
-  padding-left: 13px; /* Margem à esquerda para subitens */
-}
-
-/* Exibe os subitens quando o item está ativo */
-.sidebar-has-submenu.active .sidebar-submenu {
-  display: block; /* Exibe o submenu */
-}
-
-/* Estilo dos links dos subitens quando ativos */
-.sidebar-submenu .sidebar-nav-link.sidebar-active {
-  background-color: var(--color-primary); /* Fundo azul */
-  color: var(--white); /* Texto branco */
-  border: 1px solid var(--color-primary); /* Borda azul */
+  padding-left: 13px;
 }
 
 /* Estilo da seta (ícone de expansão) */
 .sidebar-arrow {
-  margin-left: auto; /* Alinha a seta à direita */
+  margin-left: auto;
+  transition: opacity 0.3s ease;
 }
 
 /* Área do usuário na parte inferior */
 .sidebar-user {
-  padding: 15px; /* Espaçamento interno */
-  border-top: 1px solid var(--gray-200); /* Linha divisória no topo */
-  display: flex; /* Layout flexível */
-  gap: 10px; /* Espaçamento entre a foto e as informações */
-  margin-top: auto; /* Empurra a área do usuário para a parte inferior */
-}
-
-/* Foto do usuário */
-.sidebar-user-photo img {
-  width: 20px; /* Tamanho da foto */
-  height: 20px; /* Tamanho da foto */
-  border-radius: 50%; /* Foto redonda */
-  object-fit: cover; /* Garante que a imagem cubra o espaço */
+  padding: 15px;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  transition: opacity 0.3s ease;
 }
 
 /* Informações do usuário */
 .sidebar-user-info {
   display: flex;
-  flex-direction: column; /* Organiza o nome e a função em coluna */
-}
-
-/* Nome do usuário */
-.sidebar-user-name {
-  font-size: 14px; /* Tamanho do texto */
-  font-weight: 500; /* Peso da fonte */
-  color: var(--gray-900); /* Cor do texto */
-}
-
-/* Função do usuário */
-.sidebar-user-role {
-  font-size: 12px; /* Tamanho do texto menor */
-  color: var(--gray-600); /* Cor mais clara para a função */
+  flex-direction: column;
+  transition: opacity 0.3s ease;
 }
 
 /* Estilo quando a sidebar está minimizada */
 .sidebar.minimized {
-  width: 50px; /* Largura minimizada */
-  transition: width 0.3s ease; /* Transição suave para minimizar */
+  width: 50px;
 }
 
-/* Esconde elementos quando a sidebar está minimizada */
-.sidebar.minimized .sidebar-logo .logo,
+/* Transições suaves para elementos escondidos */
 .sidebar.minimized .sidebar-nav-link span,
 .sidebar.minimized .sidebar-arrow,
 .sidebar.minimized .sidebar-user-info,
 .sidebar.minimized .sidebar-module-title {
-  display: none; /* Esconde o texto e outros elementos */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
-/* Centraliza os ícones quando a sidebar está minimizada */
+.sidebar:not(.minimized) .sidebar-nav-link span,
+.sidebar:not(.minimized) .sidebar-arrow,
+.sidebar:not(.minimized) .sidebar-user-info,
+.sidebar:not(.minimized) .sidebar-module-title {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease 0.3s, visibility 0s linear 0.3s;
+}
+
+.sidebar.minimized .sidebar-logo .logo {
+  opacity: 0;
+  position: absolute;
+}
+
+/* Centraliza os ícones quando minimizado */
 .sidebar.minimized .sidebar-nav-link {
-  justify-content: center; /* Centraliza os ícones */
+  justify-content: center;
 }
 
-/* Remove o espaçamento à direita do ícone quando a sidebar está minimizada */
 .sidebar.minimized .sidebar-icon {
-  margin-right: 0; /* Remove o espaçamento à direita do ícone */
+  margin-right: 0;
 }
 
 /* Ajuste para o scroll interno do sidebar-nav */
 .sidebar-nav {
-  flex: 1; /* Faz o sidebar-nav ocupar o espaço restante */
-  overflow-y: auto; /* Habilita o scroll vertical */
-  max-height: calc(100vh - 150px); /* Define uma altura máxima para o sidebar-nav */
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
 }
 
 /* Estilização da barra de rolagem */
 .sidebar-nav::-webkit-scrollbar {
-  width: 4px; /* Largura da barra de rolagem */
+  width: 4px;
 }
 
-/* Oculta os botões de rolagem (setas para cima e para baixo) */
-.sidebar-nav::-webkit-scrollbar-button {
-  width: 0;
-  height: 0;
-  display: none;
-}
-
-/* Estilização do "trilho" da barra de rolagem (fundo) */
 .sidebar-nav::-webkit-scrollbar-track {
-  background-color: var(--gray-200); /* Cor de fundo do trilho */
-  border-radius: 10px; /* Bordas arredondadas */
+  background-color: var(--gray-200);
+  border-radius: 10px;
 }
 
-/* Estilização do "thumb" (a parte que você arrasta) */
 .sidebar-nav::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary); /* Cor azul primária */
-  border-radius: 10px; /* Bordas arredondadas */
+  background-color: var(--color-primary);
+  border-radius: 10px;
 }
 
-/* Efeito ao passar o mouse sobre o thumb */
 .sidebar-nav::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-primary-dark); /* Cor azul mais escura ao passar o mouse */
+  background-color: var(--color-primary-dark);
 }

@@ -1,3 +1,4 @@
 /node_modules
 /.angular/cache
 /.angular
+/src/assets/environments.json
