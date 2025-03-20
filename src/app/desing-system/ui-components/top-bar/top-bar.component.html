@@ -4,8 +4,11 @@
 
   <!-- Container para o ícone de casa e o caminho da URL -->
   <div class="breadcrumb">
-    <app-svg-icon class="icon_house" [color]="'var(--gray-800)'" (click)="toggleSidebar()" [svgUrl]="'/assets/icons/ic_home.svg'"></app-svg-icon>
-    <span>{{ currentUrl }}</span>
+    <app-svg-icon class="icon_house" [color]="'var(--gray-800)'" (click)="navigateToHome()" [svgUrl]="'/assets/icons/ic_home.svg'"></app-svg-icon>
+    <span *ngFor="let breadcrumb of breadcrumbs; let last = last">
+      <span *ngIf="last">{{ breadcrumb.label }}</span>
+      <span *ngIf="!last"> > </span>
+    </span>
   </div>
 
   <!-- Botões de tema e logout -->

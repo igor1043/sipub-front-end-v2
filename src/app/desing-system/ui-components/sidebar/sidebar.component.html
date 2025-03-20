@@ -46,11 +46,15 @@
   <!-- Área do usuário na parte inferior -->
   <div class="sidebar-user" *ngIf="!minimized">
     <div class="sidebar-user-photo">
-      <app-svg-icon class="user-icon" [color]="'var(--text-color)'"  [svgUrl]="'/assets/icons/ic_user_profile.svg'"></app-svg-icon>
+      <!-- Exibe a foto do usuário se disponível, caso contrário, exibe o ícone padrão -->
+      <img *ngIf="userPhotoLink" [src]="userPhotoLink" alt="Foto do usuário" class="user-photo">
+      <app-svg-icon *ngIf="!userPhotoLink" class="user-icon" [color]="'var(--gray-800)'" [svgUrl]="'/assets/icons/ic_user_profile.svg'"></app-svg-icon>
     </div>
     <div class="sidebar-user-info">
-      <div class="sidebar-user-name">João Silva</div>
-      <div class="sidebar-user-role">Administrador</div>
+      <!-- Exibe o nome do usuário -->
+      <div class="sidebar-user-name">{{ currentUser?.username }}</div>
+      <!-- Exibe o cargo do usuário -->
+      <div class="sidebar-user-role">{{ currentUser?.role_name }}</div>
     </div>
   </div>
 </div>

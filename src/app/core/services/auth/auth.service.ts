@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AuthResponse, LoginRequest } from './models/auth.model';
@@ -15,9 +15,9 @@ export class AuthService {
 
   login(data: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(this.apiUrl, data).pipe(
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         console.error('Erro na requisição de login:', error);
-        return throwError(() => new Error('Erro ao fazer login'));
+        return throwError(() => error); 
       })
     );
   }

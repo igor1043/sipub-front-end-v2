@@ -9,8 +9,9 @@ import { SvgIconComponent } from '../../../desing-system/ui-components/svg-icon/
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { ThemeService } from '../../../services/theme.service'; // Importe o serviço de tema
-import { AuthResponse } from 'app/core/services/auth/models/auth.model';
 import { firstValueFrom } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private localStorageService: LocalStorageService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -95,13 +97,16 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value,
       id_api: 'a7482566-f66e-4211-b8a9-700ee58960e3',
+      acl: true,
+      module_description: true
     };
   
     try {
       // Usando firstValueFrom para converter o Observable em uma Promise
       const response = await firstValueFrom(this.authService.login(loginData));
       if (response) {
-        localStorage.setItem('authToken', response.token);
+        this.localStorageService.saveDatalogin(response);
+
         this.router.navigate(['/dashboard']);
         this.resetPage();
       } else {
@@ -109,17 +114,24 @@ export class LoginComponent implements OnInit {
       }
     } catch (error: any) {
       console.error('Login falhou:', error);
-  
-      // Verifica o status do erro para definir a mensagem apropriada
-      if (error.status === 503) {
-        this.loginError = 'Sistema temporariamente fora do ar. Tente novamente mais tarde.';
-      } else if (error.status === 401) {
-        this.loginError = 'Usuário ou senha incorretos.';
-      } else if (error.status === 500) {
-        this.loginError = 'Erro interno do servidor. Tente novamente mais tarde.';
-      } else {
-        this.loginError = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+    
+      let errorMessage = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+      
+      if (error instanceof HttpErrorResponse) {
+        switch (error.status) {
+          case 503:
+            errorMessage = 'Sistema temporariamente fora do ar. Tente novamente mais tarde.';
+            break;
+          case 401:
+            errorMessage = 'Usuário ou senha incorretos.';
+            break;
+          case 500:
+            errorMessage = 'Erro interno do servidor. Tente novamente mais tarde.';
+            break;
+        }
       }
+      
+      this.loginError = errorMessage;
     } finally {
       this.isLoading = false;
     }

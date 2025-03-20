@@ -3,19 +3,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AccountResponse } from './models/account.model';
+import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
 
-  private apiUrl = `${environment.apiUrl}/v1/account`;
+  private apiUrl = `${environment.apiUrl}/account`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService,) { }
 
   getAccounts(): Observable<AccountResponse> {
-    // Recupera o token do localStorage
-    const token = localStorage.getItem('authToken');
+    const token = this.localStorageService.getCurrentUser()?.token
 
     if (!token) {
       return throwError(() => new Error('Token de autenticação não encontrado'));
