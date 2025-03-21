@@ -41,7 +41,9 @@
 .table-header-container {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding: 8px;
+  gap: 16px; 
 }
 
 .table-header {
@@ -267,3 +269,22 @@ mat-form-field {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+.filter-section {
+  flex-grow: 1; /* Ocupa todo o espaço disponível */
+  max-width: 800px; /* Largura máxima do filtro */
+}
+
+.filter-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Aumenta a largura dos campos */
+.filter-controls mat-form-field {
+  flex: 1;
+  min-width: 250px;
+}
+
