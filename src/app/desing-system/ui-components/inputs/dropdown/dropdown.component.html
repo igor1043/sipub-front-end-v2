@@ -8,7 +8,7 @@
       (blur)="onBlur()"
       [class.invalid]="control.invalid && control.touched"
     />
-    <label [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
+    <label class="hint" [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
     <div class="dropdown-list" *ngIf="isDropdownVisible">
       <div
         class="dropdown-option"
