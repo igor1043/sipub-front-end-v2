@@ -1,0 +1,19 @@
+/* Estilos para os status */
+::ng-deep .status-badge {
+    padding: 4px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    border: 1px solid transparent;
+  }
+  
+  ::ng-deep .status-ativo {
+    background-color: #4CAF50; /* Verde com 10% de opacidade */
+    border-color: #4CAF50;
+    color: #ffffff;
+  }
+  
+  ::ng-deep .status-inativo {
+    background-color: #F44336; /* Vermelho com 10% de opacidade */
+    border-color: #F44336;
+    color: #ffffff;
+  }

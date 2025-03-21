@@ -25,36 +25,6 @@ export class ListConsumerUnitComponent {
     { id: 3, name: 'Unidade 3', class: 'Industrial', cnpjCpf: '456.789.123-00', address: 'Rua C, 789', status: 'Ativo' },
     { id: 4, name: 'Unidade 4', class: 'Rural', cnpjCpf: '321.654.987-00', address: 'Rua D, 101', status: 'Ativo' },
     { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
   ];
 
   // Dados paginados que serão exibidos
@@ -71,7 +41,15 @@ export class ListConsumerUnitComponent {
     { key: 'class', header: 'Classe' },
     { key: 'cnpjCpf', header: 'CNPJ/CPF' },
     { key: 'address', header: 'Endereço' },
-    { key: 'status', header: 'Status' }
+    { 
+      key: 'status', 
+      header: 'Status',
+      cellClass: (element: ConsumerUnit) => {
+        return element.status === 'Ativo' 
+          ? 'status-badge status-ativo' 
+          : 'status-badge status-inativo';
+      }
+    }
   ];
 
   selectedConsumerUnit: ConsumerUnit | null = null;

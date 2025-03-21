@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 export interface ColumnConfig {
   key: string;
   header: string;
+  cellClass?: (element: any) => string; // Nova propriedade opcional
 }
 
 @Component({
