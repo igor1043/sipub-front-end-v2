@@ -52,6 +52,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
   @Output() onSelect = new EventEmitter<T>();
   @Output() pageChanged = new EventEmitter<{ page: number, pageSize: number }>();
   @Output() onSelectedItemsChange = new EventEmitter<T[]>();
+  @Output() onBulkDelete = new EventEmitter<T[]>();
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -67,6 +68,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
     }
     if (changes['data']) {
       this.dataSource.data = this.data;
+      this.selectedItems.clear(); // Limpa seleções ao mudar dados
       this.updateSelectAllState();
     }
   }
@@ -162,5 +164,11 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
   private emitSelectedItems(): void {
     const selectedItemsArray = this.dataSource.data.filter(row => this.selectedItems.has(row.id));
     this.onSelectedItemsChange.emit(selectedItemsArray);
+  }
+
+  emitBulkDelete(): void {
+    const selectedItemsArray = this.data.filter(item => this.selectedItems.has(item.id));
+    this.onBulkDelete.emit(selectedItemsArray);
+    this.clearSelections(); // Limpa as seleções após emitir
   }
 }

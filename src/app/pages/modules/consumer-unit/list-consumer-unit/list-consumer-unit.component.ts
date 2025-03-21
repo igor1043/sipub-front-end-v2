@@ -33,7 +33,7 @@ export class ListConsumerUnitComponent {
   
   // Configurações de paginação
   totalItems = this.allConsumerUnits.length;
-  pageSize = 10;
+  pageSize = 5;
   currentPage = 0;
 
   tableColumns = [
@@ -104,5 +104,9 @@ export class ListConsumerUnitComponent {
     this.currentPage = event.page;
     this.pageSize = event.pageSize;
     this.updatePageData();
+  }
+
+  handleBulkDelete(items: ConsumerUnit[]): void {
+    console.log('Itens selecionados para exclusão:', items);
   }
 }
