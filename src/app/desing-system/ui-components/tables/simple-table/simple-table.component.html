@@ -92,11 +92,35 @@
 </div>
 
 <!-- Paginação -->
-<mat-paginator class="custom-paginator"
-               [pageSizeOptions]="pageSizeOptions || [5, 10, 20, 50]"
-               showFirstLastButtons
-               [length]="10"
-               (page)="onPageChange.emit($event)"
-               [hidePageSize]="false"
-               aria-label="Seleciona a página">
-</mat-paginator>
+<div class="custom-pagination">
+  <div class="page-info">
+    <span>{{ getDisplayedRange() }}</span>
+  </div>
+  
+  <div class="page-controls">
+    <button mat-button (click)="firstPage()" [disabled]="currentPage === 0">
+      Primeira
+    </button>
+    <button mat-button (click)="previousPage()" [disabled]="currentPage === 0">
+      Anterior
+    </button>
+    
+    <div class="page-size-select">
+      <mat-form-field>
+        <mat-select [(value)]="pageSize" (selectionChange)="onPageSizeChange()">
+          <mat-option *ngFor="let size of pageSizeOptions" [value]="size">
+            {{ size }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <span>itens por página</span>
+    </div>
+    
+    <button mat-button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+      Próxima
+    </button>
+    <button mat-button (click)="lastPage()" [disabled]="currentPage >= totalPages - 1">
+      Última
+    </button>
+  </div>
+</div>

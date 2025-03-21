@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SimpleTableComponent } from '../../../../desing-system/ui-components/tables/simple-table/simple-table.component';
-import { PageEvent } from '@angular/material/paginator';
 
 interface ConsumerUnit {
   id: number;
@@ -18,17 +17,53 @@ interface ConsumerUnit {
   templateUrl: './list-consumer-unit.component.html',
   styleUrl: './list-consumer-unit.component.css'
 })
-
-
 export class ListConsumerUnitComponent {
-  consumerUnitData: ConsumerUnit[] = [
+  // Dados completos (todos os registros)
+  allConsumerUnits: ConsumerUnit[] = [
     { id: 1, name: 'Unidade 1', class: 'Comercial', cnpjCpf: '123.456.789-00', address: 'Rua Don João VI, 123 efgeriljjipwerfn gpornwg nrn goẃrfno ǵnbníog j', status: 'Ativo' },
     { id: 2, name: 'Unidade 2', class: 'Residencial', cnpjCpf: '987.654.321-00', address: 'Rua B, 456', status: 'Inativo' },
     { id: 3, name: 'Unidade 3', class: 'Industrial', cnpjCpf: '456.789.123-00', address: 'Rua C, 789', status: 'Ativo' },
     { id: 4, name: 'Unidade 4', class: 'Rural', cnpjCpf: '321.654.987-00', address: 'Rua D, 101', status: 'Ativo' },
     { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
-    // Adicione mais unidades consumidoras conforme necessário
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
   ];
+
+  // Dados paginados que serão exibidos
+  consumerUnitData: ConsumerUnit[] = [];
+  
+  // Configurações de paginação
+  totalItems = this.allConsumerUnits.length;
+  pageSize = 10;
+  currentPage = 0;
 
   tableColumns = [
     { key: 'id', header: 'ID' },
@@ -41,6 +76,17 @@ export class ListConsumerUnitComponent {
 
   selectedConsumerUnit: ConsumerUnit | null = null;
 
+  constructor() {
+    this.updatePageData();
+  }
+
+  // Atualiza os dados exibidos na página atual
+  private updatePageData(): void {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.consumerUnitData = this.allConsumerUnits.slice(startIndex, endIndex);
+  }
+
   handleAdd() {
     console.log('Adicionar nova unidade consumidora');
   }
@@ -51,6 +97,10 @@ export class ListConsumerUnitComponent {
 
   handleDelete(consumerUnit: ConsumerUnit) {
     console.log('Excluir unidade consumidora:', consumerUnit);
+    // Atualiza a lista após exclusão
+    this.allConsumerUnits = this.allConsumerUnits.filter(item => item.id !== consumerUnit.id);
+    this.totalItems = this.allConsumerUnits.length;
+    this.updatePageData();
   }
 
   handleSelect(consumerUnit: ConsumerUnit) {
@@ -58,7 +108,10 @@ export class ListConsumerUnitComponent {
     this.selectedConsumerUnit = consumerUnit;
   }
 
-  handlePageChange(event: PageEvent) {
+  handlePageChange(event: { page: number, pageSize: number }) {
     console.log('Mudança de página:', event);
+    this.currentPage = event.page;
+    this.pageSize = event.pageSize;
+    this.updatePageData();
   }
 }

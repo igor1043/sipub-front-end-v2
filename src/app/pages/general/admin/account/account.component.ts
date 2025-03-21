@@ -12,7 +12,7 @@ interface Account {
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [SimpleTableComponent],
+  imports: [],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })

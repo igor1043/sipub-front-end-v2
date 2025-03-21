@@ -1,13 +1,12 @@
 import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { CustomPaginatorIntl } from './custom-paginator-intl';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 export interface ColumnConfig {
   key: string;
@@ -19,33 +18,34 @@ export interface ColumnConfig {
   standalone: true,
   imports: [
     MatTableModule,
-    MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
     CommonModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   templateUrl: './simple-table.component.html',
-  styleUrls: ['./simple-table.component.css'],
-  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }]
+  styleUrls: ['./simple-table.component.css']
 })
 export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
   @Input() data: T[] = [];
   @Input() columns: ColumnConfig[] = [];
-  @Input() pageSizeOptions: number[] | undefined;
+  @Input() pageSizeOptions: number[] = [5, 10, 20, 50];
   @Input() selectedItem: T | null = null;
   @Input() sortingEnabled: boolean = true;
+  @Input() totalItems = 0;
+  @Input() pageSize = 10;
+  @Input() currentPage = 0;
 
   @Output() onAdd = new EventEmitter<void>();
   @Output() onEdit = new EventEmitter<T>();
   @Output() onDelete = new EventEmitter<T>();
   @Output() onSelect = new EventEmitter<T>();
-  @Output() onPageChange = new EventEmitter<PageEvent>();
+  @Output() pageChanged = new EventEmitter<{ page: number, pageSize: number }>();
   @Output() onSelectedItemsChange = new EventEmitter<T[]>();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColumns: string[] = [];
@@ -99,6 +99,52 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
     this.selectedItems.clear();
     this.updateSelectAllState();
     this.emitSelectedItems();
+  }
+
+  getDisplayedRange(): string {
+    const start = this.currentPage * this.pageSize + 1;
+    const end = Math.min((this.currentPage + 1) * this.pageSize, this.totalItems);
+    return `${start}-${end} de ${this.totalItems} itens`;
+  }
+
+  onPageSizeChange(): void {
+    this.currentPage = 0;
+    this.emitPageChange();
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.emitPageChange();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.emitPageChange();
+    }
+  }
+
+  firstPage(): void {
+    this.currentPage = 0;
+    this.emitPageChange();
+  }
+
+  lastPage(): void {
+    this.currentPage = Math.max(0, this.totalPages - 1);
+    this.emitPageChange();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
+  }
+
+  private emitPageChange(): void {
+    this.pageChanged.emit({
+      page: this.currentPage,
+      pageSize: this.pageSize
+    });
   }
 
   private updateSelectAllState(): void {
