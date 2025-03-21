@@ -1,4 +1,24 @@
 <div class="table-header-container">
+  <div *ngIf="showFilter" class="filter-section">
+    <div class="filter-controls">
+      <mat-form-field appearance="outline">
+        <mat-label>Coluna</mat-label>
+        <mat-select [(value)]="selectedColumn">
+          <mat-option value="all">Todas as colunas</mat-option>
+          <mat-option *ngFor="let col of filterableColumns" [value]="col.key">
+            {{ col.header }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput 
+               (keyup)="applyFilter()" 
+               placeholder="Pesquisar"
+               [(ngModel)]="filterValue">
+      </mat-form-field>
+    </div>
+  </div>
   <div class="table-header">
     <button mat-icon-button color="primary" (click)="onAdd.emit()">
       <svg class="icon-red" width="24" height="24" viewBox="0 0 24 24">
@@ -19,15 +39,8 @@
       </svg>
     </button>
   </div>
-  <!-- Campo de pesquisa -->
-  <div *ngIf="showFilter" class="filter-container">
-    <mat-form-field appearance="outline">
-      <input matInput 
-             (keyup)="applyFilter($event)" 
-             placeholder="Pesquisar">
-    </mat-form-field>
-  </div>
 </div>
+
 
 <div class="table-container mat-elevation-z8">
   <div class="mat-table-wrapper">

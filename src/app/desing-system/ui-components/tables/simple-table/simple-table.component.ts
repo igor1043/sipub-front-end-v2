@@ -7,6 +7,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 export interface ColumnConfig {
   key: string;
@@ -31,7 +32,8 @@ export interface ColumnConfig {
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule
   ],
   templateUrl: './simple-table.component.html',
   styleUrls: ['./simple-table.component.css']
@@ -61,21 +63,38 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
   selectedItems = new Set<any>();
   isAllSelected = false;
   showFilter = false;
+  filterValue: string = '';
+  selectedColumn: string = 'all';
+  filterableColumns: ColumnConfig[] = [];
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['columns']) {
       this.displayedColumns = ['select', ...this.columns.map(c => c.key), 'actions'];
+      this.filterableColumns = this.columns.filter(c => !c.imageOptions);
     }
     if (changes['data']) {
       this.dataSource.data = this.data;
-      this.selectedItems.clear(); // Limpa seleções ao mudar dados
+      this.selectedItems.clear();
       this.updateSelectAllState();
     }
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(): void {
+    this.dataSource.filterPredicate = (data: T, filter: string): boolean => {
+      const searchText = filter.toLowerCase();
+      
+      if (this.selectedColumn === 'all') {
+        return Object.values(data).some(value => 
+          value?.toString().toLowerCase().includes(searchText)
+        );
+      }
+      
+      const cellValue = data[this.selectedColumn as keyof T];
+      return cellValue?.toString().toLowerCase().includes(searchText) || false;
+    };
+
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 
   toggleSelection(row: T, event: MouseEvent): void {
