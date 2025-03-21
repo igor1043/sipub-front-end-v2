@@ -17,3 +17,9 @@
     border-color: #F44336;
     color: #ffffff;
   }
+
+  ::ng-deep .status-andamento {
+    background-color: #2382fd; /* Vermelho com 10% de opacidade */
+    border-color: #3662f4;
+    color: #ffffff;
+  }

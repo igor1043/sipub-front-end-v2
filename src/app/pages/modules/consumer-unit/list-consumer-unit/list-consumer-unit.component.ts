@@ -8,6 +8,7 @@ interface ConsumerUnit {
   cnpjCpf: string;
   address: string;
   status: string;
+  imageUrl: string; 
 }
 
 @Component({
@@ -20,11 +21,11 @@ interface ConsumerUnit {
 export class ListConsumerUnitComponent {
   // Dados completos (todos os registros)
   allConsumerUnits: ConsumerUnit[] = [
-    { id: 1, name: 'Unidade 1', class: 'Comercial', cnpjCpf: '123.456.789-00', address: 'Rua Don João VI, 123 efgeriljjipwerfn gpornwg nrn goẃrfno ǵnbníog j', status: 'Ativo' },
-    { id: 2, name: 'Unidade 2', class: 'Residencial', cnpjCpf: '987.654.321-00', address: 'Rua B, 456', status: 'Inativo' },
-    { id: 3, name: 'Unidade 3', class: 'Industrial', cnpjCpf: '456.789.123-00', address: 'Rua C, 789', status: 'Ativo' },
-    { id: 4, name: 'Unidade 4', class: 'Rural', cnpjCpf: '321.654.987-00', address: 'Rua D, 101', status: 'Ativo' },
-    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo' },
+    { id: 1, name: 'Unidade 1', class: 'Comercial', cnpjCpf: '123.456.789-00', address: 'Rua Don João VI, 123 efgeriljjipwerfn gpornwg nrn goẃrfno ǵnbníog j', status: 'Ativo',   imageUrl: 'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/nationalgeographic_2788792_0.jpg' },
+    { id: 2, name: 'Unidade 2', class: 'Residencial', cnpjCpf: '987.654.321-00', address: 'Rua B, 456', status: 'Inativo',   imageUrl: 'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/nationalgeographic_2788792_0.jpg' },
+    { id: 3, name: 'Unidade 3', class: 'Industrial', cnpjCpf: '456.789.123-00', address: 'Rua C, 789', status: 'Em andamento' ,   imageUrl: 'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/nationalgeographic_2788792_0.jpg'},
+    { id: 4, name: 'Unidade 4', class: 'Rural', cnpjCpf: '321.654.987-00', address: 'Rua D, 101', status: 'Ativo' ,   imageUrl: 'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/nationalgeographic_2788792_0.jpg'},
+    { id: 5, name: 'Unidade 5', class: 'Comercial', cnpjCpf: '654.321.987-00', address: 'Rua E, 202', status: 'Inativo',   imageUrl: 'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/nationalgeographic_2788792_0.jpg' },
   ];
 
   // Dados paginados que serão exibidos
@@ -47,7 +48,19 @@ export class ListConsumerUnitComponent {
       cellClass: (element: ConsumerUnit) => {
         return element.status === 'Ativo' 
           ? 'status-badge status-ativo' 
+          : element.status === 'Em andamento' 
+          ? 'status-badge status-andamento' 
           : 'status-badge status-inativo';
+      }
+    },
+    { 
+      key: 'photo', 
+      header: 'Foto',
+      imageOptions: {
+        srcKey: 'imageUrl',    // Propriedade do objeto que contém a URL
+        altKey: 'name',        // Propriedade para o texto alternativo
+        width: '40px',         // Tamanho opcional
+        height: '40px'
       }
     }
   ];

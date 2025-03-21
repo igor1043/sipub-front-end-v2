@@ -250,3 +250,20 @@ mat-form-field {
     display: none;
   }
 }
+
+/* No simple-table.component.css */
+.table-image {
+  border-radius: 4px;
+  object-fit: cover;
+  vertical-align: middle;
+  padding: 2px;
+}
+
+
+/* Garante que as imagens não ultrapassem a célula */
+.truncate-cell {
+  max-width: 200px; /* Ajuste conforme necessário */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

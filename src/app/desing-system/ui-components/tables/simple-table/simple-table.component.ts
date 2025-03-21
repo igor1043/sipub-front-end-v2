@@ -11,7 +11,13 @@ import { MatSelectModule } from '@angular/material/select';
 export interface ColumnConfig {
   key: string;
   header: string;
-  cellClass?: (element: any) => string; // Nova propriedade opcional
+  cellClass?: (element: any) => string; 
+  imageOptions?: { // Opções específicas para imagens
+    srcKey: string;
+    altKey: string;
+    width?: string;
+    height?: string;
+  };
 }
 
 @Component({
