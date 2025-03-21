@@ -9,6 +9,14 @@
       [class.invalid]="control.invalid && control.touched"
     />
     <label class="hint" [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
+
+    <img 
+    src="/assets/icons/arrow_down.svg" 
+    alt="Seta para baixo" 
+    class="dropdown-arrow"
+    [class.rotated]="isDropdownVisible"
+  />
+
     <div class="dropdown-list" *ngIf="isDropdownVisible">
       <div
         class="dropdown-option"
