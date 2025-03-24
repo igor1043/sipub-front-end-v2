@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SimpleTableComponent } from '../../../../desing-system/ui-components/tables/simple-table/simple-table.component';
+import { TextComponent } from "../../../../desing-system/ui-components/text/text.component";
 
 interface ConsumerUnit {
   id: number;
@@ -14,7 +15,7 @@ interface ConsumerUnit {
 @Component({
   selector: 'app-list-consumer-unit',
   standalone: true,
-  imports: [SimpleTableComponent],
+  imports: [SimpleTableComponent, TextComponent],
   templateUrl: './list-consumer-unit.component.html',
   styleUrl: './list-consumer-unit.component.css'
 })

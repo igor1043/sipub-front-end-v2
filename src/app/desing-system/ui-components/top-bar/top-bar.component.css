@@ -27,20 +27,19 @@
 .actions {
   display: flex;
   margin-right: 10px;
-  align-items: center;
-  margin-left: auto;
   gap: 10px; /* Adiciona espaçamento entre os elementos filhos */
 }
 
+.button_dark , .button_light{
+  width: 20px;
+  height: 20px;
+}
 
 .breadcrumbs {
   flex-grow: 1;
   margin-left: 1rem;
   color: var(--gray-800);
   font-size: 0.875rem;
-}
-
-.breadcrumbs {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -66,4 +65,9 @@
 .crumb-text {
   font-size: 0.8rem;
   color: var(--gray-800);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;  
 }

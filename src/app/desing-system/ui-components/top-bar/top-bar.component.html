@@ -22,11 +22,9 @@
   <!-- Botões de tema e logout -->
   <div class="actions">
     <!-- Ícone de tema -->
-    <div class="theme-toggle" (click)="toggleTheme()" aria-label="Alterar Tema">
-      <img *ngIf="isDarkTheme" class="button_dark" src="/assets/images/ic_light.svg" alt="Light Theme" width="20"
-        height="20" />
-      <img *ngIf="!isDarkTheme" class="button_light" src="/assets/images/ic_dark.svg" alt="Dark Theme" width="20"
-        height="20" />
+    <div class="theme-toggle" (click)="toggleTheme()">
+      <img *ngIf="isDarkTheme" class="button_dark" src="/assets/images/ic_light.svg" alt="Light Theme"  />
+      <img *ngIf="!isDarkTheme" class="button_light" src="/assets/images/ic_dark.svg" alt="Dark Theme"  />
     </div>
 
     <!-- Ícone de logout -->
