@@ -6,6 +6,7 @@ import { SvgIconComponent } from "../svg-icon/svg-icon.component";
 import { filter, map } from 'rxjs/operators';
 import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 
+
 @Component({
   selector: 'app-top-bar',
   standalone: true,
@@ -17,7 +18,9 @@ export class TopBarComponent implements OnInit {
   @HostBinding('class.dark-theme') isDarkTheme = false;
 
   @Output() toggleSidebarEvent = new EventEmitter<void>();
-  breadcrumbs: Array<{ label: string, url: string }> = [];
+
+  breadcrumbService: any;
+  breadcrumbs: string[] = [];
 
   constructor(
     private router: Router,
@@ -30,44 +33,30 @@ export class TopBarComponent implements OnInit {
     this.themeService.isDarkTheme$.subscribe((isDarkTheme) => {
       this.isDarkTheme = isDarkTheme;
     });
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.breadcrumbs = this.buildBreadcrumbs();
+      });
 
-    // Monitora as mudanças de rota para atualizar o breadcrumb
-    this.router.events.pipe(
-      filter(event => event instanceof ActivationEnd),
-      map(() => this.activatedRoute),
-      map(route => {
-        let child = route;
-        while (child.firstChild) {
-          child = child.firstChild;
-        }
-        return child;
-      }),
-      filter(route => route.outlet === 'primary')
-    ).subscribe(route => {
-      this.breadcrumbs = this.buildBreadcrumbs(route);
-    });
+    this.breadcrumbs = this.buildBreadcrumbs();
   }
 
-  buildBreadcrumbs(route: ActivatedRoute): Array<{ label: string, url: string }> {
-    let currentRoute: ActivatedRoute = route;
-    const breadcrumbs: Array<{ label: string, url: string }> = [];
-    let url = '';
+  private buildBreadcrumbs(): string[] {
+    const breadcrumbs: string[] = [];
+    let currentRoute: ActivatedRoute | null = this.activatedRoute.root;
 
     while (currentRoute) {
-      if (currentRoute.snapshot.url.length) {
-        const segment = currentRoute.snapshot.url.map(segment => segment.path).join('/');
-        url += `/${segment}`;
-        const label = currentRoute.snapshot.data['breadcrumb'];
-        if (label) {
-          breadcrumbs.unshift({ label, url });
-        }
+      const routeData = currentRoute.snapshot.data;
+      if (routeData['breadcrumb']) {
+        breadcrumbs.push(routeData['breadcrumb']);
       }
-      currentRoute = currentRoute.parent!;
+      currentRoute = currentRoute.firstChild;
     }
 
     return breadcrumbs;
   }
- 
+
 
   toggleSidebar() {
     this.toggleSidebarEvent.emit();

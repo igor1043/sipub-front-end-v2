@@ -33,3 +33,10 @@
   gap: 10px; /* Adiciona espaçamento entre os elementos filhos */
 }
 
+
+.breadcrumbs {
+  flex-grow: 1;
+  margin-left: 1rem;
+  color: var(--gray-800);
+  font-size: 0.875rem;
+}
