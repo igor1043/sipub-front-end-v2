@@ -2,13 +2,14 @@ import { Component, Input, forwardRef, Self, Optional } from '@angular/core';
 import { ControlValueAccessor, NgControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
+import { AccountComponent } from "../../../../pages/general/admin/account/account.component";
 
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css'],
   standalone: true,
-  imports: [CommonModule, SvgIconComponent],
+  imports: [CommonModule, SvgIconComponent, AccountComponent],
 })
 export class DropdownComponent implements ControlValueAccessor {
   @Input() placeholder: string = '';
