@@ -53,7 +53,6 @@ export class TopBarComponent implements OnInit {
       }
       currentRoute = currentRoute.firstChild;
     }
-
     return breadcrumbs;
   }
 

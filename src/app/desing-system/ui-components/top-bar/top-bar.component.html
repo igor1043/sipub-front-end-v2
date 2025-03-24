@@ -1,34 +1,36 @@
 <div class="top-bar">
   <!-- Botão para alternar o menu lateral -->
-  <app-svg-icon class="button_menu" [color]="'var(--gray-800)'" (click)="toggleSidebar()" [svgUrl]="'/assets/icons/ic_menu.svg'"></app-svg-icon>
+  <app-svg-icon class="button_menu" [color]="'var(--gray-800)'" (click)="toggleSidebar()"
+    [svgUrl]="'/assets/icons/ic_menu.svg'"></app-svg-icon>
 
+  <!-- Breadcrumbs com ícones -->
   <div class="breadcrumbs">
-    {{ breadcrumbs.join(' > ') }}
+    <!-- Ícone de Home -->
+    <app-svg-icon class="home-icon" [color]="'var(--gray-800)'" [svgUrl]="'/assets/icons/ic_home.svg'"
+      (click)="navigateToHome()">
+    </app-svg-icon>
+
+    <!-- Itens do breadcrumb -->
+    <span *ngFor="let crumb of breadcrumbs; let last = last" class="crumb">
+      <span class="crumb-text">{{ crumb }}</span>
+      <app-svg-icon *ngIf="!last" class="arrow-icon" [color]="'var(--gray-800)'"
+        [svgUrl]="'/assets/icons/ic_arrow_left.svg'">
+      </app-svg-icon>
+    </span>
   </div>
-  
+
   <!-- Botões de tema e logout -->
   <div class="actions">
     <!-- Ícone de tema -->
     <div class="theme-toggle" (click)="toggleTheme()" aria-label="Alterar Tema">
-      <img
-        *ngIf="isDarkTheme"
-        class="button_dark" 
-        src="/assets/images/ic_light.svg"
-        alt="Light Theme"
-        width="20"
-        height="20"
-      />
-      <img
-        *ngIf="!isDarkTheme"
-        class="button_light" 
-        src="/assets/images/ic_dark.svg"
-        alt="Dark Theme"
-        width="20"
-        height="20"
-      />
+      <img *ngIf="isDarkTheme" class="button_dark" src="/assets/images/ic_light.svg" alt="Light Theme" width="20"
+        height="20" />
+      <img *ngIf="!isDarkTheme" class="button_light" src="/assets/images/ic_dark.svg" alt="Dark Theme" width="20"
+        height="20" />
     </div>
 
     <!-- Ícone de logout -->
-    <app-svg-icon class="logout_button" [color]="'var(--gray-800)'" (click)="logout()" [svgUrl]="'/assets/icons/ic_logout.svg'"></app-svg-icon>
+    <app-svg-icon class="logout_button" [color]="'var(--gray-800)'" (click)="logout()"
+      [svgUrl]="'/assets/icons/ic_logout.svg'"></app-svg-icon>
   </div>
 </div>

@@ -17,7 +17,6 @@
 }
 
 
-
 /* Estilo para o breadcrumb */
 .breadcrumb {
   display: flex;
@@ -39,4 +38,32 @@
   margin-left: 1rem;
   color: var(--gray-800);
   font-size: 0.875rem;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.home-icon {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+}
+
+.arrow-icon {
+  width: 12px;
+  height: 12px;
+}
+
+.crumb-text {
+  font-size: 0.8rem;
+  color: var(--gray-800);
 }
