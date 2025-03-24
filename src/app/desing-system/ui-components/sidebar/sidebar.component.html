@@ -22,7 +22,7 @@
           >
             <app-svg-icon class="sidebar-icon" [color]="'var(--gray-900)'"  [svgUrl]="item.icon"></app-svg-icon>
             <span *ngIf="!minimized">{{ item.title }}</span>
-            <span class="sidebar-arrow" *ngIf="item.subItems && !minimized">
+            <span class="sidebar-arrow" *ngIf="item.subItems && !minimized" [class.rotated]="item.isOpen">
               <app-svg-icon [color]="'var(--gray-900)'"  [svgUrl]="'/assets/icons/arrow_down.svg'"></app-svg-icon>
             </span>
           </a>

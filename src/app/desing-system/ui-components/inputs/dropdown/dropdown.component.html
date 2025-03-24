@@ -1,29 +1,17 @@
 <div class="input-container" [class]="size">
   <div class="floating-label">
-    <input
-      type="text"
-      [value]="displayText"
-      (input)="onInputChange($event)"
-      (focus)="onFocus()"
-      (blur)="onBlur()"
-      [class.invalid]="control.invalid && control.touched"
-    />
+    <input type="text" [value]="displayText" (input)="onInputChange($event)" (focus)="onFocus()" (blur)="onBlur()"
+      [class.invalid]="control.invalid && control.touched" />
     <label class="hint" [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
 
-    <img 
-    src="/assets/icons/arrow_down.svg" 
-    alt="Seta para baixo" 
-    class="dropdown-arrow"
-    [class.rotated]="isDropdownVisible"
-  />
+    <app-svg-icon src="/assets/icons/arrow_down.svg" alt="Seta para baixo" class="dropdown-arrow" color="var(--text-color)" [class.rotated]="isDropdownVisible" />
 
     <div class="dropdown-list" *ngIf="isDropdownVisible">
-      <div
-        class="dropdown-option"
-        *ngFor="let option of filteredOptions"
-        (mousedown)="selectOption(option)"
-      >
-        {{ option.name }}
+      <div class="dropdown-option" *ngFor="let option of filteredOptions" (mousedown)="selectOption(option)">
+        <app-svg-icon class="option-icon" svgUrl="/assets/icons/ic_unit.svg" color="var(--text-color)" />
+        <span> 
+          {{ option.name }}
+        </span>
       </div>
     </div>
   </div>
@@ -31,7 +19,7 @@
 
 
   <div class="footer-container" *ngIf="control.invalid && isRequired">
-    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-700)'/>
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-700)' />
     <span class="required-text">
       Campo obrigatório
     </span>
@@ -39,7 +27,7 @@
 
   <!-- Container para Alertas Genéricos -->
   <div class="footer-container" *ngIf="!isRequired && alertText">
-    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_help.svg" color='var(--gray-700)'/>
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_help.svg" color='var(--gray-700)' />
     <span class="alert-text">
       {{ alertText }}
     </span>

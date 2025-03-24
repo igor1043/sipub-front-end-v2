@@ -1,3 +1,29 @@
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.option-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  /* Espaço entre o ícone e o nome */
+}
+
+.static-item {
+  font-weight: bold;
+  color: var(--gray-600);
+  cursor: default;
+}
+
+.static-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
 .input-container {
   display: flex;
   flex-direction: column;
@@ -9,17 +35,16 @@
 
 .floating-label {
   position: relative;
-  display: flex;
+  display: relative;
   align-items: center;
   width: 100%;
 }
 
-
 .dropdown-arrow {
   width: 16px;
   height: 16px;
-  position: absolute;
-  right: 12px; 
+  position: relative;
+  right: 12px;
   transition: transform 0.3s ease;
   pointer-events: none;
 }
@@ -29,7 +54,7 @@
 }
 
 input {
-  padding-right: 32px; 
+  padding-right: 32px;
 }
 
 .hint {
@@ -76,13 +101,14 @@ label.float {
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background: white;
+  background: var(--gray-100);
+  text-decoration-color: var(--text-color);
   z-index: 1000;
   margin-top: 4px;
 }
 
 .dropdown-option {
-  padding: 8px 12px;
+  padding: 8px 8px;
   cursor: pointer;
 }
 
@@ -135,30 +161,4 @@ label.float {
 .input-container.large input {
   height: 48px;
   font-size: 1.125rem;
-}
-
-/* Performando no modo escuro */
-/* Modo normal */
-.dropdown-list {
-  background-color: white;
-  color: black;
-  border: 1px solid #ccc;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Modo escuro */
-body.dark-mode .dropdown-list {
-  background-color: #222;
-  color: white;
-  border-color: #444;
-}
-
-body.dark-mode .dropdown-option {
-  background-color: #222;
-  color: white;
-}
-
-body.dark-mode .dropdown-option:hover {
-  background-color: #333;
-  
 }

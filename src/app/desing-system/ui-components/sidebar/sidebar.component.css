@@ -119,6 +119,10 @@
   transition: opacity 0.3s ease;
 }
 
+.rotated {
+  transform: rotate(180deg);
+}
+
 /* Área do usuário na parte inferior */
 .sidebar-user {
   padding: 15px;

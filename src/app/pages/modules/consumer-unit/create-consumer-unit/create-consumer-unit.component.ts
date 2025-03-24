@@ -59,6 +59,15 @@ export class CreateConsumerUnitComponent {
     });
   }
 
+  isValidAccount = (control: FormControl) => {
+    const inputName = control.value;
+    const isValid = this.listAccounts.some(account => account.name.toLowerCase() === inputName);
+  
+    console.log('Input value:', inputName, 'List of account names:', this.listAccounts);
+  
+    return isValid ? null : { invalidAccount: true };
+  }
+
   ngOnInit(): void {
     this.getListAccount();
   }
