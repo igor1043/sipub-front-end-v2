@@ -16,15 +16,8 @@ export class UserService {
 
     getUserPhoto(userId: number): Observable<UserPhotoResponse> {
         const url = `${this.apiUrl}/photo/${userId}?pre_signed_url=true`;
-
-        const token = this.localStorageService.getCurrentUser()?.token
-
-            // Configura o header com o token
-            const headers = new HttpHeaders({
-              'Authorization': `Bearer ${token}`
-            });
-            
-        return this.http.get<UserPhotoResponse>(url, { headers }).pipe(
+        
+        return this.http.get<UserPhotoResponse>(url,).pipe(
             catchError((error: HttpErrorResponse) => {
                 console.error('Erro na requisição da foto do usuário:', error);
                 return throwError(() => error);

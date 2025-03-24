@@ -50,5 +50,5 @@ export class LocalStorageService {
   getCurrentAccount(): Account | null {
     const accountJson = localStorage.getItem(this.ACCOUNT_KEY);
     return accountJson ? JSON.parse(accountJson) : null;
-  }
+  }  
 }

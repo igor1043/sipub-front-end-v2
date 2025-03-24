@@ -10,6 +10,8 @@ import { CreateConsumerUnitComponent } from './modules/consumer-unit/create-cons
 import { AuthGuard } from './auth.guard';
 import { UserProfileComponent } from './general/user-profile/user-profile.component';
 import { MonthlyMonitoringConsumerUnitComponent } from './modules/consumer-unit/monthly-monitoring-consumer-unit/monthly-monitoring-consumer-unit.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 export const routes: Routes = [
   { 
@@ -94,7 +96,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), MatSnackBarModule],
   exports: [RouterModule],
   providers: [AuthGuard]
 })
