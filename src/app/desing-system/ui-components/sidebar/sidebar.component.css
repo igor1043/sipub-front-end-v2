@@ -213,3 +213,10 @@
   color: var(--gray-800);
   font-size: 12px;
 }
+
+.user-photo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}

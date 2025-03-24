@@ -19,9 +19,27 @@
     </span>
   </div>
 
-  <span class="account-name" *ngIf="accountAlias">
-    {{ accountAlias }}
-  </span>
+  <div class="account-section" *ngIf="accountAlias">
+    <!-- Imagem da conta -->
+    <img 
+      *ngIf="urlImage && !imageLoadError"
+      class="account-image"
+      [src]="urlImage"
+      alt="Account image"
+      (error)="handleImageError()"
+    >
+    
+    <!-- Divider -->
+    <div 
+      *ngIf="urlImage && !imageLoadError"
+      class="account-divider"
+    ></div>
+  
+    <!-- Nome da conta -->
+    <span class="account-name">
+      {{ accountAlias }}
+    </span>
+  </div>
   
   <!-- Botões de tema e logout -->
   <div class="actions">

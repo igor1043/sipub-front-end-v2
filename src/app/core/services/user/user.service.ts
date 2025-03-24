@@ -15,7 +15,7 @@ export class UserService {
     constructor(private http: HttpClient, private localStorageService: LocalStorageService,) { }
 
     getUserPhoto(userId: number): Observable<UserPhotoResponse> {
-        const url = `${this.apiUrl}/photo/${userId}`;
+        const url = `${this.apiUrl}/photo/${userId}?pre_signed_url=true`;
 
         const token = this.localStorageService.getCurrentUser()?.token
 

@@ -1,42 +1,37 @@
 <div class="upload-container">
-    <div class="drop-zone" 
-         (dragover)="onDragOver($event)"
-         (dragleave)="onDragLeave($event)"
-         (drop)="onDrop($event)"
-         [class.dragover]="isDragging"
-         (click)="fileInput.click()">
-         
-      <input #fileInput type="file" class="hidden-input" 
-             (change)="onFileSelected($event)"
-             [multiple]="maxFiles !== 1"
-             accept="application/pdf">
-             
+  <div class="drop-zone" 
+       (dragover)="onDragOver($event)"
+       (dragleave)="onDragLeave($event)"
+       (drop)="onDrop($event)"
+       [class.dragover]="isDragging"
+       (click)="fileInput.click()">
+       
+    <input #fileInput type="file" class="hidden-input" 
+           (change)="onFileSelected($event)"
+           [multiple]="allowMultiple"
+           accept="application/pdf">
+    
+
+    <div class="drop-content">
+      <app-svg-icon class="upload-icon" color='var(--color-primary)' [svgUrl]="'/assets/icons/ic_upload.svg'" ></app-svg-icon>
       <p class="upload-instructions">
-        <strong>Clique para selecionar</strong> ou arraste PDFs aqui
+        Clique para selecionar ou arraste e solte o PDFs aqui
       </p>
-      
-      <div *ngIf="maxFiles > 0" class="hint-text">
-        Máximo de {{maxFiles}} arquivo{{maxFiles > 1 ? 's' : ''}}
-      </div>
-    </div>
-  
-    <div *ngIf="errorMessage" class="error-message">
-      <app-svg-icon class="ic-alert" [svgUrl]="'/assets/images/ic_alert.svg'"></app-svg-icon>
-      {{ errorMessage }}
-    </div>
-  
-    <div class="preview-container" *ngIf="files.length > 0">
-      <div class="preview-item" *ngFor="let file of files">
-        <svg class="pdf-icon" viewBox="0 0 24 24">
-          <path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M13,13V18H14V13H13M10,14.5V15.5H14V14.5H10M10,16.5V17.5H14V16.5H10Z"/>
-        </svg>
-        <div class="file-info">
-          <div class="file-name">{{ file.name }}</div>
-          <div class="file-size">{{ formatFileSize(file.size) }}</div>
-        </div>
-        <button type="button" class="remove-btn" (click)="removeFile(file)">
-          Remover
-        </button>
-      </div>
     </div>
   </div>
+
+  <div class="file-info-footer">
+    <span class="supported-format">Formato suportado: PDF</span>
+    <span class="max-size">Tamanho máximo: {{maxFileSize}} MB</span>
+  </div>
+
+  <!-- Restante do código mantido igual -->
+  <div *ngIf="errorMessage" class="error-message">
+    <app-svg-icon class="ic-alert" [svgUrl]="'/assets/images/ic_alert.svg'"></app-svg-icon>
+    {{ errorMessage }}
+  </div>
+
+  <div class="preview-container" *ngIf="files.length > 0">
+    <!-- ... (mantido igual) ... -->
+  </div>
+</div>

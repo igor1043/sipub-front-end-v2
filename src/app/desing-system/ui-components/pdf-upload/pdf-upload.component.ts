@@ -77,31 +77,41 @@ export class PdfUploadComponent implements ControlValueAccessor {
   private handleFiles(files: FileList): void {
     const fileArray = Array.from(files);
     
-    // Validate max files
-    if (this.maxFiles > 0 && (this.files.length + fileArray.length) > this.maxFiles) {
-      this.errorMessage = `Máximo de ${this.maxFiles} arquivo${this.maxFiles > 1 ? 's' : ''} permitido${this.maxFiles > 1 ? 's' : ''}`;
-      return;
-    }
-
-    // Filter valid files
-    const validFiles = fileArray.filter(file => 
-      file.type === 'application/pdf' && 
-      file.size <= this.maxFileSize * 1024 * 1024
-    );
-
-    // Handle invalid files
-    if (validFiles.length !== fileArray.length) {
-      this.errorMessage = 'Alguns arquivos foram ignorados (não são PDF ou excedem o tamanho máximo)';
-    }
-
-    // Add valid files
-    this.files = this.maxFiles === 1 ? 
-      [validFiles[0]] : 
-      [...this.files, ...validFiles].slice(0, this.maxFiles);
-
-    this.emitValue();
+    // Reset error message
     this.errorMessage = null;
-  }
+
+    // Validação de quantidade máxima
+    if (this.maxFiles > 0 && (this.files.length + fileArray.length) > this.maxFiles) {
+        this.errorMessage = `Máximo de ${this.maxFiles} arquivo${this.maxFiles > 1 ? 's' : ''} permitido${this.maxFiles > 1 ? 's' : ''}`;
+        return;
+    }
+
+    // Processar cada arquivo
+    const validFiles: File[] = [];
+    for (const file of fileArray) {
+        // Validar tipo
+        if (file.type !== 'application/pdf') {
+            this.errorMessage = 'Formato não suportado. Apenas PDFs são permitidos.';
+            continue;
+        }
+
+        // Validar tamanho
+        if (file.size > this.maxFileSize * 1024 * 1024) {
+            this.errorMessage = `Arquivo excede o tamanho máximo de ${this.maxFileSize}MB`;
+            continue;
+        }
+
+        validFiles.push(file);
+    }
+
+    // Adicionar arquivos válidos
+    if (validFiles.length > 0) {
+        this.files = this.maxFiles === 1 ? 
+            [validFiles[0]] : 
+            [...this.files, ...validFiles].slice(0, this.maxFiles);
+        this.emitValue();
+    }
+}
 
   // Remove file
   removeFile(file: File): void {

@@ -9,6 +9,7 @@ import { ListConsumerUnitComponent } from './modules/consumer-unit/list-consumer
 import { CreateConsumerUnitComponent } from './modules/consumer-unit/create-consumer-unit/create-consumer-unit.component';
 import { AuthGuard } from './auth.guard';
 import { UserProfileComponent } from './general/user-profile/user-profile.component';
+import { MonthlyMonitoringConsumerUnitComponent } from './modules/consumer-unit/monthly-monitoring-consumer-unit/monthly-monitoring-consumer-unit.component';
 
 export const routes: Routes = [
   { 
@@ -59,6 +60,12 @@ export const routes: Routes = [
             component: CreateConsumerUnitComponent,
             canActivate: [AuthGuard],
             data: { breadcrumb: 'Criar Unidade' } 
+          },
+          {
+            path: 'monthly-monitoring', 
+            component: MonthlyMonitoringConsumerUnitComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Monitoramento Mensal' } 
           },
           { 
             path: 'edit/:id', 

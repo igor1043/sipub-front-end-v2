@@ -5,6 +5,9 @@ import { ThemeService } from '../../../services/theme.service';
 import { SvgIconComponent } from "../svg-icon/svg-icon.component";
 import { filter, map } from 'rxjs/operators';
 import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
+import { AccountService } from 'app/core/services/account/account.service';
+import { firstValueFrom } from 'rxjs';
+import { AccountConfigurationResponse } from 'app/core/services/account/models/account.image.model';
 
 
 @Component({
@@ -22,12 +25,15 @@ export class TopBarComponent implements OnInit {
   breadcrumbService: any;
   breadcrumbs: string[] = [];
   accountAlias?: string;
+  urlImage?: string;
+  imageLoadError = false;
 
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService,
     private activatedRoute: ActivatedRoute,
     private themeService: ThemeService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +52,7 @@ export class TopBarComponent implements OnInit {
     this.breadcrumbs = this.buildBreadcrumbs();
 
     this.accountAlias = account?.alias;
+    this.getImageAccount(account?.id_account!!)
   }
 
   private buildBreadcrumbs(): string[] {
@@ -78,5 +85,21 @@ export class TopBarComponent implements OnInit {
 
   navigateToHome() {
     this.router.navigate(['/dashboard']);
+  }
+
+
+  async getImageAccount(id_account: number) {
+    try {
+      const response: AccountConfigurationResponse = await firstValueFrom(this.accountService.getAccountImageConfiguration(id_account));
+      this.urlImage = response.data.payload[0].signed_url;
+      this.imageLoadError = false;
+    } catch (error) {
+      this.urlImage = undefined;
+      this.imageLoadError = true;
+      console.error('Erro ao baixar imagem da conta:', error);
+    }
+  }
+  handleImageError() {
+    this.imageLoadError = true;
   }
 }

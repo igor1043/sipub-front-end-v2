@@ -53,7 +53,7 @@ export class MenuService {
         subItems: [
           { title: 'Lista de Unidades', route: '/consumer-unit/list' },
           { title: 'Cadastro de Unidade', route: '/consumer-unit/add' },
-          { title: 'Monitoramento Mensal', route: '/unidade-consumidora/subitem2' },
+          { title: 'Monitoramento Mensal', route: '/consumer-unit/monthly-monitoring' },
           { title: 'Parâmetros', route: '/unidade-consumidora/subitem2' },
         ],
         isModule: true,

@@ -4,19 +4,19 @@
   }
   
   .drop-zone {
-    border: 2px dashed #ccc;
+    border: 1px dashed var(--gray-900);
     border-radius: 8px;
     padding: 2rem;
     text-align: center;
     cursor: pointer;
     transition: border-color 0.3s ease;
-    background-color: #f8f9fa;
+    background-color:  var(--background-color);
   }
   
   .drop-zone:hover,
   .drop-zone.dragover {
-    border-color: #2196F3;
-    background-color: #e3f2fd;
+    border-color: var(--color-primary);
+    background-color:  var(--background-color);
   }
   
   .preview-container {
@@ -27,10 +27,10 @@
     display: flex;
     align-items: center;
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--gray-900);
     border-radius: 8px;
     margin-bottom: 0.5rem;
-    background: #fff;
+    background:  var(--background-color);
   }
   
   .pdf-icon {
@@ -49,21 +49,21 @@
   }
   
   .file-size {
-    color: #666;
+    color: var(--gray-900);
     font-size: 0.875rem;
   }
   
   .remove-btn {
     background: none;
     border: none;
-    color: #dc3545;
+    color: var(--red-500);
     cursor: pointer;
     padding: 0.5rem;
     margin-left: 1rem;
   }
   
   .error-message {
-    color: #dc3545;
+    color:  var(--red-500);
     font-size: 0.875rem;
     margin-top: 0.5rem;
     display: flex;
@@ -76,9 +76,53 @@
   
   .upload-instructions {
     margin: 0;
-    color: #666;
+    color:  var(--gray-900);
   }
-  
-  .upload-instructions strong {
-    color: #2196F3;
-  }
+
+  .upload-container {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.drop-zone {
+    border: 2px dashed var(--gray-700);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    background-color: var(--background-color);
+    position: relative;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drop-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.upload-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.file-info-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-900);
+}
+
+.supported-format {
+    margin-left: 0.5rem;
+}
+
+.max-size {
+    margin-right: 0.5rem;
+}
