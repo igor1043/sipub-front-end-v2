@@ -83,10 +83,6 @@ button[mat-icon-button] {
   border-bottom: 1px solid var(--gray-200); /* Cor e espessura da linha de separação das células */
 }
 
-/* Oculta a última linha da tabela */
-.myTable .mat-row:last-child {
-  display: none;
-}
 
 /* Estilo para o paginador */
 .custom-paginator {
@@ -141,6 +137,10 @@ button[mat-icon-button] {
 
 /* Estilo para truncar o texto das células */
 .truncate-cell {
+  max-width: 200px; /* Ajuste conforme necessário */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--gray-800) !important; /* Texto amarelo para células truncadas */
   white-space: nowrap; /* Impede que o texto quebre em várias linhas */
   overflow: hidden; /* Esconde o texto que ultrapassar o tamanho da célula */
@@ -199,16 +199,13 @@ button[mat-icon-button] {
   justify-content: center;
 }
 
-
 .custom-pagination {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: var(--background-color);
-  border-top: 1px solid var(--gray-200);
-}
 
+}
 .page-controls {
   display: flex;
   align-items: center;
@@ -261,14 +258,6 @@ mat-form-field {
   padding: 2px;
 }
 
-
-/* Garante que as imagens não ultrapassem a célula */
-.truncate-cell {
-  max-width: 200px; /* Ajuste conforme necessário */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 
 .filter-section {
