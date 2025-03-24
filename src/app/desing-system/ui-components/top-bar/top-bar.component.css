@@ -71,3 +71,11 @@
   display: flex;
   align-items: center;  
 }
+
+
+.account-name {
+  color: var(--gray-800);
+  font-weight: 500;
+  margin-right: 1rem;
+  font-size: 0.875rem;
+}

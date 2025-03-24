@@ -21,15 +21,19 @@ export class TopBarComponent implements OnInit {
 
   breadcrumbService: any;
   breadcrumbs: string[] = [];
+  accountAlias?: string;
 
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService,
     private activatedRoute: ActivatedRoute,
-    private themeService: ThemeService
-  ) {}
+    private themeService: ThemeService,
+  ) { }
 
   ngOnInit(): void {
+    const account = this.localStorageService.getCurrentAccount()
+
+
     this.themeService.isDarkTheme$.subscribe((isDarkTheme) => {
       this.isDarkTheme = isDarkTheme;
     });
@@ -40,6 +44,8 @@ export class TopBarComponent implements OnInit {
       });
 
     this.breadcrumbs = this.buildBreadcrumbs();
+
+    this.accountAlias = account?.alias;
   }
 
   private buildBreadcrumbs(): string[] {
