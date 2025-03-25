@@ -16,14 +16,6 @@
   margin-left: 10px;
 }
 
-
-/* Estilo para o breadcrumb */
-.breadcrumb {
-  display: flex;
-  align-items: center; /* Alinha o ícone e o texto verticalmente */
-  margin-left: 20px; /* Espaçamento à esquerda */
-}
-
 .actions {
   display: flex;
   margin-right: 10px;
@@ -36,8 +28,9 @@
 }
 
 .breadcrumbs {
+  display: flex;
+  margin-left: 20px; /* Espaçamento à esquerda */
   flex-grow: 1;
-  margin-left: 1rem;
   color: var(--gray-800);
   font-size: 0.875rem;
   display: flex;
@@ -107,51 +100,18 @@
   font-size: 0.875rem;
 }
 
-
-/* Ajustes para telas médias (tablets) */
-@media (max-width: 768px) {
+@media (max-width: 760px) {
   .breadcrumbs {
-    margin-left: 0.5rem;
-    gap: 0.2rem;
+    display: none;
   }
 
-  .crumb-text {
-    font-size: 0.75rem;
-  }
-
-  .account-name {
-    display: none; /* Oculta o nome da conta em telas menores */
-  }
-
+  /* Mantém os elementos da direita alinhados */
   .actions {
-    gap: 8px;
+    margin-left: auto; /* Empurra o container para a direita */
   }
 
-  .button_menu {
-    width: 20px;
-    height: 20px;
-    margin-left: 5px;
-  }
-
-  .home-icon,
-  .arrow-icon {
-    width: 12px;
-    height: 12px;
-  }
-
-  .breadcrumbs {
-    flex-wrap: wrap; /* Permite quebra de linha se necessário */
-    overflow: hidden;
-  }
-
-  .crumb-text {
-    max-width: 80px; /* Limita a largura dos textos */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .actions {
-    margin-right: 5px;
+  /* Ajustes opcionais para espaçamento */
+  .account-section {
+    margin-right: 0.5rem; /* Reduz o espaçamento se necessário */
   }
 }

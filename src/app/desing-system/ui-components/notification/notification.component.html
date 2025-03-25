@@ -1,6 +1,14 @@
 <div class="notification-content">
-    <span>{{ data.message }}</span>
-    <div class="progress-bar">
-      <div class="progress" [style.animation-duration]="data.duration + 'ms'"></div>
+  <div class="header">
+    <div class="icon-title-wrapper">
+      <img *ngIf="data.icon" [src]="data.icon" class="icon" alt="Notification icon">
+      <h3 class="title">{{ data.title }}</h3>
     </div>
   </div>
+
+  <p *ngIf="data.description" class="description">{{ data.description }}</p>
+  
+  <div class="progress-bar">
+    <div class="progress" [style.animation-duration]="data.duration + 'ms'"></div>
+  </div>
+</div> 

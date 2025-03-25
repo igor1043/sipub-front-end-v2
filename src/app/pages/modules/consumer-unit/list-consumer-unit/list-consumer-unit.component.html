@@ -1,6 +1,13 @@
 <app-text text="Lista de Unidades Consumidoras" size="large">
 </app-text>
 
+<app-loading 
+  [isLoading]="isLoading" 
+  [error]="error"
+  (retry)="handleRetry()">
+
+</app-loading>
+
 <app-simple-table
   [data]="consumerUnitData"
   [columns]="tableColumns"

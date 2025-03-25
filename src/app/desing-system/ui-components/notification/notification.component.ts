@@ -1,12 +1,28 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+
+export interface NotificationData {
+  type: 'success' | 'error' | 'warning' | 'info';
+  title: string;
+  description?: string;
+  icon?: string;
+  duration: number,
+}
 
 @Component({
   selector: 'app-notification',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './notification.component.html',
-  styleUrl: './notification.component.css'
+  styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent {
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {}
+  constructor(
+    @Inject(MAT_SNACK_BAR_DATA) public data: NotificationData,
+    private snackBarRef: MatSnackBarRef<NotificationComponent>
+  ) {}
+
+  dismiss(): void {
+    this.snackBarRef.dismiss();
+  }
 }
