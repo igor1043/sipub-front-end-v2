@@ -190,4 +190,33 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
     this.onBulkDelete.emit(selectedItemsArray);
     this.clearSelections(); // Limpa as seleções após emitir
   }
+
+  getDisplayedPages(): (number | string)[] {
+    const pages: (number | string)[] = [];
+    const maxVisiblePages = 5; // Ajuste conforme necessário
+  
+    if (this.totalPages <= maxVisiblePages) {
+      return Array.from({length: this.totalPages}, (_, i) => i + 1);
+    }
+  
+    const start = Math.max(1, this.currentPage - 1);
+    const end = Math.min(this.totalPages, this.currentPage + 3);
+  
+    if (start > 1) pages.push(1);
+    if (start > 2) pages.push('...');
+    
+    for (let i = start; i <= end; i++) pages.push(i);
+    
+    if (end < this.totalPages - 1) pages.push('...');
+    if (end < this.totalPages) pages.push(this.totalPages);
+  
+    return pages;
+  }
+  
+  goToPage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.emitPageChange();
+    }
+  }
 }

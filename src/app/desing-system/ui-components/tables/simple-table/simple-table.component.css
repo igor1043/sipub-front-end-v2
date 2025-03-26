@@ -277,3 +277,90 @@ mat-form-field {
   min-width: 250px;
 }
 
+/* Parte da paginação */
+.custom-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  font-family: Arial, sans-serif;
+}
+
+.left-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.items-info {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.page-size-select {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-size-select select {
+  padding: 0.3rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-size: 0.9rem;
+}
+
+.right-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: #f5f5f5;
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.page-number, .page-dots {
+  min-width: 32px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.page-number:hover:not(.active) {
+  background: #f5f5f5;
+}
+
+.page-number.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.page-dots {
+  border: none;
+  background: transparent;
+  cursor: default;
+}
