@@ -1,0 +1,21 @@
+<div class="dialog-container" *ngIf="isVisible">
+  <div class="dialog" [ngClass]="dialogClass">
+    <div class="header">
+      <mat-icon class="icon">{{ iconName }}</mat-icon>
+    </div>
+    
+    <div class="content">
+      <h2 class="title">{{ title }}</h2>
+      <p class="subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+    </div>
+
+    <div class="actions">
+      <button class="button negative" (click)="onNegativeClick()">
+        {{ negativeButtonLabel }}
+      </button>
+      <button class="button positive" (click)="onPositiveClick()">
+        {{ positiveButtonLabel }}
+      </button>
+    </div>
+  </div>
+</div>
