@@ -24,19 +24,45 @@ export class MenuService {
         title: 'Administração',
         icon: '/assets/icons/ic_person.svg',
         subItems: [
-          { title: 'Conta', route: '/admin/account' },
-          { title: 'Subitem 2', route: '/administracao/subitem2' },
+          { title: 'Contas', route: '/admin/account' },
+          { title: 'Cidadão', route: '/admin/citizen' },
+          { title: 'Usuários', route: '/admin/users' },
+          {
+            title: 'Cadastros', subItems: [
+              { title: 'Pessoa Física', route: '/admin/natural-person' },
+              { title: 'Pessoa Jurídica', route: '/admin/corporate-entity' }
+            ]
+          },
+          {
+            title: 'Controle de Acesso', subItems: [
+              { title: 'Papeís', route: '/admin/natural-person' },
+              { title: 'Privilégios', route: '/admin/corporate-entity' }
+            ]
+          },
+          {
+            title: 'Registros Cadastrais', subItems: [
+              { title: 'Parâmetros Geográficos', route: '/admin/natural-person' },
+              { title: 'Dados Pessoais', route: '/admin/natural-person' },
+              { title: 'Empresas', route: '/admin/corporate-entity' },
+              { title: 'Transportes', route: '/admin/corporate-entity' },
+              { title: 'Unidades', route: '/admin/corporate-entity' },
+              { title: 'Atribuições', route: '/admin/corporate-entity' },
+            ]
+          },
+          { title: 'Credênciais', route: '/admin/credentials' },
         ],
+      },
+      {
+        title: 'Georreferenciamento',
+        icon: '/assets/icons/ic_geo.svg',
+        route: '/gestor',
       },
       {
         title: 'Gestor',
         icon: '/assets/icons/ic_manager.svg',
-        route: '/gestor',
-      },
-      {
-        title: 'Perfil de Usuário',
-        icon: '/assets/icons/ic_manager.svg',
-        route: '/user-profile',
+        subItems: [
+          { title: 'Relatórios', route: '/manager/reports' },
+        ],
       },
       {
         title: 'Iluminação Pública',

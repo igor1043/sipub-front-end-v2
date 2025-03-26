@@ -21,6 +21,9 @@ export class SidebarComponent implements OnInit {
   currentUser: User | null = null;
   userPhotoLink: string | null = null;
 
+  isHoveringUser = false;
+  isUserAreaActive = false;
+
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
@@ -43,8 +46,6 @@ export class SidebarComponent implements OnInit {
           console.error('Erro ao carregar a foto do usuário:', error);
         }
       );
-
-
   }
 
   isActive(route: string): boolean {
@@ -61,6 +62,48 @@ export class SidebarComponent implements OnInit {
     this.minimized = false;
   }
 
+  toggleMenuItem(item: MenuItem): void {
+    if (this.hasSubItems(item)) {
+      item.isOpen = !item.isOpen;
+      // Fecha outros subitens do mesmo nível
+     // this.closeSiblingSubmenus(item);
+    } else if (item.route) {
+      this.navigateTo(item.route);
+    }
+    this.cdr.detectChanges();
+  }
+
+  hasSubItems(item: MenuItem): boolean {
+    return !!item.subItems && item.subItems.length > 0;
+  }
+
+  private closeSiblingSubmenus(currentItem: MenuItem): void {
+    const parentArray = this.findParentArray(currentItem);
+    if (parentArray) {
+      parentArray.forEach(item => {
+        if (item !== currentItem && item.isOpen) {
+          item.isOpen = false;
+          this.closeAllChildSubmenus(item);
+        }
+      });
+    }
+  }
+
+  private closeAllChildSubmenus(item: MenuItem): void {
+    if (item.subItems) {
+      item.subItems.forEach(subItem => {
+        subItem.isOpen = false;
+        this.closeAllChildSubmenus(subItem);
+      });
+    }
+  }
+
+  private findParentArray(item: MenuItem): MenuItem[] | null {
+    // Implemente a lógica para encontrar o array pai se necessário
+    // Para simplificar, estamos considerando apenas dois níveis aqui
+    return this.menuItems;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['minimized'] && this.minimized) {
       this.closeAllSubmenus();
@@ -74,5 +117,11 @@ export class SidebarComponent implements OnInit {
 
   trackByFn(index: number, item: MenuItem): string {
     return item.title;
+  }
+
+  navigateToUserProfile() {
+    this.isUserAreaActive = true;
+    setTimeout(() => this.isUserAreaActive = false, 200);
+    this.router.navigate(['/user-profile]']);
   }
 }

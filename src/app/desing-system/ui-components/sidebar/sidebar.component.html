@@ -1,5 +1,4 @@
 <div class="sidebar" [class.minimized]="minimized">
-  <!-- Conteúdo da sidebar -->
   <div class="sidebar-logo">
     <app-svg-icon *ngIf="!minimized" class="logo" [color]="'var(--color-primary)'" [svgUrl]="'/assets/images/side-menu-logo.svg'"></app-svg-icon>
     <app-svg-icon *ngIf="minimized" class="logo-mini" [color]="'var(--color-primary)'" [svgUrl]="'/assets/icons/ic_logo_sipub_mini.svg'"></app-svg-icon>
@@ -7,44 +6,68 @@
 
   <nav class="sidebar-nav">
     <ul class="sidebar-nav-list">
-      <!-- Renderiza os itens do menu dinamicamente -->
       <ng-container *ngFor="let item of menuItems; trackBy: trackByFn">
-        <!-- Verifica se o item é um módulo e renderiza o texto "Módulos" antes do primeiro módulo -->
         <ng-container *ngIf="item.isModule && !menuItems[menuItems.indexOf(item) - 1]?.isModule && !minimized">
           <li class="sidebar-module-title">Módulos</li>
         </ng-container>
         
         <li [class.sidebar-has-submenu]="item.subItems">
           <a
-            (click)="item.subItems ? toggleSubmenu(item) : (item.route ? navigateTo(item.route) : null)"
+            (click)="toggleMenuItem(item)"
             [class.sidebar-active]="isActive(item.route || '')"
             class="sidebar-nav-link"
           >
-            <app-svg-icon class="sidebar-icon" [color]="'var(--gray-900)'"  [svgUrl]="item.icon"></app-svg-icon>
+            <app-svg-icon class="sidebar-icon" [color]="'var(--gray-900)'" [svgUrl]="item.icon"></app-svg-icon>
             <span *ngIf="!minimized">{{ item.title }}</span>
-            <span class="sidebar-arrow" *ngIf="item.subItems && !minimized" [class.rotated]="item.isOpen">
-              <app-svg-icon [color]="'var(--gray-900)'"  [svgUrl]="'/assets/icons/arrow_down.svg'"></app-svg-icon>
+            <span class="sidebar-arrow" *ngIf="hasSubItems(item) && !minimized" [class.rotated]="item.isOpen">
+              <app-svg-icon [color]="'var(--gray-900)'" [svgUrl]="'/assets/icons/arrow_down.svg'"></app-svg-icon>
             </span>
           </a>
-          <!-- Subitens -->
-          <ul class="sidebar-submenu" *ngIf="item.subItems && item.isOpen && !minimized">
-            <li *ngFor="let subItem of item.subItems">
-              <a
-                (click)="navigateTo(subItem.route || '')"
-                [class.sidebar-active]="isActive(subItem.route || '')"
-                class="sidebar-nav-link"
-              >
-                {{ subItem.title }}
-              </a>
-            </li>
-          </ul>
+          
+          <!-- Subitens recursivos -->
+          <ng-container *ngIf="item.subItems && item.isOpen && !minimized">
+            <ul class="sidebar-submenu">
+              <li *ngFor="let subItem of item.subItems">
+                <a
+                  (click)="toggleMenuItem(subItem)"
+                  [class.sidebar-active]="isActive(subItem.route || '')"
+                  class="sidebar-nav-link"
+                >
+                  {{ subItem.title }}
+                  <span class="sidebar-arrow" *ngIf="hasSubItems(subItem)" [class.rotated]="subItem.isOpen">
+                    <app-svg-icon [color]="'var(--gray-900)'" [svgUrl]="'/assets/icons/arrow_down.svg'"></app-svg-icon>
+                  </span>
+                </a>
+                
+                <!-- Subsubitens -->
+                <ng-container *ngIf="subItem.subItems && subItem.isOpen">
+                  <ul class="sidebar-submenu submenu-level-2">
+                    <li *ngFor="let subSubItem of subItem.subItems">
+                      <a
+                        (click)="navigateTo(subSubItem.route || '')"
+                        [class.sidebar-active]="isActive(subSubItem.route || '')"
+                        class="sidebar-nav-link"
+                      >
+                        {{ subSubItem.title }}
+                      </a>
+                    </li>
+                  </ul>
+                </ng-container>
+              </li>
+            </ul>
+          </ng-container>
         </li>
       </ng-container>
     </ul>
   </nav>
-
   <!-- Área do usuário na parte inferior -->
-  <div class="sidebar-user" *ngIf="!minimized">
+  <div class="sidebar-user" *ngIf="!minimized"    
+  (click)="navigateToUserProfile()"
+  (mouseenter)="isHoveringUser = true"
+  (mouseleave)="isHoveringUser = false"
+  [class.user-area-hover]="isHoveringUser"
+  [class.user-area-active]="isUserAreaActive">
+
     <div class="sidebar-user-photo">
       <!-- Exibe a foto do usuário se disponível, caso contrário, exibe o ícone padrão -->
       <img *ngIf="userPhotoLink" [src]="userPhotoLink" alt="Foto do usuário" class="user-photo">

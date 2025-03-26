@@ -56,7 +56,7 @@ function handleTokenError(router: Router, notificationService: NotificationServi
     2000,
     'Faça login novamente para continuar');
   snackBarRef.afterDismissed().subscribe(() => {
-    localStorageService.logout()
-    router.navigate(['/login']);
+    //localStorageService.logout()
+    //router.navigate(['/login']);
   });
 }

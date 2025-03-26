@@ -44,6 +44,7 @@
 /* Remove as bolinhas da lista principal e dos subitens */
 .sidebar-nav-list,
 .sidebar-submenu {
+  margin-right: 5px;
   list-style: none;
   padding-left: 0;
 }
@@ -219,4 +220,56 @@
   height: 30px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+
+.sidebar-submenu .sidebar-nav-link {
+  padding: 6px 8px;
+  font-size: 13px;
+  min-height: 20px; /* Altura mínima igual para todos */
+  align-items: center
+}
+
+.sidebar-submenu .sidebar-arrow {
+  transform: scale(0.8);
+}
+
+
+/* Estilo da área do usuário */
+.sidebar-user {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+/* Efeito hover */
+.sidebar-user:hover {
+  background-color: var(--gray-100);
+}
+
+/* Efeito ao clicar */
+.sidebar-user:active {
+  background-color: var(--gray-200);
+  transform: scale(0.98);
+}
+
+/* Efeito visual opcional para itens filho durante o hover */
+.user-area-hover .sidebar-user-name {
+  color: var(--color-primary) !important;
+}
+
+.user-area-hover .sidebar-user-role {
+  color: var(--color-primary-dark) !important;
+}
+
+/* Efeito de transição suave para o texto */
+.sidebar-user-name,
+.sidebar-user-role {
+  transition: color 0.3s ease;
+}
+
+/* Efeito de clique mais pronunciado */
+.user-area-active {
+  transform: scale(0.95);
+  opacity: 0.8;
 }
