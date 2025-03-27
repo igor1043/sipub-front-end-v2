@@ -1,14 +1,17 @@
-<div class="notification-content">
-  <div class="header">
-    <div class="icon-title-wrapper">
-      <img *ngIf="data.icon" [src]="data.icon" class="icon" alt="Notification icon">
-      <h3 class="title">{{ data.title }}</h3>
+<div class="notification-list">
+  <div *ngFor="let notification of notifications$ | async" class="notification-item" [ngClass]="notification.type">
+    <div class="notification-content">
+      <div class="header">
+        <div class="icon-title-wrapper">
+          <img *ngIf="notification.icon" [src]="notification.icon" class="icon" alt="Notification icon">
+          <h3 class="title">{{ notification.title }}</h3>
+        </div>
+        <button class="dismiss" (click)="dismiss(notification.id)">×</button>
+      </div>
+      <p *ngIf="notification.description" class="description">{{ notification.description }}</p>
+      <div class="progress-bar">
+        <div class="progress" [style.animation-duration]="notification.duration + 'ms'"></div>
+      </div>
     </div>
   </div>
-
-  <p *ngIf="data.description" class="description">{{ data.description }}</p>
-  
-  <div class="progress-bar">
-    <div class="progress" [style.animation-duration]="data.duration + 'ms'"></div>
-  </div>
-</div> 
+</div>

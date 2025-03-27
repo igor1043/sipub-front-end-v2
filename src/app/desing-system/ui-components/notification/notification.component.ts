@@ -1,28 +1,27 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
+// notification.component.ts
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { NotificationData, NotificationService } from './NotificationService';
 import { CommonModule } from '@angular/common';
 
-export interface NotificationData {
-  type: 'success' | 'error' | 'warning' | 'info';
-  title: string;
-  description?: string;
-  icon?: string;
-  duration: number,
-}
 
 @Component({
   selector: 'app-notification',
-  imports: [CommonModule],
   templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.css']
+  styleUrls: ['./notification.component.css'],
+  imports: [CommonModule]
 })
-export class NotificationComponent {
-  constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data: NotificationData,
-    private snackBarRef: MatSnackBarRef<NotificationComponent>
-  ) {}
+export class NotificationComponent implements OnInit {
+  notifications$: Observable<NotificationData[]>;
 
-  dismiss(): void {
-    this.snackBarRef.dismiss();
+  constructor(private notificationService: NotificationService) {
+    this.notifications$ = this.notificationService.notifications$;
   }
+
+  // Remove manualmente a notificação clicada
+  dismiss(id: string): void {
+    this.notificationService.dismissNotification(id);
+  }
+
+  ngOnInit(): void {}
 }

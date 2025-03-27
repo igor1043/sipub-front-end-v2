@@ -55,8 +55,10 @@ function handleTokenError(router: Router, notificationService: NotificationServi
     'Sessão expirada.',
     2000,
     'Faça login novamente para continuar');
-  snackBarRef.afterDismissed().subscribe(() => {
+  //snackBarRef.afterDismissed().subscribe(() => {
     //localStorageService.logout()
     //router.navigate(['/login']);
-  });
+  //});
+ 
+  
 }

@@ -22,20 +22,3 @@ html, body {
   
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-
-.mat-mdc-snack-bar-container.success-snackbar {
-  --mdc-snackbar-container-color: #4CAF50; /* verde para sucesso */
-}
-
-.mat-mdc-snack-bar-container.error-snackbar {
-  --mdc-snackbar-container-color: #f44336; /* vermelho para erro */
-}
-
-.mat-mdc-snack-bar-container.warning-snackbar {
-  --mdc-snackbar-container-color: #FF9800; /* laranja para aviso */
-}
-
-.mat-mdc-snack-bar-container.info-snackbar {
-  --mdc-snackbar-container-color: #2196F3; /* azul para informação */
-}

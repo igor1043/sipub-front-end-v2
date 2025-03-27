@@ -1,44 +1,102 @@
+// notification.service.ts
 import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { NotificationComponent } from 'app/desing-system/ui-components/notification/notification.component';
+import { BehaviorSubject } from 'rxjs';
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
+
+export interface NotificationData {
+  id: string;
+  type: NotificationType;
+  title: string;
+  description?: string;
+  icon?: string;
+  duration: number;
+  onComplete?: () => void; // Callback opcional para acionar ao final do tempo
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  constructor(private snackBar: MatSnackBar) { }
+  private notificationsSubject = new BehaviorSubject<NotificationData[]>([]);
+  notifications$ = this.notificationsSubject.asObservable();
 
-  private show(
-    type: NotificationType,
-    title: string,
-    duration: number = 5000,
-    description?: string,
-    icon?: string
-  ): MatSnackBarRef<NotificationComponent> {
-    return this.snackBar.openFromComponent(NotificationComponent, {
-      data: { type, title, description, icon, duration },
+  // Função simples para gerar um ID único
+  private generateId(): string {
+    return Math.random().toString(36).substr(2, 9);
+  }
+
+  private addNotification(notification: NotificationData): void {
+    const current = this.notificationsSubject.getValue();
+    this.notificationsSubject.next([...current, notification]);
+
+    // Após o tempo de duração, remove a notificação e executa o callback, se existir
+    setTimeout(() => {
+      this.removeNotification(notification.id);
+      if (notification.onComplete) {
+        notification.onComplete();
+      }
+    }, notification.duration);
+  }
+
+  private removeNotification(id: string): void {
+    const current = this.notificationsSubject.getValue();
+    this.notificationsSubject.next(current.filter(n => n.id !== id));
+  }
+
+  showSuccess(title: string, duration: number = 5000, description?: string, icon?: string, onComplete?: () => void): void {
+    const notification: NotificationData = {
+      id: this.generateId(),
+      type: 'success',
+      title,
+      description,
+      icon,
       duration,
-      panelClass: [`${type}-snackbar`],
-      horizontalPosition: 'right',
-      verticalPosition: 'top'
-    });
+      onComplete
+    };
+    this.addNotification(notification);
   }
 
-  showSuccess(title: string, duration?: number, description?: string, icon?: string) : MatSnackBarRef<NotificationComponent>{
-    return this.show('success', title, duration, description, icon);
+  showError(title: string, duration: number = 5000, description?: string, icon?: string, onComplete?: () => void): void {
+    const notification: NotificationData = {
+      id: this.generateId(),
+      type: 'error',
+      title,
+      description,
+      icon,
+      duration,
+      onComplete
+    };
+    this.addNotification(notification);
   }
 
-  showError(title: string, duration?: number, description?: string, icon?: string): MatSnackBarRef<NotificationComponent> {
-    return this.show('error', title, duration, description, icon);
+  showWarning(title: string, duration: number = 5000, description?: string, icon?: string, onComplete?: () => void): void {
+    const notification: NotificationData = {
+      id: this.generateId(),
+      type: 'warning',
+      title,
+      description,
+      icon,
+      duration,
+      onComplete
+    };
+    this.addNotification(notification);
   }
 
-  showWarning(title: string, duration?: number, description?: string, icon?: string): MatSnackBarRef<NotificationComponent> {
-    return this.show('warning', title, duration, description, icon);
+  showInfo(title: string, duration: number = 5000, description?: string, icon?: string, onComplete?: () => void): void {
+    const notification: NotificationData = {
+      id: this.generateId(),
+      type: 'info',
+      title,
+      description,
+      icon,
+      duration,
+      onComplete
+    };
+    this.addNotification(notification);
   }
 
-  showInfo(title: string, duration?: number, description?: string, icon?: string): MatSnackBarRef<NotificationComponent> {
-    return this.show('info', title, duration, description, icon);
+  dismissNotification(id: string): void {
+    this.removeNotification(id);
   }
 }

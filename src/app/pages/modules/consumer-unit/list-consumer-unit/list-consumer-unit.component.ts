@@ -8,12 +8,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Account, AccountsMockService } from 'app/core/mocks/accounts.mock';
 import { ConsumerUnitsListMockService } from 'app/core/mocks/consumer-unit/consumer.unit.list.mock';
 import { DropdownComponent } from "../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
+import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
+import { NotificationComponent } from "../../../../desing-system/ui-components/notification/notification.component";
 
 
 @Component({
   selector: 'app-list-consumer-unit',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, LoadingComponent, SimpleTableComponent, TextComponent, LoadingComponent, DropdownComponent],
+  imports: [CommonModule, ReactiveFormsModule, LoadingComponent, SimpleTableComponent, TextComponent, LoadingComponent, DropdownComponent, NotificationComponent],
   templateUrl: './list-consumer-unit.component.html',
   styleUrl: './list-consumer-unit.component.css'
 })
@@ -69,9 +71,28 @@ export class ListConsumerUnitComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarContas();
+    this.notificationService.showSuccess(
+      'Sucesso!',
+      5000,
+      'Esta é a primeira notificação.',
+      undefined,
+      () => {
+        console.log('Primeira notificação encerrada.');
+      }
+    );
+    this.notificationService.showError(
+      'Erro!',
+      7000,
+      'Esta é a segunda notificação.',
+      undefined,
+      () => {
+        console.log('Segunda notificação encerrada.');
+      }
+    );
+ 
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private notificationService: NotificationService) {
     this.form = this.fb.group({
       selected_account: [null, Validators.required],
     });
