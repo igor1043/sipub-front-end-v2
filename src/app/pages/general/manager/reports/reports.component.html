@@ -1,0 +1,43 @@
+<app-loading [isLoading]="isLoading"></app-loading>
+
+<div *ngIf="!isLoading">
+  <app-text text="Relatórios" size="large"></app-text>
+  
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <app-dropdown 
+        [options]="accountOptions" 
+        placeholder="Selecione a conta" 
+        [control]="form.get('selected_account')!"
+      ></app-dropdown>
+
+      <app-module-dropdown
+      [modules]="modules"
+      [selectedModule]="selectedModule"
+      (selectedModuleChange)="onModuleSelected($event)"
+      [disabled]="!form.get('selected_account')?.value">
+    </app-module-dropdown>
+    </div>
+
+    <div class="content" *ngIf="reportGroups.length > 0">
+      <app-report-list 
+        [reportGroups]="reportGroups"
+        (subItemSelected)="onSubItemSelected($event)"
+      ></app-report-list>
+
+    <div class="form-area">
+      @if (selectedSubItem) {
+        <app-dynamic-form [subItem]="selectedSubItem"></app-dynamic-form>
+      } @else {
+        <div class="placeholder">
+          Selecione um relatório na lista ao lado
+        </div>
+      }
+    </div>
+  </div>
+</form>
+
+<app-loading 
+  [isLoading]="isLoading" >
+
+</app-loading>

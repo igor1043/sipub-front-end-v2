@@ -1,0 +1,56 @@
+<!-- dynamic-form.component.html -->
+<div class="dynamic-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h3>{{ subItem.name }}</h3>
+    
+    <div class="form-fields">
+      @for (field of subItem.formConfig; track field.key) {
+        <div class="form-field">
+          <label>{{ field.label }}:</label>
+          
+          @switch (field.type) {
+            @case ('text') {
+              <input type="text" 
+                     [formControlName]="field.key"
+                     [placeholder]="field.label">
+            }
+            
+            @case ('number') {
+              <input type="number" 
+                     [formControlName]="field.key"
+                     [placeholder]="field.label"
+                     step="0.01">
+            }
+            
+            @case ('date') {
+              <input type="date" 
+                     [formControlName]="field.key">
+            }
+            
+            @case ('month') {
+              <input type="month" 
+                     [formControlName]="field.key">
+            }
+            
+            @case ('select') {
+              <select [formControlName]="field.key">
+                <option value="" disabled selected>Selecione...</option>
+                @for (option of field.options; track option) {
+                  <option [value]="option">{{ option }}</option>
+                }
+              </select>
+            }
+          }
+
+          @if (field.required && form.get(field.key)?.errors?.['required'] && form.get(field.key)?.touched) {
+            <span class="error-message">Campo obrigatório</span>
+          }
+        </div>
+      }
+    </div>
+
+    <button type="submit" class="submit-button">
+      Gerar Relatório
+    </button>
+  </form>
+</div>

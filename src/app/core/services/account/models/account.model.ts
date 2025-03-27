@@ -1,3 +1,5 @@
+import { Account } from "app/core/interfaces/account.interface";
+
 export interface AccountResponse {
   meta: {
     error_type: string;
@@ -8,16 +10,4 @@ export interface AccountResponse {
     links: any[];
   };
   data: Account[];
-}
-
-export interface Account {
-  id: number;
-  nome: string;
-  alias: string;
-  created_at: string;
-  is_admin: boolean;
-  is_coordinator: boolean;
-  billing: boolean;
-  state: string;
-  city: string;
 }

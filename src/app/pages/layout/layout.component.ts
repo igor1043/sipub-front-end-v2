@@ -6,15 +6,18 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [SidebarComponent, RouterModule,TopBarComponent],
+  imports: [SidebarComponent, RouterModule, TopBarComponent],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
-  isSidebarMinimized = false; // Propriedade para controlar o estado da sidebar
+  isSidebarMinimized = false;
 
-  // Método para alternar o estado da sidebar
   toggleSidebar() {
     this.isSidebarMinimized = !this.isSidebarMinimized;
+  }
+
+  updateSidebarState(minimized: boolean) {
+    this.isSidebarMinimized = minimized;
   }
 }

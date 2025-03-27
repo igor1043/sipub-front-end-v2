@@ -1,4 +1,4 @@
-<div class="sidebar" [class.minimized]="minimized">
+<div class="sidebar" [class.minimized]="minimized"  (mouseenter)="expandSidebar()" >
   <div class="sidebar-logo">
     <app-svg-icon *ngIf="!minimized" class="logo" [color]="'var(--color-primary)'" [svgUrl]="'/assets/images/side-menu-logo.svg'"></app-svg-icon>
     <app-svg-icon *ngIf="minimized" class="logo-mini" [color]="'var(--color-primary)'" [svgUrl]="'/assets/icons/ic_logo_sipub_mini.svg'"></app-svg-icon>

@@ -9,10 +9,5 @@ import { CommonModule } from '@angular/common';
 })
 export class LoadingComponent {
   @Input() isLoading: boolean = false;
-  @Input() error: string | null = null;
-  @Output() retry = new EventEmitter<void>();
 
-  handleRetry() {
-    this.retry.emit();
-  }
 }

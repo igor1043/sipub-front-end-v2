@@ -1,0 +1,17 @@
+<div class="report-list">
+  @for (group of reportGroups; track group.title) {
+    <div class="report-group">
+      <h4>{{ group.title }}</h4>
+      <div class="subitems">
+        @for (subItem of group.subItems; track subItem.id) {
+          <div 
+            class="subitem"
+            [class.active]="activeSubItemId === subItem.id"
+            (click)="selectSubItem(subItem)">
+            {{ subItem.name }}
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

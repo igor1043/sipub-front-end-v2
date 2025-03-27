@@ -12,86 +12,98 @@ import { UserProfileComponent } from './general/user-profile/user-profile.compon
 import { MonthlyMonitoringConsumerUnitComponent } from './modules/consumer-unit/monthly-monitoring-consumer-unit/monthly-monitoring-consumer-unit.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReportsComponent } from './general/manager/reports/reports.component';
 
 export const routes: Routes = [
-  { 
-    path: 'login', 
+  {
+    path: 'login',
     component: LoginComponent,
-    data: { breadcrumb: 'Login' } 
+    data: { breadcrumb: 'Login' }
   },
-  { 
-    path: 'page-not-found', 
+  {
+    path: 'page-not-found',
     component: PageNotFoundComponent,
-    data: { breadcrumb: 'Página não encontrada' } 
+    data: { breadcrumb: 'Página não encontrada' }
   },
   {
     path: '',
     component: LayoutComponent,
     data: { breadcrumb: 'Home' },
     children: [
-      { 
-        path: 'dashboard', 
-        component: DashboardComponent, 
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: 'Dashboard' } 
+        data: { breadcrumb: 'Dashboard' }
       },
-      { 
-        path: 'admin/account', 
-        component: AccountComponent, 
+      {
+        path: 'admin/account',
+        component: AccountComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: 'Lista de Contas' } 
+        data: { breadcrumb: 'Lista de Contas' }
       },
-      { 
-        path: 'user-profile', 
-        component: UserProfileComponent, 
+      {
+        path: 'user-profile',
+        component: UserProfileComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: 'Perfil do Usuário' } 
+        data: { breadcrumb: 'Perfil do Usuário' }
       },
-      { 
+      {
+        path: 'manager',
+        data: { breadcrumb: 'Gestor' },
+        children: [
+          {
+            path: 'reports',
+            component: ReportsComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Relarórios' }
+          },]
+      },
+      {
         path: 'consumer-unit',
         data: { breadcrumb: 'Unidade Consumidora' },
         children: [
-          { 
-            path: 'list', 
+          {
+            path: 'list',
             component: ListConsumerUnitComponent,
             canActivate: [AuthGuard],
-            data: { breadcrumb: 'Lista de Unidades' } 
-          },
-          { 
-            path: 'add', 
-            component: CreateConsumerUnitComponent,
-            canActivate: [AuthGuard],
-            data: { breadcrumb: 'Criar Unidade' } 
+            data: { breadcrumb: 'Lista de Unidades' }
           },
           {
-            path: 'monthly-monitoring', 
-            component: MonthlyMonitoringConsumerUnitComponent,
-            canActivate: [AuthGuard],
-            data: { breadcrumb: 'Monitoramento Mensal' } 
-          },
-          { 
-            path: 'edit/:id', 
+            path: 'add',
             component: CreateConsumerUnitComponent,
             canActivate: [AuthGuard],
-            data: { breadcrumb: 'Editar' } 
+            data: { breadcrumb: 'Criar Unidade' }
+          },
+          {
+            path: 'monthly-monitoring',
+            component: MonthlyMonitoringConsumerUnitComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Monitoramento Mensal' }
+          },
+          {
+            path: 'edit/:id',
+            component: CreateConsumerUnitComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Editar' }
           }
         ]
       },
-      { 
-        path: '', 
-        redirectTo: 'dashboard', 
-        pathMatch: 'full' 
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
       },
     ],
   },
-  { 
-    path: '', 
-    redirectTo: 'login', 
-    pathMatch: 'full' 
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
-  { 
-    path: '**', 
-    redirectTo: 'page-not-found' 
+  {
+    path: '**',
+    redirectTo: 'page-not-found'
   },
 ];
 

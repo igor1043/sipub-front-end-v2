@@ -16,7 +16,8 @@ import { PdfUploadComponent } from 'app/desing-system/ui-components/pdf-upload/p
 import { MapPickerComponent } from 'app/desing-system/ui-components/map-picker/map-picker.component';
 import { firstValueFrom } from 'rxjs';
 import { AccountService } from 'app/core/services/account/account.service';
-import { Account, AccountResponse } from 'app/core/services/account/models/account.model';
+import { AccountResponse } from 'app/core/services/account/models/account.model';
+import { Account } from 'app/core/interfaces/account.interface';
 
 
 export class CreateConsumerUnitModule { }

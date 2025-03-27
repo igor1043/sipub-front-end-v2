@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, Input, OnInit, SimpleChanges  } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, OnInit, SimpleChanges, Output, EventEmitter  } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../ui-components/svg-icon/svg-icon.component';
@@ -16,8 +16,13 @@ import { UserService } from 'app/core/services/user/user.service';
 })
 export class SidebarComponent implements OnInit {
   @Input() minimized = false;
+  @Output() minimizedChange = new EventEmitter<boolean>(); // Emissor de eventos para o pai
+
+
   menuItems: MenuItem[] = [];
   
+  private collapseTimeout: any;
+
   currentUser: User | null = null;
   userPhotoLink: string | null = null;
 
@@ -124,4 +129,19 @@ export class SidebarComponent implements OnInit {
     setTimeout(() => this.isUserAreaActive = false, 200);
     this.router.navigate(['/user-profile]']);
   }
+
+expandSidebar(): void {
+  clearTimeout(this.collapseTimeout);
+  this.minimized = false;
+  this.minimizedChange.emit(this.minimized);
+  this.cdr.detectChanges();
+}
+
+collapseSidebar(): void {
+  this.collapseTimeout = setTimeout(() => {
+    this.minimized = true;
+    this.minimizedChange.emit(this.minimized);
+    this.cdr.detectChanges();
+  }, 500); // Pequeno atraso para evitar minimizar rapidamente
+}
 }
