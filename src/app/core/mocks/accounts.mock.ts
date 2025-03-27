@@ -6,7 +6,7 @@ export class AccountsMockService {
   private mockAccounts: Account[] = [
     {
       id: 1,
-      nome: 'Conta Energética Municipal',
+      name: 'Conta Energética Municipal',
       alias: 'CEM',
       created_at: '2022-01-15T08:00:00Z',
       is_admin: true,
@@ -17,7 +17,7 @@ export class AccountsMockService {
     },
     {
       id: 2,
-      nome: 'Distribuidora Norte Energia',
+      name: 'Distribuidora Norte Energia',
       alias: 'DNE',
       created_at: '2021-11-22T14:30:00Z',
       is_admin: false,
@@ -28,7 +28,7 @@ export class AccountsMockService {
     },
     {
       id: 3,
-      nome: 'Consórcio de Iluminação Pública',
+      name: 'Consórcio de Iluminação Pública',
       alias: 'CIP',
       created_at: '2023-03-10T10:15:00Z',
       is_admin: false,
@@ -39,7 +39,7 @@ export class AccountsMockService {
     },
     {
       id: 4,
-      nome: 'Gestão Urbana Sustentável',
+      name: 'Gestão Urbana Sustentável',
       alias: 'GUS',
       created_at: '2020-05-05T09:45:00Z',
       is_admin: true,
@@ -50,7 +50,7 @@ export class AccountsMockService {
     },
     {
       id: 5,
-      nome: 'Operadora de Serviços Públicos',
+      name: 'Operadora de Serviços Públicos',
       alias: 'OSP',
       created_at: '2023-07-01T16:20:00Z',
       is_admin: false,
@@ -99,7 +99,7 @@ export class AccountsMockService {
 
   searchAccounts(term: string) {
     const results = this.mockAccounts.filter(a =>
-      a.nome.toLowerCase().includes(term.toLowerCase()) ||
+      a.name.toLowerCase().includes(term.toLowerCase()) ||
       a.alias.toLowerCase().includes(term.toLowerCase())
     );
     return of(results).pipe(delay(250));
@@ -112,7 +112,7 @@ export class AccountsMockService {
 
 export interface Account {
   id: number;
-  nome: string;
+  name: string;
   alias: string;
   created_at: string;
   is_admin: boolean;

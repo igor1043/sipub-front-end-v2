@@ -133,7 +133,7 @@ export class ReportsComponent implements OnInit {
   get accountOptions(): { id: number, name: string }[] {
     return this.listAccounts.map(account => ({
       id: account.id,
-      name: account.nome // Ou account.alias se preferir
+      name: account.name // Ou account.alias se preferir
     }));
   }
 }

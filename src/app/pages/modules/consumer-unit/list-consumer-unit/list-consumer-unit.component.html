@@ -6,6 +6,15 @@
 
 </app-loading>
 
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-dropdown 
+  [options]="accountOptions" 
+  placeholder="Selecione a conta" 
+  [control]="form.get('selected_account')!"
+  ></app-dropdown>
+
+</form>
+
 <app-simple-table
   [data]="consumerUnitData"
   [columns]="tableColumns"
