@@ -1,4 +1,3 @@
-// notification.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NotificationData, NotificationService } from './NotificationService';

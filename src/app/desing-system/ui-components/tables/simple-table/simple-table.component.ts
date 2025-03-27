@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -12,8 +12,8 @@ import { FormsModule } from '@angular/forms';
 export interface ColumnConfig {
   key: string;
   header: string;
-  cellClass?: (element: any) => string; 
-  imageOptions?: { // Opções específicas para imagens
+  cellClass?: (element: any) => string;
+  imageOptions?: {
     srcKey: string;
     altKey: string;
     width?: string;
@@ -38,7 +38,7 @@ export interface ColumnConfig {
   templateUrl: './simple-table.component.html',
   styleUrls: ['./simple-table.component.css']
 })
-export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
+export class SimpleTableComponent<T extends { id: any }> implements OnChanges, AfterViewInit {
   @Input() data: T[] = [];
   @Input() columns: ColumnConfig[] = [];
   @Input() pageSizeOptions: number[] = [5, 10, 20, 50];
@@ -67,6 +67,9 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
   selectedColumn: string = 'all';
   filterableColumns: ColumnConfig[] = [];
 
+  ngAfterViewInit(): void {
+    this.connectSort();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['columns']) {
@@ -77,6 +80,22 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
       this.dataSource.data = this.data;
       this.selectedItems.clear();
       this.updateSelectAllState();
+    }
+    if (changes['sortingEnabled'] && this.sort) {
+      this.sort.disabled = !this.sortingEnabled;
+    }
+  }
+
+  private connectSort(): void {
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string) => {
+        const column = this.columns.find(c => c.key === sortHeaderId);
+        if (column?.imageOptions) {
+          return data[column.imageOptions.altKey]?.toLowerCase() || '';
+        }
+        return data[sortHeaderId]?.toString().toLowerCase() || '';
+      };
     }
   }
 
@@ -188,20 +207,20 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
   emitBulkDelete(): void {
     const selectedItemsArray = this.data.filter(item => this.selectedItems.has(item.id));
     this.onBulkDelete.emit(selectedItemsArray);
-    this.clearSelections(); // Limpa as seleções após emitir
+    this.clearSelections();
   }
 
   getDisplayedPages(): (number | string)[] {
     const pages: (number | string)[] = [];
-    const maxVisiblePages = 5; // Ajuste conforme necessário
-  
+    const maxVisiblePages = 5;
+
     if (this.totalPages <= maxVisiblePages) {
       return Array.from({length: this.totalPages}, (_, i) => i + 1);
     }
-  
+
     const start = Math.max(1, this.currentPage - 1);
     const end = Math.min(this.totalPages, this.currentPage + 3);
-  
+
     if (start > 1) pages.push(1);
     if (start > 2) pages.push('...');
     
@@ -209,7 +228,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges {
     
     if (end < this.totalPages - 1) pages.push('...');
     if (end < this.totalPages) pages.push(this.totalPages);
-  
+
     return pages;
   }
   
