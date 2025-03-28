@@ -47,6 +47,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   @Input() totalItems = 0;
   @Input() pageSize = 10;
   @Input() currentPage = 0;
+  @Input() crudEnabled = true;
 
   @Output() onAdd = new EventEmitter<void>();
   @Output() onEdit = new EventEmitter<T>();
@@ -72,8 +73,10 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['columns']) {
-      this.displayedColumns = ['select', ...this.columns.map(c => c.key), 'actions'];
+    if (changes['columns'] || changes['crudEnabled']) {
+      this.displayedColumns = this.crudEnabled 
+        ? ['select', ...this.columns.map(c => c.key), 'actions'] 
+        : [...this.columns.map(c => c.key)];
       this.filterableColumns = this.columns.filter(c => !c.imageOptions);
     }
     if (changes['data']) {
@@ -83,6 +86,11 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
     }
     if (changes['sortingEnabled'] && this.sort) {
       this.sort.disabled = !this.sortingEnabled;
+    }
+    
+    if (changes['crudEnabled'] && !this.crudEnabled) {
+      this.selectedItems.clear();
+      this.emitSelectedItems();
     }
   }
 
