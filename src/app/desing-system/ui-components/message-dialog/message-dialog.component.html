@@ -2,7 +2,11 @@
   <div class="dialog" [ngClass]="dialogClass">
     <div class="header">
       <div class="icon-container">
-        <img [src]="iconPath" class="icon" alt="dialog icon">
+        <app-svg-icon 
+        class="icon" 
+        [svgUrl]="iconPath" 
+        [color]="typeColor">
+      </app-svg-icon>
       </div>
     </div>
     

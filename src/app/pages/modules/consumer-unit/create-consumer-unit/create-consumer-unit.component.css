@@ -1,0 +1,40 @@
+::ng-deep .tabs .mat-tab-group {
+    margin-top: 20px;
+  }
+
+.form-container, .container-location {
+    display: flex;
+    gap: 2rem;
+    /* Espaço entre as colunas */
+    flex-wrap: wrap;
+    /* Permite quebra de linha */
+}
+
+.basic_info,
+.images_area {
+    flex: 1;
+    /* Faz ambas as divs crescerem igualmente */
+    min-width: 300px;
+    /* Largura mínima antes de quebrar */
+}
+
+.map-location,
+.inputs-location {
+    flex: 1;
+    /* Faz ambas as divs crescerem igualmente */
+    min-width: 300px;
+    /* Largura mínima antes de quebrar */
+}
+
+/* Ajuste para telas pequenas */
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
+    }
+
+    .basic_info,
+    .images_area {
+        width: 100%;
+        min-width: auto;
+    }
+}

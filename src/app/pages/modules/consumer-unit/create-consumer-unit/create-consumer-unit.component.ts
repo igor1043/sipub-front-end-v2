@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ButtonComponent } from '../../../../desing-system/ui-components/button/button.component';
 import { SwitchComponent } from 'app/desing-system/ui-components/switch/switch.component';
 import { TabsComponent } from 'app/desing-system/ui-components/tabs/tabs.component';
@@ -18,6 +18,10 @@ import { firstValueFrom } from 'rxjs';
 import { AccountService } from 'app/core/services/account/account.service';
 import { AccountResponse } from 'app/core/services/account/models/account.model';
 import { Account } from 'app/core/interfaces/account.interface';
+import { AccountsMockService } from 'app/core/mocks/accounts.mock';
+import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
+import { LoadingComponent } from "../../../../desing-system/ui-components/loading/loading.component";
+import { NotificationComponent } from "../../../../desing-system/ui-components/notification/notification.component";
 
 
 export class CreateConsumerUnitModule { }
@@ -36,28 +40,54 @@ export class CreateConsumerUnitModule { }
     InputTextComponent,
     DropdownComponent,
     ImageUploadComponent,
-    PdfUploadComponent,
-    MapPickerComponent
-  ],
+    MapPickerComponent,
+    LoadingComponent,
+    NotificationComponent
+],
   templateUrl: './create-consumer-unit.component.html',
-  styleUrls: ['./create-consumer-unit.component.css'] // Corrigido: styleUrls em vez de styleUrl
+  styleUrls: ['./create-consumer-unit.component.css']
 })
 export class CreateConsumerUnitComponent {
+  //mocks
+    private accountsMock = inject(AccountsMockService);
+
+    
   form: FormGroup;
 
-  listAccounts: { id: number; name: string }[] = [];
+  isLoading = false;
+
+  listAccounts: Account[] = []
+  selectedAccount: Account | null = null;
+
+
   accounts: Account[] = [];
 
-  constructor(private fb: FormBuilder, private accountService: AccountService) {
+  ngOnInit(): void {
+    this.getListAccount();
+  }
+
+  constructor(private fb: FormBuilder, private accountService: AccountService, private notificationService: NotificationService) {
     this.form = this.fb.group({
-      optionalField: [''],
-      requiredField: ['', [Validators.required, Validators.minLength(3)]],
-      batataField: ['', [this.batataValidator]],
-      campo: [null, Validators.required],
+      selected_account: [null, Validators.required],
+      name_consumer_unit: ['', [Validators.required, Validators.minLength(1)]],
+      class_consumer_unit: [null, [Validators.required]],
+      type_supply: [''],
       images: [''],
-      documents: [''],
       location: [''],
+      street: [''],
+      neiborhood: [''],
+
     });
+
+
+    this.form.get('selected_account')?.valueChanges.subscribe(contaId => {
+      this.selectedAccount = this.listAccounts.find(a => a.id === contaId) || null;
+
+      if (contaId) {
+        //this.carregarListaUnidadeConsumidora(contaId);
+      }
+    });
+  
   }
 
   isValidAccount = (control: FormControl) => {
@@ -69,13 +99,6 @@ export class CreateConsumerUnitComponent {
     return isValid ? null : { invalidAccount: true };
   }
 
-  ngOnInit(): void {
-    this.getListAccount();
-  }
-
-  batataValidator(control: FormControl) {
-    return control.value === 'batata' ? null : { batata: true };
-  }
 
   onToggle(event: any) {
     console.log(event);
@@ -97,25 +120,35 @@ export class CreateConsumerUnitComponent {
     }
   }
 
-  async getListAccount() {
-    try {
-      const response: AccountResponse = await firstValueFrom(this.accountService.getAccounts());
-      this.accounts = response.data; // Armazenar a lista de contas
-
-      // Mapear as contas para o formato da listaOpcoes
-      this.listAccounts = this.accounts.map(account => ({
-        id: account.id,
-        name: account.nome
-      }));
-
-      console.log('Lista de opções atualizada:', this.listAccounts);
-    } catch (error) {
-      console.error('Erro ao carregar a lista de contas:', error);
-    }
-  }
-
   onOptionSelected(selectedOption: { id: number; name: string }) {
     console.log('Opção selecionada:', selectedOption);
     // Aqui você pode fazer algo com a opção selecionada, como atualizar o formulário
+  }
+
+
+  private getListAccount(): void {
+    this.isLoading = true;
+    this.accountsMock.getAccounts().subscribe({
+      next: (listAccounts) => {
+        this.listAccounts = listAccounts;
+        this.isLoading = false;
+      },
+      error: (erro) => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar a lista de contas',
+          7000,
+          'Recarregue a página e tente novamente',
+          undefined,
+          () => {}
+        );
+      }
+    });
+  }
+  get accountOptions(): { id: number, name: string }[] {
+    return this.listAccounts.map(account => ({
+      id: account.id,
+      name: account.name 
+    }));
   }
 }

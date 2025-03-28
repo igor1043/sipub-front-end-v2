@@ -1,66 +1,112 @@
 <app-text text="Unidade Consumidora" size="large">
 </app-text>
 
-<app-tabs [tabs]="['Informações Básicas', 'Monitoramento Mensal', 'Carga e Consumo','Geração']" size="medium">
-  <!-- Tab 1: Informações Básicas -->
-  <ng-template #appCustomTab>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <!-- Campo não obrigatório -->
-      <app-input-text placeholder="Campo opcional" size="medium" type="text"
-        [control]="form.get('optionalField')!"></app-input-text>
+  <app-tabs class ="tabs" [tabs]="['Informações Básicas', 'Monitoramento Mensal', 'Carga e Consumo','Geração']" size="medium">
+    <!-- Tab 1: Informações Básicas -->
+    <ng-template #appCustomTab>
 
-      <!-- Campo obrigatório com mais de 3 caracteres -->
-      <app-input-text placeholder="Campo obrigatório" alertText="Deve ter mais de 3 caracteres" size="medium"
-        type="text" [isRequired]="true" [control]="form.get('requiredField')!"></app-input-text>
+      <app-dropdown [options]="listAccounts" placeholder="Selecione a conta referente a unidade consumidora"
+        [isRequired]="true" [size]="'medium'" [control]="form.get('selected_account')!"></app-dropdown>
 
-      <!-- Campo com validação personalizada (deve ser 'batata') -->
-      <app-input-text placeholder="Digite 'batata'" alertText="Deve ser 'batata'" size="medium" type="text"
-        [control]="form.get('batataField')!"></app-input-text>
+      <app-divider type="small"></app-divider>
 
-      <app-dropdown [options]="listAccounts" placeholder="Selecione" [isRequired]="true"
-        [control]="form.get('campo')!"></app-dropdown>
+      <app-text text="Informações da Unidade Consumidora" size="large"></app-text>
 
+      <div class="form-container">
+        <div class="basic_info">
 
-      <app-image-upload [maxFiles]="5" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
-        formControlName="images"></app-image-upload>
+          <app-input-text placeholder="Nome da Unidade" size="medium" type="text" [isRequired]="true"
+            [control]="form.get('name_consumer_unit')!"></app-input-text>
 
+          <!-- <app-dropdown [options]="listAccounts" placeholder="Classe" [isRequired]="true" [size]="'medium'" [control]="form.get('class_consumer_unit')!"></app-dropdown> -->
 
-      <app-pdf-upload [maxFiles]="3" [maxFileSize]="10" formControlName="documents"></app-pdf-upload>
-
-      <app-map-picker [title]="'Geo de teste'" [markerIconUrl]="'assets/icons/ic_marker_consumer_unit.svg'"
-        formControlName="location"></app-map-picker>
-
-      <p>Endereço completo: {{ form.get('location')?.value?.address }}</p>
-      <p>Coordenadas: {{ form.get('location')?.value?.lat }}, {{ form.get('location')?.value?.lng }}</p>
-
-    </form>
-    <!-- Switch -->
-    <app-switch label="Textinho" (toggleChanged)="onToggle($event)"></app-switch>
-
-    <!-- Divider -->
-    <app-divider type="small"></app-divider>
-
-  </ng-template>
-
-  <!-- Tab 2: Monitoramento Mensal -->
-  <ng-template #appCustomTab>
-    <p>Conteúdo da Tab 2</p>
+          <!-- area referente a tipo de documento e codigo do cliente, deve ficar tudo na mesma linha, com auto proporção em largura -->
 
 
+          <app-input-text placeholder="Tipo de fornecimento" size="medium" type="text"
+            [control]="form.get('type_supply')!"></app-input-text>
 
-  </ng-template>
+        </div>
 
-  <!-- Tab 3: Carga e Consumo -->
-  <ng-template #appCustomTab>
-    <p>Conteúdo da Tab 3</p>
-  </ng-template>
+        <div class="images_area">
+          <app-image-upload [maxFiles]="5" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
+            formControlName="images"></app-image-upload>
+          <app-switch label="Ativa" (toggleChanged)="onToggle($event)"></app-switch>
+        </div>
 
-  <!-- Tab 4: Geração -->
-  <ng-template #appCustomTab>
-    <p>Conteúdo da Tab 4</p>
-  </ng-template>
-</app-tabs>
+      </div>
+
+
+      <div class="info-creation">
+        <app-divider type="small"></app-divider>
+        <app-text text="Informações de Criação" size="large"></app-text>
+
+
+      </div>
+
+      <app-divider type="small"></app-divider>
+      <app-text text="localização e Ponto de Referência" size="large"></app-text>
+
+      <div class="container-location">
+
+        <div class="map-location">
+
+          <app-map-picker [markerIconUrl]="'assets/icons/ic_marker_consumer_unit.svg'"
+            formControlName="location"></app-map-picker>
+
+          <p>Endereço completo: {{ form.get('location')?.value?.address }}</p>
+          <p>Coordenadas: {{ form.get('location')?.value?.lat }}, {{ form.get('location')?.value?.lng }}</p>
+        </div>
+
+        <div class="inputs-location">
+          <app-input-text placeholder="Logradouro" size="medium" type="text"
+            [control]="form.get('street')!"></app-input-text>
+
+          <app-input-text placeholder="Bairro" size="medium" type="text"
+            [control]="form.get('neiborhood')!"></app-input-text>
+
+
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+      <!-- Switch -->
+
+
+      <!-- Divider -->
+      <app-divider type="small"></app-divider>
+
+    </ng-template>
+
+    <!-- Tab 2: Monitoramento Mensal -->
+    <ng-template #appCustomTab>
+      <p>Conteúdo da Tab 2</p>
+    </ng-template>
+
+    <!-- Tab 3: Carga e Consumo -->
+    <ng-template #appCustomTab>
+      <p>Conteúdo da Tab 3</p>
+    </ng-template>
+
+    <!-- Tab 4: Geração -->
+    <ng-template #appCustomTab>
+      <p>Conteúdo da Tab 4</p>
+    </ng-template>
+  </app-tabs>
+</form>
 
 <app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onClickLogin()">
 </app-button>
+
+
+<app-loading [isLoading]="isLoading"></app-loading>
+<app-notification></app-notification>

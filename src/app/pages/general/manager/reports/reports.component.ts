@@ -10,8 +10,9 @@ import { ReportGroup, ReportSubItem } from '../components/report-list/report.int
 import { ReportMockService } from 'app/core/mocks/report.mock';
 import { Module } from 'app/core/interfaces/module.interface';
 import { ModulesMockService } from 'app/core/mocks/modules.mock';
-import { Account, AccountsMockService } from 'app/core/mocks/accounts.mock';
+import { AccountsMockService } from 'app/core/mocks/accounts.mock';
 import { LoadingComponent } from "../../../../desing-system/ui-components/loading/loading.component";
+import { Account } from 'app/core/interfaces/account.interface';
 
 
 @Component({

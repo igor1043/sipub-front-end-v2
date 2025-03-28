@@ -1,6 +1,6 @@
 export interface Account {
     id: number;
-    nome: string;
+    name: string;
     alias: string;
     created_at: string;
     is_admin: boolean;

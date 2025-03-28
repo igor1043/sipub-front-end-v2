@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { delay, of } from 'rxjs';
+import { Account } from '../interfaces/account.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AccountsMockService {
@@ -108,16 +109,4 @@ export class AccountsMockService {
   private generateId(): number {
     return Math.max(...this.mockAccounts.map(a => a.id)) + 1;
   }
-}
-
-export interface Account {
-  id: number;
-  name: string;
-  alias: string;
-  created_at: string;
-  is_admin: boolean;
-  is_coordinator: boolean;
-  billing: boolean;
-  state: string;
-  city: string;
 }

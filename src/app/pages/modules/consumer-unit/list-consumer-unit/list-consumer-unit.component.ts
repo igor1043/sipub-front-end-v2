@@ -5,11 +5,12 @@ import { LoadingComponent } from 'app/desing-system/ui-components/loading/loadin
 import { ConsumerUnit } from 'app/core/interfaces/modules/consumer-unit/list-consumer-unit.interface';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Account, AccountsMockService } from 'app/core/mocks/accounts.mock';
+import { AccountsMockService } from 'app/core/mocks/accounts.mock';
 import { ConsumerUnitsListMockService } from 'app/core/mocks/consumer-unit/consumer.unit.list.mock';
 import { DropdownComponent } from "../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
 import { NotificationComponent } from "../../../../desing-system/ui-components/notification/notification.component";
+import { Account } from 'app/core/interfaces/account.interface';
 
 
 @Component({
