@@ -13,9 +13,7 @@
 }
 
 .content {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem;
   border: 1px solid var(--gray-200); /* Define a borda com a cor desejada */
   border-radius: 10px; /* Define o raio das bordas arredondadas */
   margin: 5px;

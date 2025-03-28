@@ -1,21 +1,33 @@
 <div class="dialog-container" *ngIf="isVisible">
   <div class="dialog" [ngClass]="dialogClass">
     <div class="header">
-      <mat-icon class="icon">{{ iconName }}</mat-icon>
+      <div class="icon-container">
+        <img [src]="iconPath" class="icon" alt="dialog icon">
+      </div>
     </div>
     
     <div class="content">
-      <h2 class="title">{{ title }}</h2>
-      <p class="subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+      <app-text [text]="title" size="large" [bold]="true" [color]="'var(--gray-900)'"></app-text>
+      <app-text *ngIf="subtitle" [text]="subtitle" size="medium" [color]="'var(--gray-800)'"></app-text>
     </div>
 
     <div class="actions">
-      <button class="button negative" (click)="onNegativeClick()">
-        {{ negativeButtonLabel }}
-      </button>
-      <button class="button positive" (click)="onPositiveClick()">
-        {{ positiveButtonLabel }}
-      </button>
+      <app-button 
+        class="action-button"
+        mode="secondary" 
+        size="medium" 
+        [text]="negativeButtonLabel"
+        (clicked)="onNegativeClick()">
+      </app-button>
+
+      <app-button 
+        class="action-button"
+        mode="primary" 
+        [buttonColor]="typeColor"
+        size="medium" 
+        [text]="positiveButtonLabel"
+        (clicked)="onPositiveClick()">
+      </app-button>
     </div>
   </div>
 </div>

@@ -47,7 +47,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   @Input() pageSize = 10;
   @Input() currentPage = 0;
   @Input() crudEnabled = true;
-  @Input() pageSizeOptions: number[] = [5, 10, 20, 50, this.totalItems];
+  @Input() pageSizeOptions: number[] = [5, 10, 20, 50];
 
   @Output() onAdd = new EventEmitter<void>();
   @Output() onEdit = new EventEmitter<T>();
