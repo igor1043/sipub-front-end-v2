@@ -364,3 +364,11 @@ mat-form-field {
   background: transparent;
   cursor: default;
 }
+
+/* Adicione estilos para a mensagem */
+.empty-message {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #666;
+}

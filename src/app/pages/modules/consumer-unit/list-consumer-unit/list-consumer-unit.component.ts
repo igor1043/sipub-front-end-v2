@@ -101,6 +101,7 @@ export class ListConsumerUnitComponent implements OnInit {
       this.selectedAccount = this.listAccounts.find(a => a.id === contaId) || null;
       this.allConsumerUnits = [];
       this.consumerUnitData = [];
+      this.totalItems= 0;
 
       if (contaId) {
         this.carregarListaUnidadeConsumidora(contaId);
