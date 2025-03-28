@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges, OnChanges, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -38,16 +38,16 @@ export interface ColumnConfig {
   templateUrl: './simple-table.component.html',
   styleUrls: ['./simple-table.component.css']
 })
-export class SimpleTableComponent<T extends { id: any }> implements OnChanges, AfterViewInit {
+export class SimpleTableComponent<T extends { id: any }> implements OnChanges, AfterViewInit, AfterViewChecked {
   @Input() data: T[] = [];
   @Input() columns: ColumnConfig[] = [];
-  @Input() pageSizeOptions: number[] = [5, 10, 20, 50];
   @Input() selectedItem: T | null = null;
   @Input() sortingEnabled: boolean = true;
   @Input() totalItems = 0;
   @Input() pageSize = 10;
   @Input() currentPage = 0;
   @Input() crudEnabled = true;
+  @Input() pageSizeOptions: number[] = [5, 10, 20, 50, this.totalItems];
 
   @Output() onAdd = new EventEmitter<void>();
   @Output() onEdit = new EventEmitter<T>();
@@ -68,6 +68,8 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   selectedColumn: string = 'all';
   filterableColumns: ColumnConfig[] = [];
 
+  private sortConnected = false;
+
   ngAfterViewInit(): void {
     this.connectSort();
   }
@@ -83,6 +85,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
       this.dataSource.data = this.data;
       this.selectedItems.clear();
       this.updateSelectAllState();
+      this.sortConnected = false;
     }
     if (changes['sortingEnabled'] && this.sort) {
       this.sort.disabled = !this.sortingEnabled;
@@ -91,6 +94,13 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
     if (changes['crudEnabled'] && !this.crudEnabled) {
       this.selectedItems.clear();
       this.emitSelectedItems();
+    }
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.sort && !this.sortConnected) {
+      this.connectSort();
+      this.sortConnected = true;
     }
   }
 
