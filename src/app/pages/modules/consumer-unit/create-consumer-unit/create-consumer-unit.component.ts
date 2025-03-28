@@ -60,6 +60,7 @@ export class CreateConsumerUnitComponent {
       documents: [''],
       location: [''],
       startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
     });
   }
 

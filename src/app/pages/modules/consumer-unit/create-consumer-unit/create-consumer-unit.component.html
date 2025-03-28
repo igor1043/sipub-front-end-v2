@@ -7,7 +7,7 @@
 
     <div style="display: flex; gap: 10px;">
       <app-input-date placeholder="Data de Início" [control]="form.get('startDate')!" [isRequired]="true" />
-      <app-input-date placeholder="Data de Fim" [control]="form.get('startDate')!" alertText="Data com alert" />
+      <app-input-date placeholder="Data de Fim" [control]="form.get('endDate')!" alertText="Data com alert" />
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">

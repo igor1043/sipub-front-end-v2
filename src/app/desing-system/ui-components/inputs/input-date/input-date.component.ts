@@ -1,7 +1,7 @@
-import { Component, Input, Self, Optional, forwardRef } from '@angular/core';
+import { Component, Input, Self, Optional, forwardRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatDatepickerModule, MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepickerModule, MatDatepickerInputEvent, MatDatepicker } from '@angular/material/datepicker';
 import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
 
@@ -32,6 +32,8 @@ export class InputDateComponent implements ControlValueAccessor {
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() control!: AbstractControl;
 
+  @ViewChild('picker') picker!: MatDatepicker<Date>;
+
   value: Date | null = null;
   isFocused: boolean = false;
 
@@ -40,7 +42,6 @@ export class InputDateComponent implements ControlValueAccessor {
     private dateAdapter: DateAdapter<Date>
   ) {
     this.dateAdapter.setLocale('pt-BR');
-
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
@@ -90,7 +91,7 @@ export class InputDateComponent implements ControlValueAccessor {
   }
 
   onFocus(): void {
-    this.isFocused = true;
+    this.isFocused = false;
   }
 
   onBlur(): void {
@@ -100,6 +101,16 @@ export class InputDateComponent implements ControlValueAccessor {
 
   shouldLabelFloat(): boolean {
     return this.isFocused || !!this.value;
+  }
+
+  onInputClick(): void {
+    if (this.value) {
+      this.value = null;
+      this.onChange(null);
+      this.control?.setValue(null);
+    } else {
+      this.picker.open();
+    }
   }
 
   onTouched = () => { };
