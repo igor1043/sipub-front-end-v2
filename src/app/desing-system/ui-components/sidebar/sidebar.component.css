@@ -122,7 +122,7 @@
 }
 
 .rotated {
-  transform: translate(0%, -20%) rotate(180deg);
+  transform: translate(0%, -10%) rotate(180deg);
 }
 
 /* Área do usuário na parte inferior */

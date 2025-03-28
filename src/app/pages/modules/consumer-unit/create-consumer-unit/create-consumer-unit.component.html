@@ -5,11 +5,6 @@
   <!-- Tab 1: Informações Básicas -->
   <ng-template #appCustomTab>
 
-    <div style="display: flex; gap: 10px;">
-      <app-input-date placeholder="Data de Início" [control]="form.get('startDate')!" [isRequired]="true" />
-      <app-input-date placeholder="Data de Fim" [control]="form.get('endDate')!" alertText="Data com alert" />
-    </div>
-
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Campo não obrigatório -->
       <app-input-text placeholder="Campo opcional" size="medium" type="text"

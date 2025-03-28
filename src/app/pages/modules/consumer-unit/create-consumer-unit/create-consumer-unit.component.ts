@@ -18,7 +18,6 @@ import { firstValueFrom } from 'rxjs';
 import { AccountService } from 'app/core/services/account/account.service';
 import { AccountResponse } from 'app/core/services/account/models/account.model';
 import { Account } from 'app/core/interfaces/account.interface';
-import { InputDateComponent } from "../../../../desing-system/ui-components/inputs/input-date/input-date.component";
 
 
 export class CreateConsumerUnitModule { }
@@ -38,8 +37,7 @@ export class CreateConsumerUnitModule { }
     DropdownComponent,
     ImageUploadComponent,
     PdfUploadComponent,
-    MapPickerComponent,
-    InputDateComponent
+    MapPickerComponent
   ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css'] // Corrigido: styleUrls em vez de styleUrl
@@ -59,8 +57,6 @@ export class CreateConsumerUnitComponent {
       images: [''],
       documents: [''],
       location: [''],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
     });
   }
 
