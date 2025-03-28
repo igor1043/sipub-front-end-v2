@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { ButtonComponent } from "../button/button.component";
+import { TextComponent } from "../text/text.component";
 
 export enum DialogType {
   SUCCESS = 'success',
@@ -11,7 +13,7 @@ export enum DialogType {
 
 @Component({
   selector: 'app-message-dialog',
-  imports : [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, ButtonComponent, TextComponent],
   templateUrl: './message-dialog.component.html',
   styleUrls: ['./message-dialog.component.css']
 })
@@ -47,6 +49,27 @@ export class MessageDialogComponent {
     this.close();
   }
 
+  get iconPath() {
+    const basePath = 'assets/icons/';
+    switch(this.type) {
+      case DialogType.SUCCESS: return `${basePath}ic_success.svg`;
+      case DialogType.INFO: return `${basePath}ic_info.svg`;
+      case DialogType.ERROR: return `${basePath}ic_error.svg`;
+      case DialogType.WARNING: return `${basePath}ic_warning.svg`;
+      default: return `${basePath}ic_info.svg`;
+    }
+  }
+
+  get typeColor() {
+    switch(this.type) {
+      case DialogType.SUCCESS: return `var(--green-500)`;
+      case DialogType.INFO: return `var(--blue-500)`;
+      case DialogType.ERROR: return `var(--red-500)`;
+      case DialogType.WARNING: return `var(--orange-500)`;
+      default: return `var(--gray-500)`;
+    }
+  }
+  
   get dialogClass() {
     return {
       'success-dialog': this.type === DialogType.SUCCESS,
