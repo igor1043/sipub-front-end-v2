@@ -27,6 +27,8 @@ export class ImageUploadComponent implements ControlValueAccessor {
   onChange: any = () => {};
   onTouched: any = () => {};
 
+  expandedImage: string | null = null;
+
   constructor(@Self() @Optional() public ngControl: NgControl) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
@@ -127,8 +129,12 @@ export class ImageUploadComponent implements ControlValueAccessor {
   }
 
   // Remove image
-  removeImage(preview: ImagePreview): void {
+
+   removeImage(preview: ImagePreview): void {
     this.previews = this.previews.filter(p => p !== preview);
+    if (this.previews.length > 0) {
+      this.previews = [...this.previews.slice(0, -1), this.previews[this.previews.length - 1]];
+    }
     this.emitValue();
   }
 
@@ -145,5 +151,25 @@ export class ImageUploadComponent implements ControlValueAccessor {
     const files = this.previews.map(preview => preview.file);
     this.onChange(this.maxFiles === 1 ? files[0] || null : files);
     this.onTouched();
+  }
+
+  get mainPreview(): ImagePreview | null {
+    return this.previews.length > 0 ? this.previews[this.previews.length - 1] : null;
+  }
+  
+  get secondaryPreviews(): ImagePreview[] {
+    return this.previews.slice(0, -1).reverse();
+  }
+  
+  showExpanded(imageUrl: string): void {
+    this.expandedImage = imageUrl;
+  }
+  
+  setAsMain(preview: ImagePreview): void {
+    this.previews = [
+      ...this.previews.filter(p => p !== preview),
+      preview
+    ];
+    this.emitValue();
   }
 }
