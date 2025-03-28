@@ -31,7 +31,7 @@
         </div>
 
         <div class="images_area">
-          <app-image-upload [maxFiles]="5" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
+          <app-image-upload [maxFiles]="10" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
             formControlName="images"></app-image-upload>
           <app-switch label="Ativa" (toggleChanged)="onToggle($event)"></app-switch>
         </div>
