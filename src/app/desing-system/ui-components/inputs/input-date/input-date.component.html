@@ -1,0 +1,23 @@
+<div class="input-container" [class]="size">
+  <div class="floating-label">
+    <input matInput [matDatepicker]="picker" [value]="value" (dateChange)="onDateChange($event)" (focus)="onFocus()"
+      (blur)="onBlur()" [class.invalid]="control.invalid && control.touched" readonly />
+    <label class="hint" [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
+    <app-svg-icon class="datepicker-toggle" [svgUrl]="'/assets/icons/ic_calendar.svg'" color="var(--text-color)"
+      (click)="picker.open()" />
+    <mat-datepicker #picker panelClass="custom-datepicker"></mat-datepicker>
+  </div>
+
+  <div class="footer-container" *ngIf="control.invalid && isRequired">
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-700)' />
+    <span class="required-text">
+      Campo obrigatório
+    </span>
+  </div>
+
+  <div class="footer-container" *ngIf="!isRequired && alertText">
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_help.svg" color='var(--gray-700)' />
+    <span class="alert-text">
+      {{ alertText }}
+    </span>
+  </div>
