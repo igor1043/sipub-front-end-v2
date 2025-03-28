@@ -18,6 +18,7 @@ import { firstValueFrom } from 'rxjs';
 import { AccountService } from 'app/core/services/account/account.service';
 import { AccountResponse } from 'app/core/services/account/models/account.model';
 import { Account } from 'app/core/interfaces/account.interface';
+import { InputDateComponent } from "../../../../desing-system/ui-components/inputs/input-date/input-date.component";
 
 
 export class CreateConsumerUnitModule { }
@@ -37,7 +38,8 @@ export class CreateConsumerUnitModule { }
     DropdownComponent,
     ImageUploadComponent,
     PdfUploadComponent,
-    MapPickerComponent
+    MapPickerComponent,
+    InputDateComponent
   ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css'] // Corrigido: styleUrls em vez de styleUrl
@@ -56,16 +58,17 @@ export class CreateConsumerUnitComponent {
       campo: [null, Validators.required],
       images: [''],
       documents: [''],
-      location: ['']
+      location: [''],
+      startDate: ['', Validators.required],
     });
   }
 
   isValidAccount = (control: FormControl) => {
     const inputName = control.value;
     const isValid = this.listAccounts.some(account => account.name.toLowerCase() === inputName);
-  
+
     console.log('Input value:', inputName, 'List of account names:', this.listAccounts);
-  
+
     return isValid ? null : { invalidAccount: true };
   }
 

@@ -5,6 +5,11 @@
   <!-- Tab 1: Informações Básicas -->
   <ng-template #appCustomTab>
 
+    <div style="display: flex; gap: 10px;">
+      <app-input-date placeholder="Data de Início" [control]="form.get('startDate')!" [isRequired]="true" />
+      <app-input-date placeholder="Data de Fim" [control]="form.get('startDate')!" alertText="Data com alert" />
+    </div>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Campo não obrigatório -->
       <app-input-text placeholder="Campo opcional" size="medium" type="text"
@@ -28,12 +33,11 @@
 
       <app-pdf-upload [maxFiles]="3" [maxFileSize]="10" formControlName="documents"></app-pdf-upload>
 
-      <app-map-picker [title]="'Geo de teste'"
-        [markerIconUrl]="'assets/icons/ic_marker_consumer_unit.svg'"
+      <app-map-picker [title]="'Geo de teste'" [markerIconUrl]="'assets/icons/ic_marker_consumer_unit.svg'"
         formControlName="location"></app-map-picker>
 
-        <p>Endereço completo: {{ form.get('location')?.value?.address }}</p>
-<p>Coordenadas: {{ form.get('location')?.value?.lat }}, {{ form.get('location')?.value?.lng }}</p>
+      <p>Endereço completo: {{ form.get('location')?.value?.address }}</p>
+      <p>Coordenadas: {{ form.get('location')?.value?.lat }}, {{ form.get('location')?.value?.lng }}</p>
 
     </form>
     <!-- Switch -->

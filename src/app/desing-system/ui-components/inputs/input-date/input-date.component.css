@@ -1,27 +1,33 @@
+/* Aumentando a largura do container do input */
 .input-container {
   display: flex;
-  flex-direction: column;
+  padding: 8px;
   width: 99%;
-  max-width: 99%;
-  position: relative;
+  box-sizing: content-box;
+  flex-direction: column;
+  align-items: start;
 }
 
 .floating-label {
   position: relative;
-  display: inline-block;
-  width: 100%;
+  display: relative;
+  align-items: center;
+}
+
+.hint {
+  color: var(--gray-500);
 }
 
 input {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
-  padding: 8px 8px 8px 15px;
+  padding: 8px 8px 8px 12px;
   background: transparent;
-  width: 100%;
+  width: 280px;
+  margin-left: -8px;
   outline: none;
   color: var(--text-color);
-  caret-color: var(--text-color);
 }
 
 label {
@@ -34,25 +40,36 @@ label {
   transition: all 0.3s ease;
   pointer-events: none;
   background: var(--background-color);
-  /* Fundo para cobrir a borda do input */
   padding: 0 4px;
 }
 
 label.float {
   top: -8px;
-  /* Ajuste para subir um pouco mais */
   font-size: 0.90rem;
   background-color: var(--background-color);
   color: var(--text-color);
   transform: translateY(0);
 }
 
-.hint-container {
-  margin-top: 4px;
+.datepicker-toggle {
+  width: 25px;
+  height: 25px;
+  right: 10px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.hint {
-  color: var(--gray-500);
+::ng-deep .mat-calendar {
+  width: 300px !important;
+  height: 385px !important;
+}
+
+::ng-deep .mat-datepicker-content {
+  color: var(--red-500);
+  border-radius: 5px !important;
+  margin-top: 4px !important;
+
 }
 
 .footer-container {
@@ -71,12 +88,12 @@ label.float {
 
 .alert-text {
   font-size: 0.75rem;
-  color: var(--gray-700);
+  color: #666;
 }
 
 .required-text {
   font-size: 0.75rem;
-  color: var(--red-700);
+  color: var(--red-500);
 }
 
 /* Tamanhos */

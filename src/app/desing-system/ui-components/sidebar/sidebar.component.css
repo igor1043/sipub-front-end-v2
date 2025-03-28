@@ -1,6 +1,6 @@
 /* Container principal do sidebar */
 .sidebar {
-  width: 250px; 
+  width: 250px;
   height: 100vh;
   background-color: var(--background-color);
   padding-left: 5px;
@@ -65,10 +65,10 @@
 /* Remove o padding padrão dos itens da lista */
 .sidebar-submenu li {
   padding-left: 0;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
-.sidebar-nav-list > li {
+.sidebar-nav-list>li {
   margin-bottom: 10px;
 }
 
@@ -84,7 +84,8 @@
   transition: all 0.3s ease;
   font-size: 14px;
   word-break: break-word;
-  white-space: nowrap; /* Impede quebra de linha durante transição */
+  white-space: nowrap;
+  /* Impede quebra de linha durante transição */
 }
 
 /* Efeito ao passar o mouse sobre o link */
@@ -121,7 +122,7 @@
 }
 
 .rotated {
-  transform: rotate(180deg);
+  transform: translate(0%, -20%) rotate(180deg);
 }
 
 /* Área do usuário na parte inferior */
@@ -226,7 +227,8 @@
 .sidebar-submenu .sidebar-nav-link {
   padding: 6px 8px;
   font-size: 13px;
-  min-height: 20px; /* Altura mínima igual para todos */
+  min-height: 20px;
+  /* Altura mínima igual para todos */
   align-items: center
 }
 
