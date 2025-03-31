@@ -66,6 +66,9 @@ export class CreateConsumerUnitComponent {
 
   listDocuments: Dependency[] = []
   selectedDocument: Dependency | null = null;
+  documentPlaceholder: string = 'CPF/CNPJ';
+  documentMask: '' | 'cpf' | 'cnpj' = '';
+
 
   accounts: Account[] = [];
 
@@ -94,9 +97,14 @@ export class CreateConsumerUnitComponent {
     this.form.get('selected_account')?.valueChanges.subscribe(contaId => {
       this.selectedAccount = this.listAccounts.find(a => a.id === contaId) || null;
 
-      if (contaId) {
-        //this.carregarListaUnidadeConsumidora(contaId);
-      }
+    });
+
+    this.form.get('selected_document')?.valueChanges.subscribe((selectedId: any) => {
+      const selectedOption = this.listDocuments.find(doc => doc.id === selectedId);
+      
+      const name = selectedOption?.name.toLowerCase();
+      this.documentPlaceholder = name === 'cpf' ? 'CPF' : name === 'cnpj' ? 'CNPJ' : 'CPF/CNPJ';
+      this.documentMask = name === 'cpf' ? 'cpf' : name === 'cnpj' ? 'cnpj' : '';
     });
   
   }

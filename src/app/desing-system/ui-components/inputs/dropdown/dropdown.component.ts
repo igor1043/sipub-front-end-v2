@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, Self, Optional } from '@angular/core';
+import { Component, Input, forwardRef, Self, Optional, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NgControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
