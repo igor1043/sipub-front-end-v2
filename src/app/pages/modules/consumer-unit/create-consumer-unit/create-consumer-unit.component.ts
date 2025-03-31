@@ -22,6 +22,7 @@ import { AccountsMockService } from 'app/core/mocks/accounts.mock';
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
 import { LoadingComponent } from "../../../../desing-system/ui-components/loading/loading.component";
 import { NotificationComponent } from "../../../../desing-system/ui-components/notification/notification.component";
+import { CreateConsumerUnitMockService, Dependency } from 'app/core/mocks/consumer-unit/create.consumer.unit.mock';
 
 
 export class CreateConsumerUnitModule { }
@@ -50,6 +51,7 @@ export class CreateConsumerUnitModule { }
 export class CreateConsumerUnitComponent {
   //mocks
     private accountsMock = inject(AccountsMockService);
+    private createAccountMock = inject(CreateConsumerUnitMockService)
 
     
   form: FormGroup;
@@ -59,24 +61,33 @@ export class CreateConsumerUnitComponent {
   listAccounts: Account[] = []
   selectedAccount: Account | null = null;
 
+  listClass: Dependency[] = []
+  selectedClass: Dependency | null = null;
+
+  listDocuments: Dependency[] = []
+  selectedDocument: Dependency | null = null;
 
   accounts: Account[] = [];
 
   ngOnInit(): void {
     this.getListAccount();
+    this.getListClass();
+    this.getSelectedDocument();
   }
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private notificationService: NotificationService) {
     this.form = this.fb.group({
       selected_account: [null, Validators.required],
       name_consumer_unit: ['', [Validators.required, Validators.minLength(1)]],
-      class_consumer_unit: [null, [Validators.required]],
+      selected_class: [null, Validators.required],
+      selected_document: [null, Validators.required],
+      document_number: ['', [Validators.required, Validators.minLength(1)]],
+      instalation_code: ['', [Validators.required, Validators.minLength(1)]],
       type_supply: [''],
       images: [''],
       location: [''],
       street: [''],
       neiborhood: [''],
-
     });
 
 
@@ -145,6 +156,48 @@ export class CreateConsumerUnitComponent {
       }
     });
   }
+  
+  private getListClass(): void {
+    this.isLoading = true;
+    this.createAccountMock.getDependencies().subscribe({
+      next: (listClass) => {
+        this.listClass = listClass;
+        this.isLoading = false;
+      },
+      error: (erro) => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar a lista de classes',
+          7000,
+          'Recarregue a página e tente novamente',
+          undefined,
+          () => {}
+        );
+      }
+    });
+  }
+
+  private getSelectedDocument(): void {
+    this.isLoading = true;
+    this.createAccountMock.getIdentityGroups().subscribe({
+      next: (listDocuments) => {
+        this.listDocuments = listDocuments;
+        this.isLoading = false;
+      },
+      error: (erro) => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar a lista de documentos',
+          7000,
+          'Recarregue a página e tente novamente',
+          undefined,
+          () => {}
+        );
+      }
+    });
+  }
+
+
   get accountOptions(): { id: number, name: string }[] {
     return this.listAccounts.map(account => ({
       id: account.id,

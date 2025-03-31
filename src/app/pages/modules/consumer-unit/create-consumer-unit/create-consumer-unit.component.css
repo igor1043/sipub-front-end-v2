@@ -1,8 +1,9 @@
 ::ng-deep .tabs .mat-tab-group {
     margin-top: 20px;
-  }
+}
 
-.form-container, .container-location {
+.form-container,
+.container-location {
     display: flex;
     gap: 2rem;
     /* Espaço entre as colunas */
@@ -17,6 +18,26 @@
     min-width: 300px;
     /* Largura mínima antes de quebrar */
 }
+
+.document-container {
+    display: flex;
+    gap: 1rem;
+    /* Espaço entre os elementos */
+    width: 100%;
+}
+
+.document-container>* {
+    flex: 1;
+    /* Faz todos os elementos filhos terem a mesma largura */
+    min-width: 0;
+    /* Permite que os elementos encolham corretamente */
+}
+
+.document-container>*:not(:last-child) {
+    margin-right: 1rem;
+    /* Fallback para navegadores que não suportam gap */
+}
+
 
 .map-location,
 .inputs-location {
@@ -36,5 +57,14 @@
     .images_area {
         width: 100%;
         min-width: auto;
+    }
+
+    .document-container {
+        flex-wrap: wrap;
+    }
+
+    .document-container>* {
+        flex: 100%;
+        /* Empilha os elementos em telas pequenas */
     }
 }

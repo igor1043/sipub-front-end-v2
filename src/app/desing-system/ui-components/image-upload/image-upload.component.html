@@ -1,17 +1,21 @@
 <div class="upload-container">
-  <div class="drop-zone" 
-       (click)="fileInput.click()"
-       (dragover)="onDragOver($event)"
-       (dragleave)="onDragLeave($event)"
-       (drop)="onDrop($event)"
-       [class.dragover]="isDragging"
-       *ngIf="!(previews.length && maxFiles > 1)">
-    <input type="file" #fileInput class="hidden-input" 
-           (change)="onFileSelected($event)" multiple>
-    <p class="upload-instructions">
-      <strong>Clique para enviar</strong> ou arraste arquivos aqui
-    </p>
-    <p class="upload-instructions">Formatos: {{ acceptedFormats.join(', ') }}</p>
+  <div class="drop-zone" (click)="fileInput.click()" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)" [class.dragover]="isDragging" *ngIf="!(previews.length && maxFiles > 1)">
+    <input type="file" #fileInput class="hidden-input" (change)="onFileSelected($event)" multiple>
+
+    <div class="drop-content">
+      <app-svg-icon class="upload-icon" color='var(--color-primary)'
+        [svgUrl]="'/assets/icons/ic_upload.svg'"></app-svg-icon>
+      <p class="upload-instructions">
+        <strong>Clique para enviar</strong> ou arraste arquivos aqui
+      </p>
+    </div>
+
+  </div>
+
+  <div class="file-info-footer" *ngIf="!(previews.length && maxFiles > 1)">
+
+    <p class="upload-instructions">Formatos: jpeg, png</p>
     <p class="upload-instructions">Tamanho máximo: {{ maxFileSize }}MB</p>
   </div>
 
@@ -19,13 +23,11 @@
     <!-- Coluna principal -->
     <div class="main-preview">
       <div class="preview-item large square">
-        <img [src]="mainPreview?.url" 
-             class="preview-image" 
-             (click)="showExpanded(mainPreview?.url || '')">
-             <div class="file-info" *ngIf="mainPreview">
-              {{ mainPreview.file.name }}<br>
-              {{ formatFileSize(mainPreview.file.size) }}
-            </div>
+        <img [src]="mainPreview?.url" class="preview-image" (click)="showExpanded(mainPreview?.url || '')">
+        <div class="file-info" *ngIf="mainPreview">
+          {{ mainPreview.file.name }}<br>
+          {{ formatFileSize(mainPreview.file.size) }}
+        </div>
         <button class="remove-btn" (click)="removeImage(mainPreview!)">
           &times;
         </button>
@@ -35,24 +37,17 @@
     <!-- Sidebar com upload e miniaturas -->
     <div class="sidebar-preview">
       <!-- Drop zone na sidebar -->
-      <div class="drop-zone-miniature" 
-           (click)="fileInput.click()"
-           (dragover)="onDragOver($event)"
-           (dragleave)="onDragLeave($event)"
-           (drop)="onDrop($event)"
-           [class.dragover]="isDragging"
-           *ngIf="previews.length < maxFiles || maxFiles === 0">
-        <input type="file" #fileInput class="hidden-input" 
-               (change)="onFileSelected($event)" multiple>
+      <div class="drop-zone-miniature" (click)="fileInput.click()" (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" [class.dragover]="isDragging"
+        *ngIf="previews.length < maxFiles || maxFiles === 0">
+        <input type="file" #fileInput class="hidden-input" (change)="onFileSelected($event)" multiple>
         <p class="upload-instructions">
           <strong>+ Adicionar</strong>
         </p>
       </div>
 
       <!-- Miniaturas -->
-      <div class="preview-item small square" 
-           *ngFor="let preview of secondaryPreviews"
-           (click)="setAsMain(preview)">
+      <div class="preview-item small square" *ngFor="let preview of secondaryPreviews" (click)="setAsMain(preview)">
         <img [src]="preview.url" class="preview-image">
         <button class="remove-btn" (click)="removeImage(preview); $event.stopPropagation()">
           &times;
