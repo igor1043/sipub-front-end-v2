@@ -22,7 +22,6 @@
 .document-container {
     display: flex;
     gap: 1rem;
-    /* Espaço entre os elementos */
     width: 100%;
 }
 

@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, FormControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
@@ -27,7 +27,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class InputTextComponent implements ControlValueAccessor, Validator, OnInit {
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
-  @Input() isRequired: boolean = false;
+  isRequired: boolean = false;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() type: string = 'text';
   @Input() typeMask: 'cpf' | 'cnpj' | 'phone' | '' = '';

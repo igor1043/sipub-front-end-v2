@@ -43,16 +43,16 @@ import { CreateConsumerUnitMockService, Dependency } from 'app/core/mocks/consum
     LoadingComponent,
     NotificationComponent,
 
-],
+  ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']
 })
 export class CreateConsumerUnitComponent {
   //mocks
-    private accountsMock = inject(AccountsMockService);
-    private createAccountMock = inject(CreateConsumerUnitMockService)
+  private accountsMock = inject(AccountsMockService);
+  private createAccountMock = inject(CreateConsumerUnitMockService)
 
-    
+
   form: FormGroup;
 
   isLoading = false;
@@ -83,8 +83,9 @@ export class CreateConsumerUnitComponent {
       name_consumer_unit: ['', [Validators.required, Validators.minLength(3)]],
       selected_class: ['', Validators.required],
       selected_document: ['', Validators.required],
-      document_number: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Apenas números
+      document_number: ['', Validators.required],
       instalation_code: ['', [Validators.required, Validators.minLength(4)]],
+      consumer_is_active: [false],
       type_supply: [''],
       images: [''],
       location: [''],
@@ -92,6 +93,7 @@ export class CreateConsumerUnitComponent {
       neighborhood: [''],
     });
 
+    this.form.get('document_number')?.disable();
 
     this.form.get('selected_account')?.valueChanges.subscribe(contaId => {
       this.selectedAccount = this.listAccounts.find(a => a.id === contaId) || null;
@@ -181,12 +183,12 @@ export class CreateConsumerUnitComponent {
           7000,
           'Recarregue a página e tente novamente',
           undefined,
-          () => {}
+          () => { }
         );
       }
     });
   }
-  
+
   private getListClass(): void {
     this.isLoading = true;
     this.createAccountMock.getDependencies().subscribe({
@@ -201,7 +203,7 @@ export class CreateConsumerUnitComponent {
           7000,
           'Recarregue a página e tente novamente',
           undefined,
-          () => {}
+          () => { }
         );
       }
     });
@@ -221,7 +223,7 @@ export class CreateConsumerUnitComponent {
           7000,
           'Recarregue a página e tente novamente',
           undefined,
-          () => {}
+          () => { }
         );
       }
     });
@@ -231,11 +233,11 @@ export class CreateConsumerUnitComponent {
   get accountOptions(): { id: number, name: string }[] {
     return this.listAccounts.map(account => ({
       id: account.id,
-      name: account.name 
+      name: account.name
     }));
   }
-  
 
 
-  
+
+
 }
