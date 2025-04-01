@@ -15,7 +15,7 @@
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background: var(--gray-100);
+  background: var(--background-color);
   margin-top: 4px;
   z-index: 1000;
   box-sizing: content-box;
@@ -43,10 +43,6 @@
   transform: translate(0%, -50%) rotate(180deg);
 }
 
-input {
-  padding-right: 32px;
-}
-
 .hint {
   color: var(--gray-500);
 }
@@ -61,6 +57,7 @@ input {
   outline: none;
   color: var(--text-color);
   caret-color: var(--text-color);
+  cursor: pointer;
 }
 
 label {

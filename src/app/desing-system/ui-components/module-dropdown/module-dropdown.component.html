@@ -1,24 +1,23 @@
 <div class="dropdraw-container" [class.disabled]="disabled">
   <div class="selected-item" (click)="!disabled && toggleDropdown()">
     @if (selectedModule) {
-      <img [src]="selectedModule.iconUrl" alt="Ícone" class="icon">
-      <span>{{ selectedModule.name }}</span>
+    <img [src]="selectedModule.iconUrl" alt="Ícone" class="icon">
+    <span>{{ selectedModule.name }}</span>
     } @else {
-      <span>Selecione um módulo</span>
+    <span class="hint-text">Selecione um módulo</span>
     }
-    <span class="arrow">{{ isOpen ? '▲' : '▼' }}</span>
+    <app-svg-icon class="dropdown-arrow" [color]="'var(--gray-900)'" [svgUrl]="'/assets/icons/arrow_down.svg'"
+      [class.rotated]="isOpen"></app-svg-icon>
   </div>
 
   @if (isOpen) {
-    <div class="dropdown-list">
-      @for (module of modules; track module.id) {
-        <div class="dropdown-item" 
-             [class.selected]="selectedModule?.id === module.id"
-             (click)="toggleSelection(module)">
-          <img [src]="module.iconUrl" alt="Ícone" class="icon">
-          <span>{{ module.name }}</span>
-        </div>
-      }
+  <div class="dropdown-list">
+    @for (module of modules; track module.id) {
+    <div class="dropdown-item" [class.selected]="selectedModule?.id === module.id" (click)="toggleSelection(module)">
+      <img [src]="module.iconUrl" alt="Ícone" class="icon">
+      <span>{{ module.name }}</span>
     </div>
+    }
+  </div>
   }
 </div>

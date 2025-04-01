@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Module } from 'app/core/interfaces/module.interface';
+import { CommonModule } from '@angular/common';
+import { SvgIconComponent } from "../svg-icon/svg-icon.component";
 
 @Component({
   selector: 'app-module-dropdown',
   templateUrl: './module-dropdown.component.html',
-  styleUrls: ['./module-dropdown.component.css']
+  styleUrls: ['./module-dropdown.component.css'],
+  imports: [CommonModule, SvgIconComponent],
 })
 export class ModuleDropdownComponent {
 
