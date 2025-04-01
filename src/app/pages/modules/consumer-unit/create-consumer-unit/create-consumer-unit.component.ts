@@ -104,6 +104,11 @@ export class CreateConsumerUnitComponent {
       const selectedOption = this.listDocuments.find(doc => doc.id === selectedId);
       this.updateDocumentFieldState(selectedOption);
     });
+
+    this.form.get('consumer_is_active')?.valueChanges.subscribe((isActive: boolean) => {
+      this.form.get('selected_document')?.reset('');
+      console.log('Campo "Ativo" alterado:', isActive);
+    });
   }
 
   private updateDocumentFieldState(selectedOption?: Dependency): void {
@@ -113,7 +118,7 @@ export class CreateConsumerUnitComponent {
       this.form.get('document_number')?.reset('');
       return;
     }
-  
+
     const name = selectedOption.name.toLowerCase();
     if (name === 'cpf') {
       this.documentPlaceholder = 'CPF';
@@ -125,7 +130,7 @@ export class CreateConsumerUnitComponent {
       this.documentPlaceholder = 'CPF/CNPJ';
       this.documentMask = '';
     }
-  
+
     this.form.get('document_number')?.reset();
   }
 

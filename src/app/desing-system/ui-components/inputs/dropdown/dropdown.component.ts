@@ -54,7 +54,7 @@ export class DropdownComponent implements ControlValueAccessor {
     this.displayText = this.searchTerm;
     this.filterOptions();
     this.isDropdownVisible = true;
-  
+
     if (!this.searchTerm) {
       this.onChange(null);
       if (this.control) {
@@ -75,10 +75,11 @@ export class DropdownComponent implements ControlValueAccessor {
     this.isFocused = false;
     setTimeout(() => {
       this.isDropdownVisible = false;
-      
+
       // Se não houver uma opção selecionada, limpar o valor e acionar a validação
       if (!this.selectedId) {
         this.displayText = '';
+        this.searchTerm = '';
         this.onChange(null);
         if (this.control) {
           this.control.setValue(null);
@@ -87,7 +88,7 @@ export class DropdownComponent implements ControlValueAccessor {
         }
       }
     }, 200);
-    
+
     this.onTouched();
   }
   filterOptions(): void {
@@ -118,7 +119,7 @@ export class DropdownComponent implements ControlValueAccessor {
         this.control.updateValueAndValidity();
       }
     }
-    
+
     this.isDropdownVisible = false; // Fecha o dropdown após a seleção
   }
 
@@ -126,6 +127,6 @@ export class DropdownComponent implements ControlValueAccessor {
     return this.isFocused || !!this.displayText;
   }
 
-  private onChange: any = () => {};
-  private onTouched: any = () => {};
+  private onChange: any = () => { };
+  private onTouched: any = () => { };
 }
