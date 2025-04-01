@@ -1,9 +1,6 @@
 .input-container {
   display: flex;
   flex-direction: column;
-  width: 99%;
-  max-width: 99%;
-  position: relative;
   margin-bottom: 20px;
 }
 
@@ -17,7 +14,7 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
-  padding: 8px 8px 8px 15px;
+  text-indent: 15px;
   background: transparent;
   width: 100%;
   outline: none;

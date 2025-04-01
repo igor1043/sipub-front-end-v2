@@ -1,9 +1,6 @@
 .input-container {
   display: flex;
   flex-direction: column;
-  width: 99%;
-  max-width: 99%;
-  position: relative;
   margin-bottom: 20px;
 }
 
@@ -21,6 +18,8 @@
   box-sizing: content-box;
 }
 
+
+
 .floating-label {
   position: relative;
   display: relative;
@@ -31,14 +30,21 @@
 .dropdown-arrow {
   position: absolute;
   width: 25px;
+  top: 50%;
+  transform: translateY(-50%);
   height: 25px;
   right: 10px;
   transition: transform 0.3s ease;
   pointer-events: none;
 }
 
+.dropdown-option span {
+  margin-left: 8px; /* Ajuste este valor conforme necessário */
+  display: inline-block; /* Para garantir que a margem seja aplicada corretamente */
+}
+
 .rotated {
-  transform: translate(0%, 0%) rotate(180deg);
+  transform: translateY(-50%) rotate(180deg); /* Atualize a transformação */
 }
 
 .hint {
@@ -49,6 +55,7 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  text-indent: 15px;
   background: transparent;
   width: 100%;
   color: var(--text-color);
