@@ -19,26 +19,24 @@
         <div class="basic_info">
 
           <app-input-text placeholder="Nome da Unidade" size="medium" type="text" [isRequired]="true"
-            [control]="form.get('name_consumer_unit')!"></app-input-text>
+           ></app-input-text>
 
           <app-dropdown [options]="listClass" placeholder="Classe" [isRequired]="true" [size]="'medium'"
             [control]="form.get('selected_class')!"></app-dropdown>
 
+
           <div class="document-container">
             <app-dropdown [options]="listDocuments" placeholder="CPF/CNPJ" [isRequired]="true" [size]="'medium'"
-              [control]="form.get('selected_document')!"
-              ></app-dropdown>
+              [control]="form.get('selected_document')!"></app-dropdown>
 
-            <app-input-text [placeholder]="documentPlaceholder" size="medium" type="text" [typeMask]="documentMask"
-              [control]="form.get('document_number')!"></app-input-text>
+            <app-input-text [placeholder]="documentPlaceholder" size="medium" type="text"
+             [disabled]="isDocumentInputDisabled"></app-input-text>
 
-            <app-input-text placeholder="Código da Instalação" size="medium" type="text"
-              [control]="form.get('instalation_code')!"></app-input-text>
 
           </div>
 
           <app-input-text placeholder="Tipo de fornecimento" size="medium" type="text"
-            [control]="form.get('type_supply')!"></app-input-text>
+            ></app-input-text>
 
         </div>
 
@@ -74,10 +72,10 @@
 
         <div class="inputs-location">
           <app-input-text placeholder="Logradouro" size="medium" type="text"
-            [control]="form.get('street')!"></app-input-text>
+         ></app-input-text>
 
           <app-input-text placeholder="Bairro" size="medium" type="text"
-            [control]="form.get('neiborhood')!"></app-input-text>
+          ></app-input-text>
 
 
         </div>

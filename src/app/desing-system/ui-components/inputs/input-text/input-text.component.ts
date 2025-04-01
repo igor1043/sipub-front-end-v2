@@ -1,5 +1,5 @@
-import { Component, Input, Self, Optional } from '@angular/core';
-import { ControlValueAccessor, NgControl, AbstractControl } from '@angular/forms';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, FormControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
@@ -10,27 +10,42 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
   styleUrls: ['./input-text.component.css'],
   standalone: true,
   imports: [CommonModule, SvgIconComponent, NgxMaskDirective],
-  providers: [provideNgxMask()],
+  providers: [
+    provideNgxMask(),
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputTextComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => InputTextComponent),
+      multi: true,
+    }
+  ]
 })
-export class InputTextComponent implements ControlValueAccessor {
+export class InputTextComponent implements ControlValueAccessor, Validator, OnInit {
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
   @Input() isRequired: boolean = false;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() type: string = 'text';
-  @Input() control!: AbstractControl;
   @Input() typeMask: 'cpf' | 'cnpj' | 'phone' | '' = '';
   @Input() disabled: boolean = false;
   @Input() onlyNumbers: boolean = false;
+  @Input() control!: AbstractControl;
 
-  value: string = '';
-  isFocused: boolean = false;
+  value: any = '';
+  onChange: any = () => {};
+  onTouched: any = () => {};
+  isFocused: boolean = false; 
 
-  formControlDisabled: boolean = false; 
-
-  constructor(@Self() @Optional() public ngControl: NgControl) {
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
+  ngOnInit() {
+    if (!this.isRequired && this.control && this.control.validator) {
+      const validationResult = this.control.validator(new FormControl());
+      if (validationResult && validationResult['required']) {
+        this.isRequired = true;
+      }
     }
   }
 
@@ -47,23 +62,34 @@ export class InputTextComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.formControlDisabled = isDisabled; // Implemented method
+    this.disabled = isDisabled;
   }
 
-  onInputChange(event: Event): void {
-    if (this.formControlDisabled || this.disabled) return; // Optional safeguard
+  validate(control: FormControl) {
+    if (this.isRequired) {
+      let currentValue = control.value || '';
+      
+      if (this.onlyNumbers || this.typeMask) {
+        currentValue = currentValue.toString().replace(/\D/g, '');
+      }
 
-    let value = (event.target as HTMLInputElement).value;
-    if (this.onlyNumbers) {
-      value = value.replace(/\D/g, '');
+      if (currentValue === '') {
+        return { required: true };
+      }
     }
-    this.value = value;
-    this.onChange(value);
-    this.control?.setValue(value);
+    return null;
+  }
+
+  onInputChange(event: any): void {
+    if (this.disabled) return;
+    this.value = event.target.value;
+    this.onChange(this.value);
+    this.onTouched();
   }
 
   onFocus(): void {
     this.isFocused = true;
+    this.onTouched();
   }
 
   onBlur(): void {
@@ -72,22 +98,32 @@ export class InputTextComponent implements ControlValueAccessor {
   }
 
   shouldLabelFloat(): boolean {
-    return this.isFocused || !!this.value;
+    return !!this.value || this.isFocused;
   }
-
-  onTouched = () => {};
-  onChange: any = () => {};
 
   get mask(): string {
     switch (this.typeMask) {
       case 'cpf':
-        return '000.000.000-00';
+        return '000.000.000-00'; 
       case 'cnpj':
         return '00.000.000/0000-00';
       case 'phone':
         return '(00) 00000-0000';
       default:
         return '';
+    }
+  }
+
+  get specialCharacters(): string[] {
+    switch (this.typeMask) {
+      case 'cpf':
+        return ['.', '.', '-'];
+      case 'cnpj':
+        return ['.', '.', '/', '-'];
+      case 'phone':
+        return ['(', ')', ' ', '-'];
+      default:
+        return [];
     }
   }
 }

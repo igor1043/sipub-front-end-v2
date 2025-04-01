@@ -6,23 +6,20 @@
       (input)="onInputChange($event)"
       (focus)="onFocus()"
       (blur)="onBlur()"
-      [mask]="mask" 
-      [disabled]="formControlDisabled || disabled"
-      [class.invalid]="control.invalid && control.touched"
+      [mask]="mask"
+      [disabled]="disabled"
     />
     <label class="hint" [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
   </div>
 
-  <!-- Container para Campo Obrigatório -->
-  <div class="footer-container" *ngIf="control.invalid && isRequired">
+  <div class="footer-container" *ngIf="isRequired">
     <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-700)'/>
     <span class="required-text">
       Campo obrigatório
     </span>
   </div>
 
-  <!-- Container para Alertas Genéricos -->
-  <div class="footer-container" *ngIf="!isRequired && alertText">
+  <div class="footer-container" *ngIf="alertText">
     <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_help.svg" color='var(--gray-700)'/>
     <span class="alert-text">
       {{ alertText }}

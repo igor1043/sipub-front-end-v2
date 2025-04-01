@@ -24,8 +24,6 @@ import { LoadingComponent } from "../../../../desing-system/ui-components/loadin
 import { NotificationComponent } from "../../../../desing-system/ui-components/notification/notification.component";
 import { CreateConsumerUnitMockService, Dependency } from 'app/core/mocks/consumer-unit/create.consumer.unit.mock';
 
-
-export class CreateConsumerUnitModule { }
 @Component({
   selector: 'app-create-consumer-unit',
   standalone: true,
@@ -43,7 +41,8 @@ export class CreateConsumerUnitModule { }
     ImageUploadComponent,
     MapPickerComponent,
     LoadingComponent,
-    NotificationComponent
+    NotificationComponent,
+
 ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']
@@ -80,17 +79,17 @@ export class CreateConsumerUnitComponent {
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private notificationService: NotificationService) {
     this.form = this.fb.group({
-      selected_account: [null, Validators.required],
-      name_consumer_unit: ['', [Validators.required, Validators.minLength(1)]],
-      selected_class: [null, Validators.required],
-      selected_document: [null, Validators.required],
-      document_number: ['', [Validators.required, Validators.minLength(1)]],
-      instalation_code: ['', [Validators.required, Validators.minLength(1)]],
+      selected_account: ['', Validators.required],
+      name_consumer_unit: ['', [Validators.required, Validators.minLength(3)]],
+      selected_class: ['', Validators.required],
+      selected_document: ['', Validators.required],
+      document_number: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Apenas números
+      instalation_code: ['', [Validators.required, Validators.minLength(4)]],
       type_supply: [''],
       images: [''],
       location: [''],
       street: [''],
-      neiborhood: [''],
+      neighborhood: [''],
     });
 
 
@@ -101,12 +100,35 @@ export class CreateConsumerUnitComponent {
 
     this.form.get('selected_document')?.valueChanges.subscribe((selectedId: any) => {
       const selectedOption = this.listDocuments.find(doc => doc.id === selectedId);
-      
-      const name = selectedOption?.name.toLowerCase();
-      this.documentPlaceholder = name === 'cpf' ? 'CPF' : name === 'cnpj' ? 'CNPJ' : 'CPF/CNPJ';
-      this.documentMask = name === 'cpf' ? 'cpf' : name === 'cnpj' ? 'cnpj' : '';
+      this.updateDocumentFieldState(selectedOption);
     });
+  }
+
+  private updateDocumentFieldState(selectedOption?: Dependency): void {
+    if (!selectedOption) {
+      this.documentPlaceholder = 'CPF/CNPJ';
+      this.documentMask = '';
+      this.form.get('document_number')?.reset('');
+      return;
+    }
   
+    const name = selectedOption.name.toLowerCase();
+    if (name === 'cpf') {
+      this.documentPlaceholder = 'CPF';
+      this.documentMask = 'cpf';
+    } else if (name === 'cnpj') {
+      this.documentPlaceholder = 'CNPJ';
+      this.documentMask = 'cnpj';
+    } else {
+      this.documentPlaceholder = 'CPF/CNPJ';
+      this.documentMask = '';
+    }
+  
+    this.form.get('document_number')?.reset();
+  }
+
+  get isDocumentInputDisabled(): boolean {
+    return !this.form.get('selected_document')?.value;
   }
 
   isValidAccount = (control: FormControl) => {
@@ -212,4 +234,8 @@ export class CreateConsumerUnitComponent {
       name: account.name 
     }));
   }
+  
+
+
+  
 }
