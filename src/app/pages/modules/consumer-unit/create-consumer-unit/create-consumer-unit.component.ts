@@ -107,7 +107,9 @@ export class CreateConsumerUnitComponent {
 
     this.form.get('consumer_is_active')?.valueChanges.subscribe((isActive: boolean) => {
       this.form.get('selected_document')?.reset('');
+      this.form.get('name_consumer_unit')?.reset('');
       console.log('Campo "Ativo" alterado:', isActive);
+
     });
   }
 

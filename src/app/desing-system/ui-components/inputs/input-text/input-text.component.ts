@@ -27,7 +27,6 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class InputTextComponent implements ControlValueAccessor, Validator, OnInit {
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
-  isRequired: boolean = false;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() type: string = 'text';
   @Input() typeMask: 'cpf' | 'cnpj' | 'phone' | '' = '';
@@ -41,11 +40,10 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
   isFocused: boolean = false; 
 
   ngOnInit() {
-    if (!this.isRequired && this.control && this.control.validator) {
-      const validationResult = this.control.validator(new FormControl());
-      if (validationResult && validationResult['required']) {
-        this.isRequired = true;
-      }
+    if(this.control){
+      this.control.statusChanges.subscribe(() => {
+        console.log('Status changed:', this.control.status);
+      });
     }
   }
 
@@ -66,13 +64,9 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
   }
 
   validate(control: FormControl) {
-    if (this.isRequired) {
+    if (this.onlyNumbers || this.typeMask) {
       let currentValue = control.value || '';
-      
-      if (this.onlyNumbers || this.typeMask) {
-        currentValue = currentValue.toString().replace(/\D/g, '');
-      }
-
+      currentValue = currentValue.toString().replace(/\D/g, '');
       if (currentValue === '') {
         return { required: true };
       }
@@ -80,6 +74,10 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
     return null;
   }
 
+  get showErrorContainer(): boolean {
+    return this.control ? this.control.invalid : false;
+  }
+  
   onInputChange(event: any): void {
     if (this.disabled) return;
     this.value = event.target.value;

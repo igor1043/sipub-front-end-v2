@@ -1,7 +1,6 @@
 <div class="input-container" [class]="size">
   <div class="floating-label">
     <input
-    #inputElement
       [type]="type"
       [value]="value"
       (input)="onInputChange($event)"
@@ -13,15 +12,16 @@
     <label class="hint" [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
   </div>
 
-  <div class="footer-container" *ngIf="isRequired">
-    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-700)'/>
+  <!-- Exibe o container de erro se o controle for inválido -->
+  <div class="footer-container" *ngIf="showErrorContainer">
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color="var(--red-700)"/>
     <span class="required-text">
       Campo obrigatório
     </span>
   </div>
 
   <div class="footer-container" *ngIf="alertText">
-    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_help.svg" color='var(--gray-700)'/>
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_help.svg" color="var(--gray-700)"/>
     <span class="alert-text">
       {{ alertText }}
     </span>
