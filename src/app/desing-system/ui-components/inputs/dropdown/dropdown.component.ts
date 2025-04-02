@@ -1,7 +1,8 @@
-import { Component, Input, forwardRef, Self, Optional, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Self, Optional, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NgControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dropdown',
@@ -10,7 +11,7 @@ import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
   standalone: true,
   imports: [CommonModule, SvgIconComponent],
 })
-export class DropdownComponent implements ControlValueAccessor {
+export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestroy {
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
   @Input() isRequired: boolean = false;
@@ -25,10 +26,35 @@ export class DropdownComponent implements ControlValueAccessor {
   isFocused: boolean = false;
   selectedId: any = null;
 
+  private controlSubscription!: Subscription;
+
   constructor(@Self() @Optional() public ngControl: NgControl) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
+  }
+
+  ngOnInit(): void {
+    if (this.ngControl && this.ngControl.control) {
+      this.controlSubscription = this.ngControl.control.valueChanges.subscribe(value => {
+        if (value === '' || value === null) {
+          this.clearSelection();
+        }
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.controlSubscription) {
+      this.controlSubscription.unsubscribe();
+    }
+  }
+
+  private clearSelection(): void {
+    this.selectedId = null;
+    this.displayText = '';
+    this.searchTerm = '';
+    this.filterOptions();
   }
 
   writeValue(id: any): void {

@@ -1,20 +1,22 @@
-import { Component, Input, forwardRef, OnInit } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
 import { EnvironmentService } from './EnvironmentService';
 
-interface MarkerPosition {
+export interface MarkerPosition {
   lat: number;
   lng: number;
   address?: string;
   street?: string;
+  number?: string;      
   neighborhood?: string;
   city?: string;
   state?: string;
-  postalCode?: string;
+  postalCode?: string; 
   country?: string;
 }
+
 
 @Component({
   selector: 'app-map-picker',
@@ -34,6 +36,8 @@ export class MapPickerComponent implements ControlValueAccessor, OnInit {
   apiKey: string = "your_api_key";
   private currentMapCenter?: google.maps.LatLngLiteral;
   center: MarkerPosition = { lat: -23.5505, lng: -46.6333 };
+
+  @Output() markerRemoved = new EventEmitter<void>();
 
   constructor(private envService: EnvironmentService) {}
 
@@ -199,6 +203,7 @@ export class MapPickerComponent implements ControlValueAccessor, OnInit {
     if (this.map && this.currentMapCenter) {
       this.map.panTo(this.currentMapCenter);
     }
+    this.markerRemoved.emit(); 
   }
 
   private updatePosition(position: MarkerPosition): void {
@@ -214,31 +219,45 @@ export class MapPickerComponent implements ControlValueAccessor, OnInit {
         const addressDetails: Partial<MarkerPosition> = {
           address: results[0].formatted_address
         };
-
+  
         addressComponents.forEach(component => {
+          console.log('Component:', component);
+          
+          // Número
           if (component.types.includes('street_number')) {
+            addressDetails.number = component.long_name;
+          }
+        
+          // Rua (sem número)
+          if (component.types.includes('route')) {
             addressDetails.street = component.long_name;
           }
-          if (component.types.includes('route')) {
-            addressDetails.street = `${addressDetails.street || ''} ${component.long_name}`.trim();
-          }
-          if (component.types.includes('sublocality')) {
+        
+          // Bairro
+          if (component.types.includes('sublocality') || component.types.includes('neighborhood')) {
             addressDetails.neighborhood = component.long_name;
           }
-          if (component.types.includes('locality')) {
-            addressDetails.city = component.long_name;
+        
+          // Cidade (prioriza "locality", depois "administrative_area_level_2")
+          if (!addressDetails.city) { // Só define se ainda não tiver sido preenchido
+            if (component.types.includes('locality')) {
+              addressDetails.city = component.long_name;
+            } else if (component.types.includes('administrative_area_level_2')) {
+              addressDetails.city = component.long_name;
+            }
           }
+        
+          // Estado (sigla)
           if (component.types.includes('administrative_area_level_1')) {
             addressDetails.state = component.short_name;
           }
+        
+          // CEP
           if (component.types.includes('postal_code')) {
             addressDetails.postalCode = component.long_name;
           }
-          if (component.types.includes('country')) {
-            addressDetails.country = component.long_name;
-          }
         });
-
+  
         if (this.marker) {
           this.marker.position = { 
             ...this.marker.position,

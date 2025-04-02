@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DropdownComponent } from "../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
 import { ImageUploadComponent } from 'app/desing-system/ui-components/image-upload/image-upload.component';
 import { PdfUploadComponent } from 'app/desing-system/ui-components/pdf-upload/pdf-upload.component';
-import { MapPickerComponent } from 'app/desing-system/ui-components/map-picker/map-picker.component';
+import { MapPickerComponent, MarkerPosition } from 'app/desing-system/ui-components/map-picker/map-picker.component';
 import { firstValueFrom } from 'rxjs';
 import { AccountService } from 'app/core/services/account/account.service';
 import { AccountResponse } from 'app/core/services/account/models/account.model';
@@ -43,7 +43,7 @@ import { ContainerInfoDateComponent } from "./components/container-info-date/con
     MapPickerComponent,
     LoadingComponent,
     NotificationComponent,
-    ContainerInfoDateComponent
+    ContainerInfoDateComponent,
 ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']
@@ -106,18 +106,23 @@ export class CreateConsumerUnitComponent {
       unit_implementation_date: ['', Validators.required],
       holder_email: ['', [Validators.required, Validators.email]],
       location: [''],
-      street: [''],          
-      neighborhood: [''],    
-      number: [''],          
-      zone: [''],           
+      street: [''],
+      neighborhood: [''],
+      number: [''],
+      zone: [''],
       reference_point: [''],
-      city: [''],            
-      state: [''],           
-      zip_code: [''] ,
+      city: [''],
+      state: [''],
+      zip_code: [''],
     });
 
     this.form.get('document_number')?.disable();
 
+
+    this.setupListeners();
+  }
+
+  private setupListeners(): void {
     this.form.get('selected_account')?.valueChanges.subscribe(contaId => {
       this.selectedAccount = this.listAccounts.find(a => a.id === contaId) || null;
 
@@ -130,10 +135,10 @@ export class CreateConsumerUnitComponent {
 
     this.form.get('switch_consumer_is_active')?.valueChanges.subscribe((isActive: boolean) => {
       this.form.get('selected_document')?.reset('');
-      this.form.get('name_consumer_unit')?.reset('');
-      console.log('Campo "Ativo" alterado:', isActive);
+      this.form.get('selected_account')?.reset('');
 
     });
+    this.setupLocationListener();
   }
 
   private updateDocumentFieldState(selectedOption?: Dependency): void {
@@ -309,13 +314,43 @@ export class CreateConsumerUnitComponent {
     }));
   }
 
+  private setupLocationListener(): void {
+    const locationControl = this.form.get('location');
+    if (locationControl) {
+      locationControl.valueChanges.subscribe((location: MarkerPosition) => {
+        if (location) {
+          this.form.patchValue({
+            street: location.street,
+            number: location.number,
+            neighborhood: location.neighborhood,
+            city: location.city,
+            state: location.state,
+            zip_code: location.postalCode,
+            // zone e reference_point não são preenchidos automaticamente
+          });
+        }
+      });
+    }
+  }
+
+  onMarkerRemoved() {
+    this.form.patchValue({
+      street: null,
+      number: null,
+      neighborhood: null,
+      city: null,
+      state: null,
+      zip_code: null,
+    });
+  }
+
   private documentValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (!value) return null;
-  
+
       const docType = this.documentMask;
-  
+
       if (docType === 'cpf' && value.length !== 14) {
         return { invalidCpf: true };
       }
