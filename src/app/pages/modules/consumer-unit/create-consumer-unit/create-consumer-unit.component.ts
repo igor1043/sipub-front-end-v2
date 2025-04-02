@@ -106,8 +106,14 @@ export class CreateConsumerUnitComponent {
       unit_implementation_date: ['', Validators.required],
       holder_email: ['', [Validators.required, Validators.email]],
       location: [''],
-      street: [''],
-      neighborhood: [''],
+      street: [''],          
+      neighborhood: [''],    
+      number: [''],          
+      zone: [''],           
+      reference_point: [''],
+      city: [''],            
+      state: [''],           
+      zip_code: [''] ,
     });
 
     this.form.get('document_number')?.disable();

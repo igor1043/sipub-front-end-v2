@@ -66,8 +66,9 @@
           </div>
         </div>
 
+        <app-divider type="small"></app-divider>
         <div class="info_creation">
-          <app-divider type="small"></app-divider>
+          
           <app-text text="Informações de Criação" size="large"></app-text>
 
           <div class="info_creation_line">
@@ -95,9 +96,7 @@
         <app-text text="localização e Ponto de Referência" size="large"></app-text>
 
         <div class="container_location">
-
           <div class="map_location">
-
             <app-map-picker [markerIconUrl]="'assets/icons/ic_marker_consumer_unit.svg'"
               formControlName="location"></app-map-picker>
 
@@ -106,8 +105,49 @@
           </div>
 
           <div class="inputs_location">
-            <app-input-text placeholder="Logradouro" size="medium" type="text"></app-input-text>
-            <app-input-text placeholder="Bairro" size="medium" type="text"></app-input-text>
+            <!-- Linha 1 - Logradouro -->
+            <div class="full-width-line">
+              <app-input-text formControlName="street" placeholder="Logradouro" size="medium" type="text">
+              </app-input-text>
+            </div>
+
+            <!-- Linha 2 - Bairro e Número -->
+            <div class="half-width-line">
+              <app-input-text formControlName="neighborhood" placeholder="Bairro" size="medium" type="text"
+                class="half-width">
+              </app-input-text>
+
+              <app-input-text formControlName="number" placeholder="Número" size="medium" type="text"
+                class="half-width">
+              </app-input-text>
+            </div>
+
+            <!-- Linha 3 - Zona -->
+            <div class="full-width-line">
+              <app-input-text formControlName="zone" placeholder="Zona" size="medium" type="text">
+              </app-input-text>
+            </div>
+
+            <!-- Linha 4 - Ponto de Referência -->
+            <div class="full-width-line">
+              <app-input-text formControlName="reference_point" placeholder="Ponto de Referência" size="medium"
+                type="text">
+              </app-input-text>
+            </div>
+
+            <!-- Linha 5 - Cidade, Estado, CEP -->
+            <div class="third-width-line">
+              <app-input-text formControlName="city" placeholder="Cidade" size="medium" type="text" class="third-width">
+              </app-input-text>
+
+              <app-input-text formControlName="state" placeholder="Estado" size="medium" type="text"
+                class="third-width">
+              </app-input-text>
+
+              <app-input-text formControlName="zip_code" placeholder="CEP" size="medium" type="text"
+                class="third-width">
+              </app-input-text>
+            </div>
           </div>
         </div>
 
