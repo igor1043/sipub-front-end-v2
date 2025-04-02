@@ -1,6 +1,7 @@
 <div class="input-container" [class]="size">
   <div class="floating-label">
     <input
+    #inputText
       [type]="type"
       [value]="value"
       (input)="onInputChange($event)"

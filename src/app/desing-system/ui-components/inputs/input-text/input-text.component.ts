@@ -1,8 +1,9 @@
-import { Component, forwardRef, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, FormControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-input-text',
@@ -24,7 +25,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     }
   ]
 })
-export class InputTextComponent implements ControlValueAccessor, Validator, OnInit {
+export class InputTextComponent implements ControlValueAccessor, Validator, OnInit, OnDestroy {
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
@@ -35,15 +36,33 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
   disabled: boolean = false;
 
   value: any = '';
-  onChange: any = () => {};
-  onTouched: any = () => {};
-  isFocused: boolean = false; 
+  onChange: any = () => { };
+  onTouched: any = () => { };
+  isFocused: boolean = false;
+
+  private controlSubscription!: Subscription;
+  @ViewChild('inputText', { static: false }) inputText!: ElementRef;
 
   ngOnInit() {
-    if(this.control){
-      this.control.statusChanges.subscribe(() => {
-        console.log('Status changed:', this.control.status);
+    if (this.control) {
+      this.controlSubscription = this.control.valueChanges.subscribe(value => {
+        if (value === '' || value === null) {
+          this.writeValue('');
+          this.control.setValue('', { emitEvent: false });
+  
+          setTimeout(() => {
+            if (this.inputText && this.inputText.nativeElement) {
+              this.inputText.nativeElement.value = '';
+            }
+          });
+        }
       });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.controlSubscription) {
+      this.controlSubscription.unsubscribe();
     }
   }
 
@@ -77,7 +96,7 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
   get showErrorContainer(): boolean {
     return this.control ? this.control.invalid : false;
   }
-  
+
   onInputChange(event: any): void {
     if (this.disabled) return;
     this.value = event.target.value;
@@ -102,7 +121,7 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
   get mask(): string {
     switch (this.typeMask) {
       case 'cpf':
-        return '000.000.000-00'; 
+        return '000.000.000-00';
       case 'cnpj':
         return '00.000.000/0000-00';
       case 'phone':
