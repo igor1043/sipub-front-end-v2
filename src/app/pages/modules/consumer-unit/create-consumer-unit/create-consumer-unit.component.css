@@ -1,45 +1,69 @@
-::ng-deep .tabs .mat-tab-group {
-    margin-top: 20px;
+:host ::ng-deep app-tabs {
+    display: block;
+    margin-top: 30px ;
+  }
+
+.selected_account {
+    display: block;
+    margin-top: 5px ;
 }
 
-.form-container,
-.container-location {
+.title_info_consumer_unit {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.form_container{
     display: flex;
     gap: 2rem;
-    /* Espaço entre as colunas */
-    flex-wrap: wrap;
-    /* Permite quebra de linha */
 }
-
-.basic_info,
+.basic_info {
+    flex: 1;
+    min-width: 300px;
+}
 .images_area {
     flex: 1;
-    /* Faz ambas as divs crescerem igualmente */
+    background: red;
     min-width: 300px;
-    /* Largura mínima antes de quebrar */
 }
 
-.document-container {
+.container_location {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.document_container {
     display: flex;
     gap: 1rem;
     width: 100%;
-}
-
-.document-container>* {
     flex: 1;
-    /* Faz todos os elementos filhos terem a mesma largura */
     min-width: 0;
-    /* Permite que os elementos encolham corretamente */
 }
 
-.document-container>*:not(:last-child) {
-    margin-right: 1rem;
-    /* Fallback para navegadores que não suportam gap */
+.document_container > * {
+    flex: 1 1 0; 
+    min-width: 0;
+}
+
+.container_info_installation {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+}
+
+.container_info_installation > * {
+    flex: 1 1 0; /* Distribuição igualitária */
+    min-width: 0; /* Permite que os itens encolham */
 }
 
 
-.map-location,
-.inputs-location {
+
+
+.map_location,
+.inputs_location {
     flex: 1;
     /* Faz ambas as divs crescerem igualmente */
     min-width: 300px;
@@ -48,21 +72,21 @@
 
 /* Ajuste para telas pequenas */
 @media (max-width: 768px) {
-    .form-container {
+    .form_container {
         flex-direction: column;
     }
 
-    .basic_info,
+    
     .images_area {
         width: 100%;
         min-width: auto;
     }
 
-    .document-container {
+    .document_container {
         flex-wrap: wrap;
     }
 
-    .document-container>* {
+    .document_container>* {
         flex: 100%;
         /* Empilha os elementos em telas pequenas */
     }

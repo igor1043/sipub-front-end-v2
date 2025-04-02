@@ -1,69 +1,92 @@
-<app-text text="Unidade Consumidora" size="large">
-</app-text>
+<div class="container">
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-text class="title_create" text="Unidade Consumidora" size="large">
+  </app-text>
 
-  <app-tabs class="tabs" [tabs]="['Informações Básicas', 'Monitoramento Mensal', 'Carga e Consumo','Geração']"
-    size="medium">
-    <!-- Tab 1: Informações Básicas -->
-    <ng-template #appCustomTab>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-      <app-dropdown [options]="listAccounts" placeholder="Selecione a conta referente a unidade consumidora"
-        [isRequired]="true" [size]="'medium'" [control]="form.get('selected_account')!"></app-dropdown>
+    <app-tabs class="tabs" [tabs]="['Informações Básicas','Monitoramento Mensal','Carga e Consumo','Geração']"
+      size="medium">
+      <!-- Tab 1: Informações Básicas -->
+      <ng-template #appCustomTab>
 
-      <app-divider type="small"></app-divider>
+        <app-dropdown class="selected_account" [options]="listAccounts"
+          placeholder="Selecione a conta referente a unidade consumidora" [isRequired]="true" [size]="'medium'"
+          [control]="form.get('selected_account')!"></app-dropdown>
 
-      <app-text text="Informações da Unidade Consumidora" size="large"></app-text>
-
-      <div class="form-container">
-        <div class="basic_info">
-          <app-input-text [control]="form.get('name_consumer_unit')!" formControlName="name_consumer_unit"  placeholder="Nome da Unidade" size="medium" type="text"></app-input-text>
-          <app-dropdown [options]="listClass" placeholder="Classe" [isRequired]="true" [size]="'medium'"
-            [control]="form.get('selected_class')!"></app-dropdown>
-
-          <div class="document-container">
-            <app-dropdown [options]="listDocuments" placeholder="CPF/CNPJ" [isRequired]="true" [size]="'medium'"
-              [control]="form.get('selected_document')!"></app-dropdown>
-
-            <app-input-text [control]="form.get('document_number')!" formControlName="document_number"
-              [placeholder]="documentPlaceholder" size="medium" type="text" [typeMask]="documentMask"
-              [disabled]="isDocumentInputDisabled"></app-input-text>
-              
-          </div>
-          <app-input-text placeholder="Tipo de fornecimento" size="medium" type="text"></app-input-text>
-        </div>
-
-        <div class="images_area">
-          <app-image-upload [maxFiles]="10" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
-            formControlName="images"></app-image-upload>
-          <app-switch formControlName="consumer_is_active" size="medium" label="Ativa"></app-switch>
-        </div>
-      </div>
-
-      <div class="info-creation">
         <app-divider type="small"></app-divider>
-        <app-text text="Informações de Criação" size="large"></app-text>
-      </div>
 
-      <app-divider type="small"></app-divider>
-      <app-text text="localização e Ponto de Referência" size="large"></app-text>
+        <app-text class="title_info_consumer_unit" text="Informações da Unidade Consumidora" size="large"></app-text>
 
-      <div class="container-location">
+        <div class="form_container">
+          <div class="basic_info">
+            <app-input-text [control]="form.get('name_consumer_unit')!" formControlName="name_consumer_unit"
+              placeholder="Nome da Unidade" size="medium" type="text"></app-input-text>
+            <app-dropdown [options]="listClass" placeholder="Classe" [isRequired]="true" [size]="'medium'"
+              [control]="form.get('selected_class')!"></app-dropdown>
 
-        <div class="map-location">
+            <div class="document_container">
+              <app-dropdown [options]="listDocuments" placeholder="CPF/CNPJ" [isRequired]="true" [size]="'medium'"
+                [control]="form.get('selected_document')!"></app-dropdown>
 
-          <app-map-picker [markerIconUrl]="'assets/icons/ic_marker_consumer_unit.svg'"
-            formControlName="location"></app-map-picker>
+              <app-input-text [control]="form.get('document_number')!" formControlName="document_number"
+                [placeholder]="documentPlaceholder" size="medium" type="text"
+                [typeMask]="documentMask"></app-input-text>
 
-          <p>Endereço completo: {{ form.get('location')?.value?.address }}</p>
-          <p>Coordenadas: {{ form.get('location')?.value?.lat }}, {{ form.get('location')?.value?.lng }}</p>
+              <app-input-text [control]="form.get('client_code')!" formControlName="client_code"
+                [placeholder]="'Código do Cliente'" size="medium" type="text"></app-input-text>
+            </div>
+
+            <app-dropdown [options]="listSubgroupTariff" placeholder="Subgrupo Tarifário" [isRequired]="true" [size]="'medium'"
+            [control]="form.get('subgroup_tariff')!"></app-dropdown>
+
+            <div class = "container_info_installation">
+
+              <app-input-text [control]="form.get('type_supply')!" formControlName="type_supply"
+              [placeholder]="'Tipo de Fornecimento'" size="medium" type="text"></app-input-text>
+
+              <app-input-text [control]="form.get('instalation_code')!" formControlName="instalation_code"
+              [placeholder]="'Código da Instalação'" size="medium" type="text"></app-input-text>
+            </div>
+    
+
+            <app-dropdown [options]="listModalities" placeholder="Modalidade" [isRequired]="true" [size]="'medium'"
+            [control]="form.get('modality')!"></app-dropdown>
+
+            <app-switch formControlName="switch_cip_cosip" size="medium" label="CIP/Cosip"></app-switch>
+          </div>
+
+          <div class="images_area">
+            <app-image-upload [maxFiles]="10" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
+              formControlName="images"></app-image-upload>
+            <app-switch formControlName="switch_consumer_is_active" size="medium" label="Ativa"></app-switch>
+          </div>
         </div>
 
-        <div class="inputs-location">
-          <app-input-text placeholder="Logradouro" size="medium" type="text"></app-input-text>
-          <app-input-text placeholder="Bairro" size="medium" type="text"></app-input-text>
+        <div class="info_creation">
+          <app-divider type="small"></app-divider>
+          <app-text text="Informações de Criação" size="large"></app-text>
         </div>
-      </div>
+
+        <app-divider type="small"></app-divider>
+        <app-text text="localização e Ponto de Referência" size="large"></app-text>
+
+        <div class="container_location">
+
+          <div class="map_location">
+
+            <app-map-picker [markerIconUrl]="'assets/icons/ic_marker_consumer_unit.svg'"
+              formControlName="location"></app-map-picker>
+
+            <p>Endereço completo: {{ form.get('location')?.value?.address }}</p>
+            <p>Coordenadas: {{ form.get('location')?.value?.lat }}, {{ form.get('location')?.value?.lng }}</p>
+          </div>
+
+          <div class="inputs_location">
+            <app-input-text placeholder="Logradouro" size="medium" type="text"></app-input-text>
+            <app-input-text placeholder="Bairro" size="medium" type="text"></app-input-text>
+          </div>
+        </div>
 
 
 
@@ -73,34 +96,35 @@
 
 
 
-      <!-- Switch -->
+        <!-- Switch -->
 
 
-      <!-- Divider -->
-      <app-divider type="small"></app-divider>
+        <!-- Divider -->
+        <app-divider type="small"></app-divider>
 
-    </ng-template>
+      </ng-template>
 
-    <!-- Tab 2: Monitoramento Mensal -->
-    <ng-template #appCustomTab>
-      <p>Conteúdo da Tab 2</p>
-    </ng-template>
+      <!-- Tab 2: Monitoramento Mensal -->
+      <ng-template #appCustomTab>
+        <p>Conteúdo da Tab 2</p>
+      </ng-template>
 
-    <!-- Tab 3: Carga e Consumo -->
-    <ng-template #appCustomTab>
-      <p>Conteúdo da Tab 3</p>
-    </ng-template>
+      <!-- Tab 3: Carga e Consumo -->
+      <ng-template #appCustomTab>
+        <p>Conteúdo da Tab 3</p>
+      </ng-template>
 
-    <!-- Tab 4: Geração -->
-    <ng-template #appCustomTab>
-      <p>Conteúdo da Tab 4</p>
-    </ng-template>
-  </app-tabs>
-</form>
+      <!-- Tab 4: Geração -->
+      <ng-template #appCustomTab>
+        <p>Conteúdo da Tab 4</p>
+      </ng-template>
+    </app-tabs>
+  </form>
 
-<app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onClickLogin()">
-</app-button>
+  <app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onClickLogin()">
+  </app-button>
 
 
-<app-loading [isLoading]="isLoading"></app-loading>
-<app-notification></app-notification>
+  <app-loading [isLoading]="isLoading"></app-loading>
+  <app-notification></app-notification>
+</div>

@@ -50,4 +50,18 @@ export class CreateConsumerUnitMockService {
 
     return of(tariffGroups).pipe(delay(800));
   }
+
+  getModalities() {
+    const modalities: Dependency[] = [
+      { id: 17, name: 'Autoconsumo Remoto', type: 'modality' },
+      { id: 18, name: 'Geração Compartilhada', type: 'modality' },
+      { id: 19, name: 'Geração na Própria UC', type: 'modality' },
+      { id: 20, name: 'Integração de Múltiplas UCs', type: 'modality' },
+      { id: 21, name: 'Empreendimento com Múltiplas UCs', type: 'modality' },
+      { id: 22, name: 'Geração Distribuída Isenta', type: 'modality' },
+      { id: 23, name: 'Compensaçao de Energia', type: 'modality' }
+    ];
+
+    return of(modalities).pipe(delay(800));
+  }
 }

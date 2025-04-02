@@ -4,7 +4,7 @@ import { SwitchComponent } from 'app/desing-system/ui-components/switch/switch.c
 import { TabsComponent } from 'app/desing-system/ui-components/tabs/tabs.component';
 import { TextComponent } from 'app/desing-system/ui-components/text/text.component';
 import { DividerComponent } from 'app/desing-system/ui-components/divider/divider.component';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextComponent } from 'app/desing-system/ui-components/inputs/input-text/input-text.component';
 import { NgModule } from '@angular/core';
@@ -68,6 +68,12 @@ export class CreateConsumerUnitComponent {
   documentPlaceholder: string = 'CPF/CNPJ';
   documentMask: '' | 'cpf' | 'cnpj' = '';
 
+  listSubgroupTariff: Dependency[] = []
+  selectedSubgroupTariff: Dependency | null = null;
+
+  listModalities: Dependency[] = []
+  selectedModality: Dependency | null = null;
+
 
   accounts: Account[] = [];
 
@@ -75,6 +81,8 @@ export class CreateConsumerUnitComponent {
     this.getListAccount();
     this.getListClass();
     this.getSelectedDocument();
+    this.getTariffGroup();
+    this.getModalities();
   }
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private notificationService: NotificationService) {
@@ -83,10 +91,14 @@ export class CreateConsumerUnitComponent {
       name_consumer_unit: ['', [Validators.required, Validators.minLength(3)]],
       selected_class: ['', Validators.required],
       selected_document: ['', Validators.required],
-      document_number: ['', Validators.required],
-      instalation_code: ['', [Validators.required, Validators.minLength(4)]],
-      consumer_is_active: [false],
+      document_number: ['', [Validators.required, this.documentValidator()]],
+      client_code: ['', [Validators.required]],
+      subgroup_tariff: ['', [Validators.required]],
       type_supply: [''],
+      instalation_code: ['', [Validators.required]],
+      modality: ['', [Validators.required]],
+      switch_cip_cosip: [false],
+      switch_consumer_is_active: [true],
       images: [''],
       location: [''],
       street: [''],
@@ -105,7 +117,7 @@ export class CreateConsumerUnitComponent {
       this.updateDocumentFieldState(selectedOption);
     });
 
-    this.form.get('consumer_is_active')?.valueChanges.subscribe((isActive: boolean) => {
+    this.form.get('switch_consumer_is_active')?.valueChanges.subscribe((isActive: boolean) => {
       this.form.get('selected_document')?.reset('');
       this.form.get('name_consumer_unit')?.reset('');
       console.log('Campo "Ativo" alterado:', isActive);
@@ -118,8 +130,10 @@ export class CreateConsumerUnitComponent {
       this.documentPlaceholder = 'CPF/CNPJ';
       this.documentMask = '';
       this.form.get('document_number')?.reset('');
+      this.form.get('document_number')?.disable();
       return;
     }
+    this.form.get('document_number')?.enable();
 
     const name = selectedOption.name.toLowerCase();
     if (name === 'cpf') {
@@ -196,6 +210,46 @@ export class CreateConsumerUnitComponent {
     });
   }
 
+  private getTariffGroup(): void {
+    this.isLoading = true;
+    this.createAccountMock.getTariffGroups().subscribe({
+      next: (listGroupTariff) => {
+        this.listSubgroupTariff = listGroupTariff;
+        this.isLoading = false;
+      },
+      error: (erro) => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar a lista de classes',
+          7000,
+          'Recarregue a página e tente novamente',
+          undefined,
+          () => { }
+        );
+      }
+    });
+  }
+
+  private getModalities(): void {
+    this.isLoading = true;
+    this.createAccountMock.getModalities().subscribe({
+      next: (listModalities) => {
+        this.listModalities = listModalities;
+        this.isLoading = false;
+      },
+      error: (erro) => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar a lista de modalidades',
+          7000,
+          'Recarregue a página e tente novamente',
+          undefined,
+          () => { }
+        );
+      }
+    });
+  }
+
   private getListClass(): void {
     this.isLoading = true;
     this.createAccountMock.getDependencies().subscribe({
@@ -244,7 +298,20 @@ export class CreateConsumerUnitComponent {
     }));
   }
 
-
-
-
+  private documentValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value) return null;
+  
+      const docType = this.documentMask;
+  
+      if (docType === 'cpf' && value.length !== 14) {
+        return { invalidCpf: true };
+      }
+      if (docType === 'cnpj' && value.length !== 18) {
+        return { invalidCnpj: true };
+      }
+      return null;
+    };
+  }
 }

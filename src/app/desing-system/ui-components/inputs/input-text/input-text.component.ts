@@ -30,9 +30,9 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() type: string = 'text';
   @Input() typeMask: 'cpf' | 'cnpj' | 'phone' | '' = '';
-  @Input() disabled: boolean = false;
   @Input() onlyNumbers: boolean = false;
   @Input() control!: AbstractControl;
+  disabled: boolean = false;
 
   value: any = '';
   onChange: any = () => {};

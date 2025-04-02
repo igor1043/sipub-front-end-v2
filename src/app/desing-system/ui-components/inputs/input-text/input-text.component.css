@@ -31,14 +31,12 @@ label {
   color: var(--text-color);
   transition: all 0.3s ease;
   pointer-events: none;
-  background: var(--background-color);
-  /* Fundo para cobrir a borda do input */
+  background: transparent;
   padding: 0 4px;
 }
 
 label.float {
   top: -8px;
-  /* Ajuste para subir um pouco mais */
   font-size: 0.90rem;
   background-color: var(--background-color);
   color: var(--text-color);
@@ -77,7 +75,6 @@ label.float {
   color: var(--red-700);
 }
 
-/* Tamanhos */
 .input-container.small input {
   height: 30px;
   font-size: 0.875rem;
