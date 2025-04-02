@@ -6,8 +6,6 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 63px;
-  height: 34px;
 }
 
 .switch input {
@@ -26,33 +24,93 @@
   background-color: var(--background-color);
   transition: 0.4s;
   border-radius: 34px;
-  border: 2px solid var(--color-primary); /* Borda vermelha quando não selecionado */
+  border: 2px solid var(--color-primary);
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  top: 50%; /* Centraliza verticalmente */
-  transform: translateY(-50%); /* Ajusta a posição vertical */
-  background-color: var(--black); /* Cor roxa quando não selecionado */
+  background-color: var(--black);
   transition: 0.4s;
   border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: var(--color-primary);
-  border-color: var(--color-primary); /* Borda da cor primária quando selecionado */
+  border-color: var(--color-primary);
 }
 
-input:checked + .slider:before {
-  transform: translateX(26px) translateY(-50%); /* Mantém a centralização vertical */
-  background-color: var(--white); /* Cor laranja quando selecionado */
+input:checked+.slider:before {
+  background-color: var(--white);
 }
 
 .toggle-text {
   margin-left: 10px;
-  font-size: 16px;
+  font-size: 1rem;
+}
+
+/* Tamanhos de texto */
+.toggle-container.small .toggle-text {
+  font-size: 0.875rem;
+  /* 14px */
+}
+
+.toggle-container.medium .toggle-text {
+  font-size: 1rem;
+  /* 16px */
+}
+
+.toggle-container.large .toggle-text {
+  font-size: 1.125rem;
+  /* 18px */
+}
+
+/* Tamanho small (40x24) - mantido arredondado */
+.toggle-container.small .switch {
+  width: 40px;
+  height: 24px;
+}
+
+.toggle-container.small .slider:before {
+  height: 18px;
+  width: 18px;
+  left: 1px;
+}
+
+.toggle-container.small input:checked+.slider:before {
+  transform: translateX(16px) translateY(-50%);
+}
+
+/* Tamanho medium (56x32) */
+.toggle-container.medium .switch {
+  width: 50px;
+  height: 28px;
+}
+
+.toggle-container.medium .slider:before {
+  height: 20px;
+  width: 20px;
+  left: 1px;
+}
+
+.toggle-container.medium input:checked+.slider:before {
+  transform: translateX(24px) translateY(-50%);
+}
+
+/* Tamanho large (56x32) */
+.toggle-container.large .switch {
+  width: 56px;
+  height: 32px;
+}
+
+.toggle-container.large .slider:before {
+  height: 24px;
+  width: 24px;
+  left: 2px;
+}
+
+.toggle-container.large input:checked+.slider:before {
+  transform: translateX(24px) translateY(-50%);
 }

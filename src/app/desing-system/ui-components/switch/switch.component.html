@@ -1,11 +1,6 @@
-<div class="toggle-container" [class]="containerClass">
+<div class="toggle-container" [class]="size">
   <label class="switch">
-    <input 
-      type="checkbox" 
-      [checked]="isChecked" 
-      [disabled]="disabled"
-      (change)="onToggle()"
-    >
+    <input type="checkbox" [checked]="isChecked" [disabled]="disabled" (change)="onToggle()">
     <span class="slider round"></span>
   </label>
   <span class="toggle-text">{{ label }}</span>

@@ -63,12 +63,4 @@ export class SwitchComponent implements ControlValueAccessor, Validator {
       this.onTouched();
     }
   }
-
-  get containerClass() {
-    return {
-      'small': this.size === 'small',
-      'medium': this.size === 'medium',
-      'large': this.size === 'large'
-    };
-  }
 }
