@@ -23,9 +23,29 @@
 }
 .images_area {
     flex: 1;
-    background: red;
     min-width: 300px;
 }
+
+.info_creation {
+    width: 50%; /* Ocupa metade da largura disponível */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espaço entre elementos filhos */
+    height: 100%; /* Preenche a altura disponível */
+  }
+  
+  .info_creation_line {
+    display: flex;
+    gap: 1rem;
+    flex: 1; /* Cada linha ocupa igualmente o espaço vertical restante */
+  }
+  
+  .info_creation_line app-input-text {
+    flex: 1; /* Campos ocupam espaço igual na linha */
+    min-width: 0; /* Permite que os campos reduzam abaixo de seu tamanho mínimo */
+  }
+  
+
 
 .container_location {
     display: flex;

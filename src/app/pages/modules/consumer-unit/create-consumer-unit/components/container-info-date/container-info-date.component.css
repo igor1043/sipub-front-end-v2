@@ -1,0 +1,49 @@
+.container {
+    background-color: transparent;
+    border: 1px solid var(--gray-700);
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .date-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    height: 100%;
+    justify-content: center; 
+    align-items: center;
+    text-align: center;
+  }
+  
+  .divider {
+    width: 1px;
+    height: 40px;
+    background-color: var(--gray-700);
+    opacity: 0.3;
+  }
+  
+  .label {
+    font-weight: 500;
+    color: var(--gray-700);
+    font-size: 0.9rem;
+    width: 100%;
+  }
+  
+  .value {
+    color: var(--gray-900);
+    font-size: 1rem;
+    font-weight: bold;
+    width: 100%;
+  }

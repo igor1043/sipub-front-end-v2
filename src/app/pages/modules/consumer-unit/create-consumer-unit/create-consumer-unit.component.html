@@ -37,21 +37,21 @@
                 [placeholder]="'Código do Cliente'" size="medium" type="text"></app-input-text>
             </div>
 
-            <app-dropdown [options]="listSubgroupTariff" placeholder="Subgrupo Tarifário" [isRequired]="true" [size]="'medium'"
-            [control]="form.get('subgroup_tariff')!"></app-dropdown>
+            <app-dropdown [options]="listSubgroupTariff" placeholder="Subgrupo Tarifário" [isRequired]="true"
+              [size]="'medium'" [control]="form.get('subgroup_tariff')!"></app-dropdown>
 
-            <div class = "container_info_installation">
+            <div class="container_info_installation">
 
               <app-input-text [control]="form.get('type_supply')!" formControlName="type_supply"
-              [placeholder]="'Tipo de Fornecimento'" size="medium" type="text"></app-input-text>
+                [placeholder]="'Tipo de Fornecimento'" size="medium" type="text"></app-input-text>
 
               <app-input-text [control]="form.get('instalation_code')!" formControlName="instalation_code"
-              [placeholder]="'Código da Instalação'" size="medium" type="text"></app-input-text>
+                [placeholder]="'Código da Instalação'" size="medium" type="text"></app-input-text>
             </div>
-    
+
 
             <app-dropdown [options]="listModalities" placeholder="Modalidade" [isRequired]="true" [size]="'medium'"
-            [control]="form.get('modality')!"></app-dropdown>
+              [control]="form.get('modality')!"></app-dropdown>
 
             <app-switch formControlName="switch_cip_cosip" size="medium" label="CIP/Cosip"></app-switch>
           </div>
@@ -59,6 +59,9 @@
           <div class="images_area">
             <app-image-upload [maxFiles]="10" [maxFileSize]="2" [acceptedFormats]="['image/jpeg', 'image/png']"
               formControlName="images"></app-image-upload>
+
+            <app-container-info-date [creationDate]="'05/09/2025'" [updateDate]="'05/09/2025'">
+            </app-container-info-date>
             <app-switch formControlName="switch_consumer_is_active" size="medium" label="Ativa"></app-switch>
           </div>
         </div>
@@ -66,6 +69,26 @@
         <div class="info_creation">
           <app-divider type="small"></app-divider>
           <app-text text="Informações de Criação" size="large"></app-text>
+
+          <div class="info_creation_line">
+            <app-input-text [control]="form.get('created_user')!" formControlName="created_user"
+              placeholder="Usuário Criador" size="medium" type="text">
+            </app-input-text>
+
+            <app-input-text [control]="form.get('holder_phone')!" formControlName="holder_phone"
+              placeholder="Telefone do Titular" size="medium" typeMask="phone">
+            </app-input-text>
+          </div>
+
+          <div class="info_creation_line">
+            <app-input-text [control]="form.get('unit_implementation_date')!" formControlName="unit_implementation_date"
+              placeholder="Data de Implantação" size="medium" type="date">
+            </app-input-text>
+
+            <app-input-text [control]="form.get('holder_email')!" formControlName="holder_email"
+              placeholder="Email do Titular" size="medium" type="email">
+            </app-input-text>
+          </div>
         </div>
 
         <app-divider type="small"></app-divider>
