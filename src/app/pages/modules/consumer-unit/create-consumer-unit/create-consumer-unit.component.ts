@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { ButtonComponent } from '../../../../desing-system/ui-components/button/button.component';
 import { SwitchComponent } from 'app/desing-system/ui-components/switch/switch.component';
 import { TabsComponent } from 'app/desing-system/ui-components/tabs/tabs.component';
@@ -7,16 +7,12 @@ import { DividerComponent } from 'app/desing-system/ui-components/divider/divide
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextComponent } from 'app/desing-system/ui-components/inputs/input-text/input-text.component';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DropdownComponent } from "../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
 import { ImageUploadComponent } from 'app/desing-system/ui-components/image-upload/image-upload.component';
-import { PdfUploadComponent } from 'app/desing-system/ui-components/pdf-upload/pdf-upload.component';
 import { MapPickerComponent, MarkerPosition } from 'app/desing-system/ui-components/map-picker/map-picker.component';
-import { firstValueFrom } from 'rxjs';
 import { AccountService } from 'app/core/services/account/account.service';
-import { AccountResponse } from 'app/core/services/account/models/account.model';
 import { Account } from 'app/core/interfaces/account.interface';
 import { AccountsMockService } from 'app/core/mocks/accounts.mock';
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
@@ -24,6 +20,8 @@ import { LoadingComponent } from "../../../../desing-system/ui-components/loadin
 import { NotificationComponent } from "../../../../desing-system/ui-components/notification/notification.component";
 import { CreateConsumerUnitMockService, Dependency } from 'app/core/mocks/consumer-unit/create.consumer.unit.mock';
 import { ContainerInfoDateComponent } from "./components/container-info-date/container-info-date.component";
+import { DialogConfig, DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
+
 
 @Component({
   selector: 'app-create-consumer-unit',
@@ -44,7 +42,8 @@ import { ContainerInfoDateComponent } from "./components/container-info-date/con
     LoadingComponent,
     NotificationComponent,
     ContainerInfoDateComponent,
-],
+    MessageDialogComponent
+  ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']
 })
@@ -59,13 +58,10 @@ export class CreateConsumerUnitComponent {
   isLoading = false;
 
   listAccounts: Account[] = []
-  selectedAccount: Account | null = null;
 
   listClass: Dependency[] = []
-  selectedClass: Dependency | null = null;
 
   listDocuments: Dependency[] = []
-  selectedDocument: Dependency | null = null;
   documentPlaceholder: string = 'CPF/CNPJ';
   documentMask: '' | 'cpf' | 'cnpj' = '';
 
@@ -73,10 +69,10 @@ export class CreateConsumerUnitComponent {
   selectedSubgroupTariff: Dependency | null = null;
 
   listModalities: Dependency[] = []
-  selectedModality: Dependency | null = null;
-
 
   accounts: Account[] = [];
+
+  @ViewChild('messageDialog') messageDialog!: MessageDialogComponent;
 
   ngOnInit(): void {
     this.getListAccount();
@@ -124,7 +120,7 @@ export class CreateConsumerUnitComponent {
 
   private setupListeners(): void {
     this.form.get('selected_account')?.valueChanges.subscribe(contaId => {
-      this.selectedAccount = this.listAccounts.find(a => a.id === contaId) || null;
+
 
     });
 
@@ -136,7 +132,6 @@ export class CreateConsumerUnitComponent {
     this.form.get('switch_consumer_is_active')?.valueChanges.subscribe((isActive: boolean) => {
       this.form.get('selected_document')?.reset('');
       this.form.get('selected_account')?.reset('');
-
     });
     this.setupLocationListener();
   }
@@ -186,17 +181,19 @@ export class CreateConsumerUnitComponent {
 
   onClickLogin() {
     if (this.form.valid) {
-      console.log('Formulário válido:', this.form.value);
       // Aqui você pode enviar os dados para o servidor
     } else {
-      console.log('Formulário inválido');
-    }
-  }
-  onSubmit() {
-    if (this.form.valid) {
-      console.log('Formulário válido', this.form.value);
-    } else {
-      console.log('Formulário inválido');
+      this.messageDialog.open({
+        title: 'Existem campos vazios',
+        subtitle: 'Preencha todos os campos obrigatórios', 
+        type: DialogType.WARNING,
+        positiveButton: {
+          label: 'Voltar',
+          action: () => {
+            console.log('Usuário confirmou logout');
+          }
+        },
+      });
     }
   }
 
@@ -360,4 +357,7 @@ export class CreateConsumerUnitComponent {
       return null;
     };
   }
+
+
 }
+

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, Input, OnInit, SimpleChanges, Output, EventEmitter  } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, OnInit, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../ui-components/svg-icon/svg-icon.component';
@@ -20,7 +20,7 @@ export class SidebarComponent implements OnInit {
 
 
   menuItems: MenuItem[] = [];
-  
+
   private collapseTimeout: any;
 
   currentUser: User | null = null;
@@ -35,22 +35,22 @@ export class SidebarComponent implements OnInit {
     private menuService: MenuService,
     private localStorageService: LocalStorageService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.menuItems = this.menuService.getMenuItems();
     this.currentUser = this.localStorageService.getCurrentUser();
 
 
-      this.userService.getUserPhoto(1337).subscribe(
-        (response) => {
-          this.userPhotoLink = response.data.link; // Armazena o link da foto
-          this.cdr.detectChanges(); // Força a atualização da view
-        },
-        (error) => {
-          console.error('Erro ao carregar a foto do usuário:', error);
-        }
-      );
+    this.userService.getUserPhoto(1337).subscribe(
+      (response) => {
+        this.userPhotoLink = response.data.link; // Armazena o link da foto
+        this.cdr.detectChanges(); // Força a atualização da view
+      },
+      (error) => {
+        console.error('Erro ao carregar a foto do usuário:', error);
+      }
+    );
   }
 
   isActive(route: string): boolean {
@@ -71,7 +71,7 @@ export class SidebarComponent implements OnInit {
     if (this.hasSubItems(item)) {
       item.isOpen = !item.isOpen;
       // Fecha outros subitens do mesmo nível
-     // this.closeSiblingSubmenus(item);
+      // this.closeSiblingSubmenus(item);
     } else if (item.route) {
       this.navigateTo(item.route);
     }
@@ -130,18 +130,18 @@ export class SidebarComponent implements OnInit {
     this.router.navigate(['/user-profile]']);
   }
 
-expandSidebar(): void {
-  clearTimeout(this.collapseTimeout);
-  this.minimized = false;
-  this.minimizedChange.emit(this.minimized);
-  this.cdr.detectChanges();
-}
-
-collapseSidebar(): void {
-  this.collapseTimeout = setTimeout(() => {
-    this.minimized = true;
+  expandSidebar(): void {
+    clearTimeout(this.collapseTimeout);
+    this.minimized = false;
     this.minimizedChange.emit(this.minimized);
     this.cdr.detectChanges();
-  }, 500); // Pequeno atraso para evitar minimizar rapidamente
-}
+  }
+
+  collapseSidebar(): void {
+    this.collapseTimeout = setTimeout(() => {
+      this.minimized = true;
+      this.minimizedChange.emit(this.minimized);
+      this.cdr.detectChanges();
+    }, 500); // Pequeno atraso para evitar minimizar rapidamente
+  }
 }

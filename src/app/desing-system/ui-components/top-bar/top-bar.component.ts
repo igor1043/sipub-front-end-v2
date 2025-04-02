@@ -24,8 +24,7 @@ export class TopBarComponent implements OnInit {
 
   @Output() toggleSidebarEvent = new EventEmitter<void>();
 
-  DialogType = DialogType;
-  @ViewChild('logoutDialog') logoutDialog!: MessageDialogComponent;
+  @ViewChild('messageDialog') messageDialog!: MessageDialogComponent;
 
   breadcrumbService: any;
   breadcrumbs: string[] = [];
@@ -84,7 +83,24 @@ export class TopBarComponent implements OnInit {
   }
 
   logout() {
-    this.logoutDialog.open();
+    this.messageDialog.open({
+      title: 'Confirmação de Logout',
+      subtitle: 'Você realmente deseja sair do sistema?',
+      type: DialogType.WARNING,
+      positiveButton: {
+        label: 'Sim',
+        action: () => {
+          this.confirmLogout();
+          console.log('Usuário confirmou logout');
+        }
+      },
+      negativeButton: {
+        label: 'Não',
+        action: () => {
+          console.log('Usuário cancelou logout');
+        }
+      }
+    });
   }
 
   navigateToHome() {
@@ -107,7 +123,6 @@ export class TopBarComponent implements OnInit {
     this.imageLoadError = true;
   }
 
-  // Adicione este método para tratar a confirmação
   confirmLogout() {
     this.localStorageService.logout();
     this.router.navigate(['/login']);

@@ -56,12 +56,4 @@
 </div>
 
 <!-- Adicione isso no final do template -->
-<app-message-dialog 
-  #logoutDialog
-  [title]="'Confirmação de Logout'"
-  [subtitle]="'Você realmente deseja sair do sistema?'"
-  [type]="DialogType.WARNING"
-  [positiveButtonLabel]="'Sim'"
-  [negativeButtonLabel]="'Não'"
-  (positiveButtonClick)="confirmLogout()">
-</app-message-dialog>
+<app-message-dialog #messageDialog></app-message-dialog>

@@ -16,20 +16,24 @@
     </div>
 
     <div class="actions">
+      <!-- Botão negativo (condicional) -->
       <app-button 
+        *ngIf="negativeButton"
         class="action-button"
         mode="secondary" 
         size="medium" 
-        [text]="negativeButtonLabel"
+        [text]="negativeButton.label"
         (clicked)="onNegativeClick()">
       </app-button>
 
+      <!-- Botão positivo (condicional) -->
       <app-button 
+        *ngIf="positiveButton"
         class="action-button"
         mode="primary" 
         [buttonColor]="typeColor"
         size="medium" 
-        [text]="positiveButtonLabel"
+        [text]="positiveButton.label"
         (clicked)="onPositiveClick()">
       </app-button>
     </div>

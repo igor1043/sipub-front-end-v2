@@ -12,6 +12,20 @@ export enum DialogType {
   WARNING = 'warning'
 }
 
+export interface DialogButton {
+  label: string;
+  action?: () => void;
+}
+
+export interface DialogConfig {
+  title: string;
+  subtitle?: string;
+  type?: DialogType;
+  positiveButton?: DialogButton;
+  negativeButton?: DialogButton;
+}
+
+
 @Component({
   selector: 'app-message-dialog',
   imports: [CommonModule, MatIconModule, ButtonComponent, TextComponent, SvgIconComponent],
@@ -19,20 +33,19 @@ export enum DialogType {
   styleUrls: ['./message-dialog.component.css']
 })
 export class MessageDialogComponent {
-  @Input() title: string = '';
-  @Input() subtitle?: string;
-  @Input() positiveButtonLabel: string = 'OK';
-  @Input() negativeButtonLabel: string = 'Cancelar';
-  @Input() type: DialogType = DialogType.INFO;
-  
-  @Output() positiveButtonClick = new EventEmitter<void>();
-  @Output() negativeButtonClick = new EventEmitter<void>();
-  
+  title: string = '';
+  subtitle?: string;
+  type: DialogType = DialogType.INFO;
+  positiveButton?: DialogButton;
+  negativeButton?: DialogButton;
   isVisible: boolean = false;
 
-  constructor() { }
-
-  open() {
+  open(config: DialogConfig) {
+    this.title = config.title;
+    this.subtitle = config.subtitle;
+    this.type = config.type || DialogType.INFO;
+    this.positiveButton = config.positiveButton;
+    this.negativeButton = config.negativeButton;
     this.isVisible = true;
   }
 
@@ -41,15 +54,15 @@ export class MessageDialogComponent {
   }
 
   onPositiveClick() {
-    this.positiveButtonClick.emit();
+    this.positiveButton?.action?.();
     this.close();
   }
 
   onNegativeClick() {
-    this.negativeButtonClick.emit();
+    this.negativeButton?.action?.();
     this.close();
   }
-
+  
   get iconPath() {
     const basePath = '/assets/icons/';
     switch(this.type) {

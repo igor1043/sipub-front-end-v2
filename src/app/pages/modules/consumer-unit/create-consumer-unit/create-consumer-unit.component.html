@@ -3,7 +3,7 @@
   <app-text class="title_create" text="Unidade Consumidora" size="large">
   </app-text>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form">
 
     <app-tabs class="tabs" [tabs]="['Informações Básicas','Monitoramento Mensal','Carga e Consumo','Geração']"
       size="medium">
@@ -188,3 +188,5 @@
   <app-loading [isLoading]="isLoading"></app-loading>
   <app-notification></app-notification>
 </div>
+
+<app-message-dialog #messageDialog></app-message-dialog>
