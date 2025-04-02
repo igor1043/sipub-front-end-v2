@@ -6,6 +6,7 @@
       [value]="value"
       (input)="onInputChange($event)"
       (focus)="onFocus()"
+      (wheel)="handleWheelEvent($event)"
       (blur)="onBlur()"
       [mask]="mask"
       [disabled]="disabled"

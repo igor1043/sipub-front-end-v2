@@ -59,9 +59,18 @@ export class CreateConsumerUnitComponent {
 
   listAccounts: Account[] = []
 
-  listClass: Dependency[] = []
+  listClass: Dependency[] = [];
+  selectedDocument: Dependency[] = [];
+  tariffGroup: Dependency[] = [];
+  modalities: Dependency[] = [];
+  voltageLevels: Dependency[] = [];
+  connectionTypes: Dependency[] = [];
+  serviceVoltages: Dependency[] = [];
+  entryStandards: Dependency[] = [];
+  entryCableInsulations: Dependency[] = [];
+  listDocuments: Dependency[] = [];
+  listEntryTypes: Dependency[] = [];
 
-  listDocuments: Dependency[] = []
   documentPlaceholder: string = 'CPF/CNPJ';
   documentMask: '' | 'cpf' | 'cnpj' = '';
 
@@ -80,6 +89,11 @@ export class CreateConsumerUnitComponent {
     this.getSelectedDocument();
     this.getTariffGroup();
     this.getModalities();
+    this.getVoltageLevels();
+    this.getConnectionTypes();
+    this.getServiceVoltages();
+    this.getEntryStandards();
+    this.getEntryCableInsulations();
   }
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private notificationService: NotificationService) {
@@ -110,6 +124,19 @@ export class CreateConsumerUnitComponent {
       city: [''],
       state: [''],
       zip_code: [''],
+      // Controles de Infraestrutura
+      installed_load: ['', Validators.required],
+      voltage_level: ['', Validators.required],
+      connection_type: ['', Validators.required],
+      service_voltage: ['', Validators.required],
+      entry_standard: ['', Validators.required],
+      power_factor: ['', Validators.required],
+      entry_type: ['', Validators.required],
+      entry_cable_insulation: ['', Validators.required],
+      cable_gauge: ['', Validators.required],
+      breaker_interrupt_current: ['', Validators.required],
+      qgbt_distance: ['', Validators.required],
+      switch_white_white: [false],
     });
 
     this.form.get('document_number')?.disable();
@@ -185,7 +212,7 @@ export class CreateConsumerUnitComponent {
     } else {
       this.messageDialog.open({
         title: 'Existem campos vazios',
-        subtitle: 'Preencha todos os campos obrigatórios', 
+        subtitle: 'Preencha todos os campos obrigatórios',
         type: DialogType.WARNING,
         positiveButton: {
           label: 'Voltar',
@@ -303,6 +330,95 @@ export class CreateConsumerUnitComponent {
     });
   }
 
+  private getVoltageLevels(): void {
+    this.isLoading = true;
+    this.createAccountMock.getVoltageLevels().subscribe({
+      next: (voltageLevels) => {
+        this.voltageLevels = voltageLevels;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar os níveis de tensão',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
+
+  private getConnectionTypes(): void {
+    this.isLoading = true;
+    this.createAccountMock.getConnectionTypes().subscribe({
+      next: (connectionTypes) => {
+        this.connectionTypes = connectionTypes;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar os tipos de conexão',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
+
+  private getServiceVoltages(): void {
+    this.isLoading = true;
+    this.createAccountMock.getServiceVoltages().subscribe({
+      next: (serviceVoltages) => {
+        this.serviceVoltages = serviceVoltages;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar as tensões de atendimento',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
+
+  private getEntryStandards(): void {
+    this.isLoading = true;
+    this.createAccountMock.getEntryStandards().subscribe({
+      next: (entryStandards) => {
+        this.entryStandards = entryStandards;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar os padrões de entrada',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
+
+  private getEntryCableInsulations(): void {
+    this.isLoading = true;
+    this.createAccountMock.getEntryCableInsulations().subscribe({
+      next: (entryCableInsulations) => {
+        this.entryCableInsulations = entryCableInsulations;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar as isolação do ramal de entrada',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
 
   get accountOptions(): { id: number, name: string }[] {
     return this.listAccounts.map(account => ({

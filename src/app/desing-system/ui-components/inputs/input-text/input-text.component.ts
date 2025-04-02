@@ -143,4 +143,10 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
         return [];
     }
   }
+
+  handleWheelEvent(event: WheelEvent): void {
+    if (this.type === 'number') {
+      event.preventDefault();
+    }
+  }
 }

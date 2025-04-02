@@ -64,4 +64,62 @@ export class CreateConsumerUnitMockService {
 
     return of(modalities).pipe(delay(800));
   }
+
+    // Mock para níveis de tensão
+    getVoltageLevels() {
+      const voltageLevels: Dependency[] = [
+        { id: 24, name: 'Baixa Tensão', type: 'voltage_level' },
+        { id: 25, name: 'Média Tensão', type: 'voltage_level' },
+        { id: 26, name: 'Alta Tensão', type: 'voltage_level' }
+      ];
+  
+      return of(voltageLevels).pipe(delay(800));
+    }
+  
+    // Mock para tipos de conexão
+    getConnectionTypes() {
+      const connectionTypes: Dependency[] = [
+        { id: 27, name: 'Monofásico', type: 'connection_type' },
+        { id: 28, name: 'Bifásico', type: 'connection_type' },
+        { id: 29, name: 'Trifásico', type: 'connection_type' }
+      ];
+  
+      return of(connectionTypes).pipe(delay(800));
+    }
+  
+    // Mock para tensões de atendimento
+    getServiceVoltages() {
+      const serviceVoltages: Dependency[] = [
+        { id: 30, name: '110V', type: 'service_voltage' },
+        { id: 31, name: '127V', type: 'service_voltage' },
+        { id: 32, name: '220V', type: 'service_voltage' },
+        { id: 33, name: '380V', type: 'service_voltage' },
+        { id: 34, name: '440V', type: 'service_voltage' }
+      ];
+  
+      return of(serviceVoltages).pipe(delay(800));
+    }
+  
+    // Mock para tipos de padrão de entrada
+    getEntryStandards() {
+      const entryStandards: Dependency[] = [
+        { id: 35, name: 'Padrão Aéreo', type: 'entry_standard' },
+        { id: 36, name: 'Padrão Subterrâneo', type: 'entry_standard' },
+        { id: 37, name: 'Padrão Poste Particular', type: 'entry_standard' }
+      ];
+  
+      return of(entryStandards).pipe(delay(800));
+    }
+  
+    // Mock para isolação do ramal de entrada
+    getEntryCableInsulations() {
+      const entryCableInsulations: Dependency[] = [
+        { id: 38, name: 'PVC - Cobre', type: 'entry_cable_insulation' },
+        { id: 39, name: 'EPR - Alumínio', type: 'entry_cable_insulation' },
+        { id: 40, name: 'XLPE - Cobre', type: 'entry_cable_insulation' },
+        { id: 41, name: 'XLPE - Alumínio', type: 'entry_cable_insulation' }
+      ];
+  
+      return of(entryCableInsulations).pipe(delay(800));
+    }
 }
