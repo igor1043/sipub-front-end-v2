@@ -8,8 +8,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  max-height: 200px;
-  overflow-y: auto;
+  overflow-y: auto; 
   border: 1px solid #ccc;
   border-radius: 4px;
   background: var(--background-color);
@@ -17,8 +16,6 @@
   z-index: 1000;
   box-sizing: content-box;
 }
-
-
 
 .floating-label {
   position: relative;

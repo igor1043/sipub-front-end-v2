@@ -74,7 +74,6 @@
     gap: 1rem;
   }
   
-  .full-width-line,
   .half-width-line,
   .third-width-line {
     display: flex;
@@ -137,6 +136,23 @@
     /* Faz ambas as divs crescerem igualmente */
     min-width: 300px;
     /* Largura mínima antes de quebrar */
+}
+
+.container_transformer {
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 70px;
+  gap: 1rem; /* Espaço entre as linhas */
+}
+.transformer_creation_line {
+  display: flex;
+  gap: 1rem; /* Espaço entre os componentes dentro da linha */
+}
+
+.transformer_creation_line > * {
+  flex: 1; /* Faz com que todos os componentes dentro da linha tenham largura igual */
+  min-width: 0; /* Permite que os componentes reduzam abaixo de seu tamanho mínimo, se necessário */
 }
 
 /* Ajuste para telas pequenas */

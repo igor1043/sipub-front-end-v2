@@ -70,6 +70,9 @@ export class CreateConsumerUnitComponent {
   entryCableInsulations: Dependency[] = [];
   listDocuments: Dependency[] = [];
   listEntryTypes: Dependency[] = [];
+  listZones: Dependency[] = [];
+  listTypeTransformers: Dependency[] = [];
+  listTypeTransformersOwner: Dependency[] = [];
 
   documentPlaceholder: string = 'CPF/CNPJ';
   documentMask: '' | 'cpf' | 'cnpj' = '';
@@ -94,10 +97,15 @@ export class CreateConsumerUnitComponent {
     this.getServiceVoltages();
     this.getEntryStandards();
     this.getEntryCableInsulations();
+    this.getEntryTypes();
+    this.getListZones();
+    this.getListTransformerTypes();
+    this.getListTransformerTypesOwner();
   }
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private notificationService: NotificationService) {
     this.form = this.fb.group({
+      // Controles de Informações basicas da unidade
       selected_account: ['', Validators.required],
       name_consumer_unit: ['', [Validators.required, Validators.minLength(3)]],
       selected_class: ['', Validators.required],
@@ -111,10 +119,12 @@ export class CreateConsumerUnitComponent {
       switch_cip_cosip: [false],
       switch_consumer_is_active: [true],
       images: [''],
+      // Controles de Informações de Criação
       created_user: ['', Validators.required],
       holder_phone: ['', [Validators.required, Validators.minLength(15)]],
       unit_implementation_date: ['', Validators.required],
       holder_email: ['', [Validators.required, Validators.email]],
+      // Controles de localização
       location: [''],
       street: [''],
       neighborhood: [''],
@@ -136,7 +146,12 @@ export class CreateConsumerUnitComponent {
       cable_gauge: ['', Validators.required],
       breaker_interrupt_current: ['', Validators.required],
       qgbt_distance: ['', Validators.required],
-      switch_white_white: [false],
+      switch_white_tariff: [false],
+      // Controles de Transformador
+      transformer: [''],
+      transformer_power: [''],
+      transformer_type: [''],
+      transformer_owner: [''],
     });
 
     this.form.get('document_number')?.disable();
@@ -413,6 +428,78 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar as isolação do ramal de entrada',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
+
+  private getEntryTypes(): void {
+    this.isLoading = true;
+    this.createAccountMock.getEntryTypes().subscribe({
+      next: (entryTypes) => {
+        this.listEntryTypes = entryTypes;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar as isolação do ramal de entrada',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
+
+  private getListZones(): void {
+    this.isLoading = true;
+    this.createAccountMock.getListZones().subscribe({
+      next: (listZone) => {
+        this.listZones = listZone;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar as zonas',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
+
+  private getListTransformerTypes(): void {
+    this.isLoading = true;
+    this.createAccountMock.getListTransformerTypes().subscribe({
+      next: (listTransformers) => {
+        this.listTypeTransformers = listTransformers;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar os tipos de transformadores',
+          7000,
+          'Recarregue a página e tente novamente'
+        );
+      }
+    });
+  }
+
+  private getListTransformerTypesOwner(): void {
+    this.isLoading = true;
+    this.createAccountMock.getListTransformerTypesOwner().subscribe({
+      next: (listTypesTransformers) => {
+        this.listTypeTransformersOwner = listTypesTransformers;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar os tipos de transformadores',
           7000,
           'Recarregue a página e tente novamente'
         );

@@ -1,11 +1,11 @@
 <div class="input-container" [class]="size">
   <div class="floating-label">
     <app-svg-icon class="dropdown-arrow" [color]="'var(--gray-900)'" [svgUrl]="'/assets/icons/arrow_down.svg'"
-    [class.rotated]="isDropdownVisible"></app-svg-icon>
+      [class.rotated]="isDropdownVisible"></app-svg-icon>
     <input class="input-dropdown" type="text" [value]="displayText" (input)="onInputChange($event)" (focus)="onFocus()"
       (blur)="onBlur()" [class.invalid]="control.invalid && control.touched" />
     <label class="hint" [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
-    <div class="dropdown-list" *ngIf="isDropdownVisible">
+    <div class="dropdown-list" *ngIf="isDropdownVisible" [style.max-height]="dropdownMaxHeight">
       <div class="dropdown-option" *ngFor="let option of filteredOptions" (mousedown)="selectOption(option)">
         <span>
           {{ option.name }}

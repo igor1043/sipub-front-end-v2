@@ -123,8 +123,9 @@
 
             <!-- Linha 3 - Zona -->
             <div class="full-width-line">
-              <app-input-text formControlName="zone" placeholder="Zona" size="medium" type="text">
-              </app-input-text>
+              <app-dropdown [options]="listZones" placeholder="Zona" [isRequired]="true" size="medium"
+                [control]="form.get('zone')!" formControlName="zone"></app-dropdown>
+
             </div>
 
             <!-- Linha 4 - Ponto de Referência -->
@@ -150,53 +151,77 @@
           </div>
         </div>
 
-
         <div class="container_infra">
           <app-text text="Infraestrutura da Unidade Consumidora" size="large"></app-text>
-        
+
           <div class="infra_creation_line">
             <app-input-text [control]="form.get('installed_load')!" formControlName="installed_load"
-              placeholder="Carga Instalada (KW)" size="medium" type="number" ></app-input-text>
-        
+              placeholder="Carga Instalada (KW)" size="medium" type="number"></app-input-text>
+
             <app-dropdown [options]="voltageLevels" placeholder="Nível de Tensão" [isRequired]="true" size="medium"
               [control]="form.get('voltage_level')!" formControlName="voltage_level"></app-dropdown>
-        
+
             <app-dropdown [options]="connectionTypes" placeholder="Tipo de Conexão" [isRequired]="true" size="medium"
               [control]="form.get('connection_type')!" formControlName="connection_type"></app-dropdown>
           </div>
-        
+
           <div class="infra_creation_line">
-            <app-dropdown [options]="serviceVoltages" placeholder="Tensão de Atendimento (V)" [isRequired]="true" size="medium"
-              [control]="form.get('service_voltage')!" formControlName="service_voltage"></app-dropdown>
-        
-            <app-dropdown [options]="entryStandards" placeholder="Tipo de Padrão de Entrada" [isRequired]="true" size="medium"
-              [control]="form.get('entry_standard')!" formControlName="entry_standard"></app-dropdown>
-        
+            <app-dropdown [options]="serviceVoltages" placeholder="Tensão de Atendimento (V)" [isRequired]="true"
+              size="medium" [control]="form.get('service_voltage')!" formControlName="service_voltage"></app-dropdown>
+
+            <app-dropdown [options]="entryStandards" placeholder="Tipo de Padrão de Entrada" [isRequired]="true"
+              size="medium" [control]="form.get('entry_standard')!" formControlName="entry_standard"></app-dropdown>
+
             <app-input-text [control]="form.get('power_factor')!" formControlName="power_factor"
-              placeholder="Fator de Potência da Carga" size="medium" type="number" ></app-input-text>
+              placeholder="Fator de Potência da Carga" size="medium" type="number"></app-input-text>
           </div>
-        
+
           <div class="infra_creation_line">
-            <app-dropdown [options]="listEntryTypes" placeholder="Tipo de Ramal de Entrada" [isRequired]="true" size="medium"
-              [control]="form.get('entry_type')!" formControlName="entry_type"></app-dropdown>
-        
-            <app-dropdown [options]="entryCableInsulations" placeholder="Isolação do Ramal de Entrada" [isRequired]="true"
-              size="medium" [control]="form.get('entry_cable_insulation')!" formControlName="entry_cable_insulation"></app-dropdown>
-        
+            <app-dropdown [options]="listEntryTypes" placeholder="Tipo de Ramal de Entrada" [isRequired]="true"
+              size="medium" [control]="form.get('entry_type')!" formControlName="entry_type"></app-dropdown>
+
+            <app-dropdown [options]="entryCableInsulations" placeholder="Isolação do Ramal de Entrada"
+              [isRequired]="true" size="medium" [control]="form.get('entry_cable_insulation')!"
+              formControlName="entry_cable_insulation"></app-dropdown>
+
             <app-input-text [control]="form.get('cable_gauge')!" formControlName="cable_gauge"
-              placeholder="Bitola do Ramal de Entrada (mm²)" size="medium" type="number" ></app-input-text>
+              placeholder="Bitola do Ramal de Entrada (mm²)" size="medium" type="number"></app-input-text>
           </div>
-        
+
           <div class="infra_creation_line">
-            <app-input-text [control]="form.get('breaker_interrupt_current')!" formControlName="breaker_interrupt_current"
-              placeholder="Corrente de Interrupção do Disjuntor (A)" size="medium" type="number"  ></app-input-text>
-        
+            <app-input-text [control]="form.get('breaker_interrupt_current')!"
+              formControlName="breaker_interrupt_current" placeholder="Corrente de Interrupção do Disjuntor (A)"
+              size="medium" type="number"></app-input-text>
+
             <app-input-text [control]="form.get('qgbt_distance')!" formControlName="qgbt_distance"
-              placeholder="Distância do QGBT (m)" size="medium" type="number" ></app-input-text>
+              placeholder="Distância do QGBT (m)" size="medium" type="number"></app-input-text>
           </div>
         </div>
         <app-switch formControlName="switch_white_white" size="medium" label="Possui Tarifa Branca"></app-switch>
         <app-divider type="small"></app-divider>
+
+        <div class="container_transformer">
+
+          <app-text text="Transformador" size="large"></app-text>
+
+          <div class="transformer_creation_line">
+            <app-input-text [control]="form.get('transformer')!" formControlName="transformer"
+              placeholder="Potência do Transformador (KVA)" size="medium" type="text"></app-input-text>
+
+            <app-input-text [control]="form.get('transformer_power')!" formControlName="transformer_power"
+              placeholder="Potência do Transformador (KVA)" size="medium" type="number"></app-input-text>
+
+          </div>
+
+          <div class="transformer_creation_line">
+
+            <app-dropdown [options]="listTypeTransformers" placeholder="Tipo de Transformador" [isRequired]="true"
+              size="medium" [minItemsForScroll]= 2 [control]="form.get('transformer_type')!" formControlName="transformer_type"></app-dropdown>
+
+            <app-dropdown [options]="listTypeTransformersOwner" placeholder="Propriedade" [isRequired]="true" size="medium"
+              [control]="form.get('transformer_type')!" [minItemsForScroll]= 2  formControlName="transformer_type"></app-dropdown>
+          </div>
+        </div>
 
       </ng-template>
 

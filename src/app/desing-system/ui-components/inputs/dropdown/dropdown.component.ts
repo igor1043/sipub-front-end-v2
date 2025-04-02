@@ -18,6 +18,7 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() options: { id: any, name: string }[] = [];
   @Input() control!: AbstractControl;
+  @Input() minItemsForScroll: number = 5; 
 
   displayText: string = '';
   searchTerm: string = '';
@@ -101,8 +102,6 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
     this.isFocused = false;
     setTimeout(() => {
       this.isDropdownVisible = false;
-
-      // Se não houver uma opção selecionada, limpar o valor e acionar a validação
       if (!this.selectedId) {
         this.displayText = '';
         this.searchTerm = '';
@@ -110,13 +109,13 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
         if (this.control) {
           this.control.setValue(null);
           this.control.markAsTouched();
-          this.control.updateValueAndValidity(); // Força a revalidação do campo
+          this.control.updateValueAndValidity();
         }
       }
     }, 200);
-
     this.onTouched();
   }
+
   filterOptions(): void {
     this.filteredOptions = this.options.filter(option =>
       option.name.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -125,7 +124,6 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
 
   selectOption(option: { id: any, name: string }): void {
     if (this.selectedId === option.id) {
-      // Se o usuário clicar na mesma opção, desmarca a seleção
       this.selectedId = null;
       this.displayText = '';
       this.onChange(null);
@@ -135,7 +133,6 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
         this.control.updateValueAndValidity();
       }
     } else {
-      // Seleciona a nova opção
       this.selectedId = option.id;
       this.displayText = option.name;
       this.onChange(option.id);
@@ -145,12 +142,20 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
         this.control.updateValueAndValidity();
       }
     }
-
-    this.isDropdownVisible = false; // Fecha o dropdown após a seleção
+    this.isDropdownVisible = false;
   }
 
   shouldLabelFloat(): boolean {
     return this.isFocused || !!this.displayText;
+  }
+
+  hasScroll(): boolean {
+    return this.filteredOptions.length >= this.minItemsForScroll;
+  }
+
+  get dropdownMaxHeight(): string {
+    const itemHeight = 36;
+    return `${this.minItemsForScroll * itemHeight}px`;
   }
 
   private onChange: any = () => { };
