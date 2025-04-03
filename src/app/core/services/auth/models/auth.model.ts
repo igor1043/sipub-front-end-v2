@@ -16,6 +16,7 @@ export interface AuthResponse {
     city?: string;
     billing: number;
     id_user: number;
+    id_person: number;
     module: number[];
     account_access: any[];
     acl?: { // Campo opcional

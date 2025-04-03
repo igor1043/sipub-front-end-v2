@@ -41,16 +41,17 @@ export class SidebarComponent implements OnInit {
     this.menuItems = this.menuService.getMenuItems();
     this.currentUser = this.localStorageService.getCurrentUser();
 
-
-    this.userService.getUserPhoto(1337).subscribe(
-      (response) => {
-        this.userPhotoLink = response.data.link; // Armazena o link da foto
-        this.cdr.detectChanges(); // Força a atualização da view
-      },
-      (error) => {
-        console.error('Erro ao carregar a foto do usuário:', error);
-      }
-    );
+    if (this.currentUser?.id_person !== undefined) {
+      this.userService.getUserPhoto(this.currentUser?.id_person).subscribe(
+        (response) => {
+          this.userPhotoLink = response.data.link; 
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          console.error('Erro ao carregar a foto do usuário:', error);
+        }
+      );
+    }
   }
 
   isActive(route: string): boolean {

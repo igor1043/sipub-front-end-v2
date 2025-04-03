@@ -18,6 +18,7 @@ export class LocalStorageService {
       token: response.data.token,
       username: response.data.username,
       id_user: response.data.id_user,
+      id_person: response.data.id_person,
       role_name: response.data.acl?.role_name || '',
       is_admin_account: response.data.acl?.is_admin_account || false,
       is_admin: response.data.acl?.is_admin || false,
