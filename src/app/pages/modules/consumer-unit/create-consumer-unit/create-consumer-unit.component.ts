@@ -22,7 +22,6 @@ import { CreateConsumerUnitMockService, Dependency } from 'app/core/mocks/consum
 import { ContainerInfoDateComponent } from "./components/container-info-date/container-info-date.component";
 import { DialogConfig, DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
 import { InputDateComponent } from "../../../../desing-system/ui-components/inputs/input-date/input-date.component";
-import { ModuleDropdownComponent } from "../../../../desing-system/ui-components/module-dropdown/module-dropdown.component";
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -46,8 +45,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     NotificationComponent,
     ContainerInfoDateComponent,
     MessageDialogComponent,
-    InputDateComponent,
-    ModuleDropdownComponent
+    InputDateComponent
 ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']

@@ -40,19 +40,11 @@ export class InputDateComponent implements ControlValueAccessor, OnInit, OnDestr
 
   private controlSubscription!: Subscription;
 
-  constructor(
-    @Self() @Optional() public ngControl: NgControl,
-    private dateAdapter: DateAdapter<Date>
-  ) {
-    this.dateAdapter.setLocale('pt-BR');
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
-    }
-  }
-
+  constructor(private dateAdapter: DateAdapter<Date>) { }
   ngOnInit(): void {
-    if (this.ngControl && this.ngControl.control) {
-      this.controlSubscription = this.ngControl.control.valueChanges.subscribe(value => {
+    if (this.control) {
+      this.dateAdapter.setLocale('pt-BR');
+      this.controlSubscription = this.control.valueChanges.subscribe(value => {
         if (value === '' || value === null) {
           this.clearSelection();
         }
