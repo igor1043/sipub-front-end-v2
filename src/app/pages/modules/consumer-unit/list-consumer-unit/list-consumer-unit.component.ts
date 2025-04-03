@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { SimpleTableComponent } from '../../../../desing-system/ui-components/tables/simple-table/simple-table.component';
 import { TextComponent } from "../../../../desing-system/ui-components/text/text.component";
 import { LoadingComponent } from 'app/desing-system/ui-components/loading/loading.component';
@@ -11,12 +11,14 @@ import { DropdownComponent } from "../../../../desing-system/ui-components/input
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
 import { NotificationComponent } from "../../../../desing-system/ui-components/notification/notification.component";
 import { Account } from 'app/core/interfaces/account.interface';
+import { Router } from '@angular/router';
+import { DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
 
 
 @Component({
   selector: 'app-list-consumer-unit',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, LoadingComponent, SimpleTableComponent, TextComponent, LoadingComponent, DropdownComponent, NotificationComponent],
+  imports: [CommonModule, ReactiveFormsModule, LoadingComponent, SimpleTableComponent, TextComponent, LoadingComponent, DropdownComponent, NotificationComponent, MessageDialogComponent],
   templateUrl: './list-consumer-unit.component.html',
   styleUrl: './list-consumer-unit.component.css'
 })
@@ -28,7 +30,6 @@ export class ListConsumerUnitComponent implements OnInit {
   form: FormGroup;
 
   listAccounts: Account[] = []
-  selectedAccount: Account | null = null;
 
   isLoading = false;
   error: string | null = null;
@@ -57,60 +58,34 @@ export class ListConsumerUnitComponent implements OnInit {
           : 'status-badge status-inativo';
     }
   },
-  {
-    key: 'photo',
-    header: 'Foto',
-    imageOptions: {
-      srcKey: 'imageUrl',   
-      altKey: 'name',       
-      width: '40px',         
-      height: '40px'
-    }
-  }
   ];
   selectedConsumerUnit: ConsumerUnit | null = null;
 
+  @ViewChild('messageDialog') messageDialog!: MessageDialogComponent;
+
   ngOnInit(): void {
     this.carregarContas();
-    this.notificationService.showSuccess(
-      'Sucesso!',
-      5000,
-      'Esta é a primeira notificação.',
-      undefined,
-      () => {
-        console.log('Primeira notificação encerrada.');
-      }
-    );
-    this.notificationService.showError(
-      'Erro!',
-      7000,
-      'Esta é a segunda notificação.',
-      undefined,
-      () => {
-        console.log('Segunda notificação encerrada.');
-      }
-    );
- 
   }
 
-  constructor(private fb: FormBuilder, private notificationService: NotificationService) {
+  constructor(private fb: FormBuilder, private notificationService: NotificationService, private router: Router,) {
     this.form = this.fb.group({
-      selected_account: [null, Validators.required],
+      selected_account: ['', Validators.required],
     });
+    this.setupListeners();
+  }
 
-    this.form.get('selected_account')?.valueChanges.subscribe(contaId => {
-      this.selectedAccount = this.listAccounts.find(a => a.id === contaId) || null;
+  private setupListeners(): void {
+    this.form.get('selected_account')?.valueChanges.subscribe(accountId => {
+
       this.allConsumerUnits = [];
       this.consumerUnitData = [];
-      this.totalItems= 0;
+      this.totalItems = 0;
 
-      if (contaId) {
-        this.carregarListaUnidadeConsumidora(contaId);
+      if (accountId) {
+        this.carregarListaUnidadeConsumidora(accountId);
       }
     });
   }
-
-
   private carregarContas(): void {
     this.isLoading = true;
     this.accountsMock.getAccounts().subscribe({
@@ -131,7 +106,7 @@ export class ListConsumerUnitComponent implements OnInit {
     this.consumerUnitData = this.allConsumerUnits.slice(start, end);
     this.totalItems = this.allConsumerUnits.length;
   }
-  
+
   private carregarListaUnidadeConsumidora(accountId: number): void {
     this.isLoading = true;
     this.listAccountsMock.getConsumerUnitsByAccount(accountId).subscribe({
@@ -154,19 +129,33 @@ export class ListConsumerUnitComponent implements OnInit {
   }
 
   handleAdd() {
-    console.log('Adicionar nova unidade consumidora');
+    this.router.navigate(['/consumer-unit/add']);
   }
 
   handleEdit(consumerUnit: ConsumerUnit) {
-    console.log('Editar unidade consumidora:', consumerUnit);
+    this.router.navigate(['consumer-unit/edit', consumerUnit.id]);
   }
 
   handleDelete(consumerUnit: ConsumerUnit) {
-    console.log('Excluir unidade consumidora:', consumerUnit);
+    this.messageDialog.open({
+      title: 'Confirmar Exclusão',
+      subtitle: `Você está prestes a excluir a Unidade Consumidora (ID: ${consumerUnit.id}). Esta ação não pode ser desfeita.`,
+      type: DialogType.WARNING,
+      positiveButton: {
+        label: 'Sim',
+        action: () => {
+          this.allConsumerUnits = this.allConsumerUnits.filter(item => item.id !== consumerUnit.id);
+          this.totalItems = this.allConsumerUnits.length;
+          this.updatePageData();
+        }
+      },
+      negativeButton: {
+        label: 'Não',
+        action: () => {
 
-    this.allConsumerUnits = this.allConsumerUnits.filter(item => item.id !== consumerUnit.id);
-    this.totalItems = this.allConsumerUnits.length;
-    this.updatePageData();
+        }
+      },
+    });
   }
 
   handleSelect(consumerUnit: ConsumerUnit) {
@@ -182,7 +171,32 @@ export class ListConsumerUnitComponent implements OnInit {
   }
 
   handleBulkDelete(items: ConsumerUnit[]): void {
+    if (!items || items.length === 0) {
+      this.notificationService.showWarning('Nenhum item selecionado para exclusão.');
+      return;
+    }
+
+    const itemsCount = items.length;
+    const itemsIds = items.map(item => item.id).join(', ');
     console.log('Itens selecionados para exclusão:', items);
+    this.messageDialog.open({
+      title: 'Confirmar Exclusão em Lote',
+      subtitle: `Você está prestes a excluir ${itemsCount} unidade(s) consumidora(s):
+                IDs: ${itemsIds} Esta ação não pode ser desfeita.`,
+      type: DialogType.WARNING,
+      positiveButton: {
+        label: 'Sim',
+        action: () => {
+
+        }
+      },
+      negativeButton: {
+        label: 'Não',
+        action: () => {
+
+        }
+      },
+    });
   }
 
   onSubmit() {
@@ -196,7 +210,7 @@ export class ListConsumerUnitComponent implements OnInit {
   get accountOptions(): { id: number, name: string }[] {
     return this.listAccounts.map(account => ({
       id: account.id,
-      name: account.name 
+      name: account.name
     }));
   }
 }

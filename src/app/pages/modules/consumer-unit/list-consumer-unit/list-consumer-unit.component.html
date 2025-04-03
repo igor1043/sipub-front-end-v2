@@ -1,34 +1,24 @@
-<app-text text="Lista de Unidades Consumidoras" size="large">
-</app-text>
+<div class="container">
+  <app-text class="title_create" text="Lista de Unidades Consumidoras" size="large"></app-text>
 
-<app-loading 
-  [isLoading]="isLoading" >
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-dropdown class="selected_account" [options]="listAccounts"
+      placeholder="Selecione a conta referente a unidade consumidora" [isRequired]="true" [size]="'medium'"
+      [control]="form.get('selected_account')!" formControlName="selected_account"></app-dropdown>
+  
+  </form>
+  
+  <app-simple-table [data]="consumerUnitData" [columns]="tableColumns" [totalItems]="totalItems" [pageSize]="pageSize"
+    [currentPage]="currentPage" [crudEnabled]="true" (onAdd)="handleAdd()" (onEdit)="handleEdit($event)"
+    (onDelete)="handleDelete($event)" (onSelect)="handleSelect($event)" (onBulkDelete)="handleBulkDelete($event)"
+    (pageChanged)="handlePageChange($event)">
+  </app-simple-table>
 
-</app-loading>
-
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-dropdown 
-  [options]="accountOptions" 
-  placeholder="Selecione a conta" 
-
-  ></app-dropdown>
-
-</form>
-
-<app-simple-table
-  [data]="consumerUnitData"
-  [columns]="tableColumns"
-  [totalItems]="totalItems" 
-  [pageSize]="pageSize"     
-  [currentPage]="currentPage" 
-  [crudEnabled]="true"
-  (onAdd)="handleAdd()"
-  (onEdit)="handleEdit($event)"
-  (onDelete)="handleDelete($event)"
-  (onSelect)="handleSelect($event)"
-  (onBulkDelete)="handleBulkDelete($event)"
-  (pageChanged)="handlePageChange($event)"> 
-</app-simple-table>
+</div>
 
 
 <app-notification></app-notification>
+
+<app-loading [isLoading]="isLoading"></app-loading>
+
+<app-message-dialog #messageDialog></app-message-dialog>

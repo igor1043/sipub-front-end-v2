@@ -197,7 +197,7 @@
               placeholder="Distância do QGBT (m)" size="medium" type="number"></app-input-text>
           </div>
         </div>
-        <app-switch formControlName="switch_white_white" size="medium" label="Possui Tarifa Branca"></app-switch>
+        <app-switch formControlName="switch_white_tariff" size="medium" label="Possui Tarifa Branca"></app-switch>
         <app-divider type="small"></app-divider>
 
         <div class="container_transformer">
@@ -247,7 +247,8 @@
 
 
   <app-loading [isLoading]="isLoading"></app-loading>
-  <app-notification></app-notification>
 </div>
+
+<app-notification></app-notification>
 
 <app-message-dialog #messageDialog></app-message-dialog>

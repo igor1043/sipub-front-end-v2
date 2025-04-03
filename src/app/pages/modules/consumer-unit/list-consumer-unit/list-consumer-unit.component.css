@@ -1,4 +1,8 @@
-/* Estilos para os status */
+.selected_account {
+  margin-left: 5px ;
+}
+
+
 ::ng-deep .status-badge {
     padding: 4px 8px;
     border-radius: 10px;

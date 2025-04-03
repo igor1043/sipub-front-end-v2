@@ -21,6 +21,7 @@ import { NotificationComponent } from "../../../../desing-system/ui-components/n
 import { CreateConsumerUnitMockService, Dependency } from 'app/core/mocks/consumer-unit/create.consumer.unit.mock';
 import { ContainerInfoDateComponent } from "./components/container-info-date/container-info-date.component";
 import { DialogConfig, DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -101,9 +102,14 @@ export class CreateConsumerUnitComponent {
     this.getListZones();
     this.getListTransformerTypes();
     this.getListTransformerTypesOwner();
+
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      // Use o ID para carregar os dados da unidade consumidora
+    });
   }
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private notificationService: NotificationService) {
+  constructor(private fb: FormBuilder, private accountService: AccountService, private route: ActivatedRoute, private notificationService: NotificationService) {
     this.form = this.fb.group({
       // Controles de Informações basicas da unidade
       selected_account: ['', Validators.required],
