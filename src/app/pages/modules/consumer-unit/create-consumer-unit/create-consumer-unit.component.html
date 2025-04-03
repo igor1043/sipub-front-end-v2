@@ -11,7 +11,7 @@
       <ng-template #appCustomTab>
 
         <app-dropdown class="selected_account" [options]="listAccounts"
-          placeholder="Selecione a conta referente a unidade consumidora" [isRequired]="true" [size]="'medium'"
+          placeholder="Selecione a conta referente a unidade consumidora" [size]="'medium'"
           [control]="form.get('selected_account')!" formControlName="selected_account"></app-dropdown>
 
         <app-divider type="small"></app-divider>
@@ -22,11 +22,11 @@
           <div class="basic_info">
             <app-input-text [control]="form.get('name_consumer_unit')!" formControlName="name_consumer_unit"
               placeholder="Nome da Unidade" size="medium" type="text"></app-input-text>
-            <app-dropdown [options]="listClass" placeholder="Classe" [isRequired]="true" [size]="'medium'"
+            <app-dropdown [options]="listClass" placeholder="Classe" [size]="'medium'"
               [control]="form.get('selected_class')!" formControlName="selected_class"></app-dropdown>
 
             <div class="document_container">
-              <app-dropdown [options]="listDocuments" placeholder="CPF/CNPJ" [isRequired]="true" [size]="'medium'"
+              <app-dropdown [options]="listDocuments" placeholder="CPF/CNPJ" [size]="'medium'"
                 [control]="form.get('selected_document')!" formControlName="selected_document"></app-dropdown>
 
               <app-input-text [control]="form.get('document_number')!" formControlName="document_number"
@@ -37,9 +37,8 @@
                 [placeholder]="'Código do Cliente'" size="medium" type="text"></app-input-text>
             </div>
 
-            <app-dropdown [options]="listSubgroupTariff" placeholder="Subgrupo Tarifário" [isRequired]="true"
-              [size]="'medium'" [control]="form.get('subgroup_tariff')!"
-              formControlName="subgroup_tariff"></app-dropdown>
+            <app-dropdown [options]="listSubgroupTariff" placeholder="Subgrupo Tarifário" [size]="'medium'"
+              [control]="form.get('subgroup_tariff')!" formControlName="subgroup_tariff"></app-dropdown>
 
             <div class="container_info_installation">
 
@@ -50,7 +49,7 @@
                 [placeholder]="'Código da Instalação'" size="medium" type="text"></app-input-text>
             </div>
 
-            <app-dropdown [options]="listModalities" placeholder="Modalidade" [isRequired]="true" [size]="'medium'"
+            <app-dropdown [options]="listModalities" placeholder="Modalidade" [size]="'medium'"
               [control]="form.get('modality')!" formControlName="modality"></app-dropdown>
 
             <app-switch formControlName="switch_cip_cosip" size="medium" label="CIP/Cosip"></app-switch>
@@ -84,7 +83,7 @@
 
           <div class="info_creation_line">
             <app-input-date [control]="form.get('unit_implementation_date')!" placeholder="Data de Implantação"
-              size="medium" formControlName="unit_implementation_date"></app-input-date>
+              alertText="Coloca a data certa" size="medium" formControlName="unit_implementation_date"></app-input-date>
 
             <app-input-text [control]="form.get('holder_email')!" formControlName="holder_email"
               placeholder="Email do Titular" size="medium" type="email">
@@ -121,8 +120,8 @@
 
             <!-- Linha 3 - Zona -->
             <div class="full-width-line">
-              <app-dropdown [options]="listZones" placeholder="Zona" [isRequired]="true" size="medium"
-                [control]="form.get('zone')!" formControlName="zone"></app-dropdown>
+              <app-dropdown [options]="listZones" placeholder="Zona" size="medium" [control]="form.get('zone')!"
+                formControlName="zone"></app-dropdown>
 
             </div>
 
@@ -156,31 +155,30 @@
             <app-input-text [control]="form.get('installed_load')!" formControlName="installed_load"
               placeholder="Carga Instalada (KW)" size="medium" type="number"></app-input-text>
 
-            <app-dropdown [options]="voltageLevels" placeholder="Nível de Tensão" [isRequired]="true" size="medium"
+            <app-dropdown [options]="voltageLevels" placeholder="Nível de Tensão" size="medium"
               [control]="form.get('voltage_level')!" formControlName="voltage_level"></app-dropdown>
 
-            <app-dropdown [options]="connectionTypes" placeholder="Tipo de Conexão" [isRequired]="true" size="medium"
+            <app-dropdown [options]="connectionTypes" placeholder="Tipo de Conexão" size="medium"
               [control]="form.get('connection_type')!" formControlName="connection_type"></app-dropdown>
           </div>
 
           <div class="infra_creation_line">
-            <app-dropdown [options]="serviceVoltages" placeholder="Tensão de Atendimento (V)" [isRequired]="true"
-              size="medium" [control]="form.get('service_voltage')!" formControlName="service_voltage"></app-dropdown>
+            <app-dropdown [options]="serviceVoltages" placeholder="Tensão de Atendimento (V)" size="medium"
+              [control]="form.get('service_voltage')!" formControlName="service_voltage"></app-dropdown>
 
-            <app-dropdown [options]="entryStandards" placeholder="Tipo de Padrão de Entrada" [isRequired]="true"
-              size="medium" [control]="form.get('entry_standard')!" formControlName="entry_standard"></app-dropdown>
+            <app-dropdown [options]="entryStandards" placeholder="Tipo de Padrão de Entrada" size="medium"
+              [control]="form.get('entry_standard')!" formControlName="entry_standard"></app-dropdown>
 
             <app-input-text [control]="form.get('power_factor')!" formControlName="power_factor"
               placeholder="Fator de Potência da Carga" size="medium" type="number"></app-input-text>
           </div>
 
           <div class="infra_creation_line">
-            <app-dropdown [options]="listEntryTypes" placeholder="Tipo de Ramal de Entrada" [isRequired]="true"
-              size="medium" [control]="form.get('entry_type')!" formControlName="entry_type"></app-dropdown>
+            <app-dropdown [options]="listEntryTypes" placeholder="Tipo de Ramal de Entrada" size="medium"
+              [control]="form.get('entry_type')!" formControlName="entry_type"></app-dropdown>
 
-            <app-dropdown [options]="entryCableInsulations" placeholder="Isolação do Ramal de Entrada"
-              [isRequired]="true" size="medium" [control]="form.get('entry_cable_insulation')!"
-              formControlName="entry_cable_insulation"></app-dropdown>
+            <app-dropdown [options]="entryCableInsulations" placeholder="Isolação do Ramal de Entrada" size="medium"
+              [control]="form.get('entry_cable_insulation')!" formControlName="entry_cable_insulation"></app-dropdown>
 
             <app-input-text [control]="form.get('cable_gauge')!" formControlName="cable_gauge"
               placeholder="Bitola do Ramal de Entrada (mm²)" size="medium" type="number"></app-input-text>
@@ -213,12 +211,12 @@
 
           <div class="transformer_creation_line">
 
-            <app-dropdown [options]="listTypeTransformers" placeholder="Tipo de Transformador" [isRequired]="true"
-              size="medium" [minItemsForScroll]=2 [control]="form.get('transformer_type')!"
+            <app-dropdown [options]="listTypeTransformers" placeholder="Tipo de Transformador" size="medium"
+              [minItemsForScroll]=2 [control]="form.get('transformer_type')!"
               formControlName="transformer_type"></app-dropdown>
 
-            <app-dropdown [options]="listTypeTransformersOwner" placeholder="Propriedade" [isRequired]="true"
-              size="medium" [control]="form.get('transformer_type')!" [minItemsForScroll]=2
+            <app-dropdown [options]="listTypeTransformersOwner" placeholder="Propriedade" size="medium"
+              [control]="form.get('transformer_type')!" [minItemsForScroll]=2
               formControlName="transformer_type"></app-dropdown>
           </div>
         </div>

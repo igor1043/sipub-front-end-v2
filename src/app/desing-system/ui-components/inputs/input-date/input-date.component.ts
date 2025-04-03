@@ -28,7 +28,6 @@ import { Subscription } from 'rxjs';
 export class InputDateComponent implements ControlValueAccessor, OnInit, OnDestroy {
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
-  @Input() isRequired: boolean = false;
   @Input() currentValue: string | null = null;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() control!: AbstractControl;
@@ -52,6 +51,10 @@ export class InputDateComponent implements ControlValueAccessor, OnInit, OnDestr
     }
   }
 
+  get showErrorContainer(): boolean {
+    return this.control ? this.control.invalid : false;
+  }
+  
   ngOnDestroy(): void {
     if (this.controlSubscription) {
       this.controlSubscription.unsubscribe();

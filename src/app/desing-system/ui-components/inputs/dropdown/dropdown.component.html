@@ -1,12 +1,31 @@
 <div class="input-container" [class]="size">
   <div class="floating-label">
-    <app-svg-icon class="dropdown-arrow" [color]="'var(--gray-900)'" [svgUrl]="'/assets/icons/arrow_down.svg'"
-      [class.rotated]="isDropdownVisible"></app-svg-icon>
-    <input class="input-dropdown" type="text" [value]="displayText" (input)="onInputChange($event)" (focus)="onFocus()"
-      (blur)="onBlur()" [class.invalid]="control.invalid && control.touched" />
-    <label class="hint" [class.float]="shouldLabelFloat()">{{ placeholder }}</label>
-    <div class="dropdown-list" *ngIf="isDropdownVisible" [style.max-height]="dropdownMaxHeight">
-      <div class="dropdown-option" *ngFor="let option of filteredOptions" (mousedown)="selectOption(option)">
+  <app-svg-icon 
+    class="dropdown-arrow" 
+    [color]="'var(--gray-900)'" 
+    [svgUrl]="'/assets/icons/arrow_down.svg'"
+    [class.rotated]="isDropdownVisible">
+  </app-svg-icon>
+  <input 
+    class="input-dropdown" 
+    type="text" 
+    [value]="displayText" 
+    (input)="onInputChange($event)" 
+    (focus)="onFocus()"
+    (blur)="onBlur()"/>
+    <label 
+      class="hint" 
+      [class.float]="shouldLabelFloat()">
+      {{ placeholder }}
+    </label>
+    <div 
+      class="dropdown-list" 
+      *ngIf="isDropdownVisible" 
+      [style.max-height]="dropdownMaxHeight">
+      <div 
+        class="dropdown-option" 
+        *ngFor="let option of filteredOptions" 
+        (mousedown)="selectOption(option)">
         <span>
           {{ option.name }}
         </span>
@@ -14,7 +33,7 @@
     </div>
   </div>
 
-  <div class="footer-container" *ngIf="control.invalid && isRequired">
+  <div class="footer-container" *ngIf="showErrorContainer">
     <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-700)' />
     <span class="required-text">
       Campo obrigatório
@@ -22,7 +41,7 @@
   </div>
 
   <!-- Container para Alertas Genéricos -->
-  <div class="footer-container" *ngIf="!isRequired && alertText">
+  <div class="footer-container" *ngIf="!showErrorContainer && alertText">
     <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_help.svg" color='var(--gray-700)' />
     <span class="alert-text">
       {{ alertText }}

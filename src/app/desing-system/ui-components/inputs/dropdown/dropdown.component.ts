@@ -14,11 +14,10 @@ import { Subscription } from 'rxjs';
 export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestroy {
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
-  @Input() isRequired: boolean = false;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() options: { id: any, name: string }[] = [];
   @Input() control!: AbstractControl;
-  @Input() minItemsForScroll: number = 5; 
+  @Input() minItemsForScroll: number = 5;
 
   displayText: string = '';
   searchTerm: string = '';
@@ -56,6 +55,10 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
     this.displayText = '';
     this.searchTerm = '';
     this.filterOptions();
+  }
+
+  get showErrorContainer(): boolean {
+    return this.control ? this.control.invalid : false;
   }
 
   writeValue(id: any): void {

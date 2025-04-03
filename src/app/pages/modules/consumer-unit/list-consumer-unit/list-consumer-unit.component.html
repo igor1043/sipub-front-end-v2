@@ -3,7 +3,7 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <app-dropdown class="selected_account" [options]="listAccounts"
-      placeholder="Selecione a conta referente a unidade consumidora" [isRequired]="true" [size]="'medium'"
+      placeholder="Selecione a conta referente a unidade consumidora" [size]="'medium'"
       [control]="form.get('selected_account')!" formControlName="selected_account"></app-dropdown>
   
   </form>

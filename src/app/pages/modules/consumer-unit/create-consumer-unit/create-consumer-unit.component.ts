@@ -46,7 +46,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     ContainerInfoDateComponent,
     MessageDialogComponent,
     InputDateComponent
-],
+  ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']
 })
