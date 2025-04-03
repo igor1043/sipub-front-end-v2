@@ -1,9 +1,10 @@
-import { Component, Input, Self, Optional, forwardRef, ViewChild } from '@angular/core';
+import { Component, Input, Self, Optional, forwardRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule, MatDatepickerInputEvent, MatDatepicker } from '@angular/material/datepicker';
 import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-input-date',
@@ -24,7 +25,7 @@ import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
     }
   ]
 })
-export class InputDateComponent implements ControlValueAccessor {
+export class InputDateComponent implements ControlValueAccessor, OnInit, OnDestroy {
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
   @Input() isRequired: boolean = false;
@@ -37,6 +38,8 @@ export class InputDateComponent implements ControlValueAccessor {
   value: Date | null = null;
   isFocused: boolean = false;
 
+  private controlSubscription!: Subscription;
+
   constructor(
     @Self() @Optional() public ngControl: NgControl,
     private dateAdapter: DateAdapter<Date>
@@ -45,6 +48,27 @@ export class InputDateComponent implements ControlValueAccessor {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
+  }
+
+  ngOnInit(): void {
+    if (this.ngControl && this.ngControl.control) {
+      this.controlSubscription = this.ngControl.control.valueChanges.subscribe(value => {
+        if (value === '' || value === null) {
+          this.clearSelection();
+        }
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.controlSubscription) {
+      this.controlSubscription.unsubscribe();
+    }
+  }
+
+  private clearSelection(): void {
+    this.value = null;
+    this.isFocused = false;
   }
 
   writeValue(value: string): void {

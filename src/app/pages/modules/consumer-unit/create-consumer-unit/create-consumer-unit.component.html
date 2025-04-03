@@ -84,9 +84,8 @@
           </div>
 
           <div class="info_creation_line">
-            <app-input-text [control]="form.get('unit_implementation_date')!" formControlName="unit_implementation_date"
-              placeholder="Data de Implantação" size="medium" type="date">
-            </app-input-text>
+            <app-input-date [control]="form.get('unit_implementation_date')!" placeholder="Data de Implantação"
+              size="medium" formControlName="unit_implementation_date"></app-input-date>
 
             <app-input-text [control]="form.get('holder_email')!" formControlName="holder_email"
               placeholder="Email do Titular" size="medium" type="email">
@@ -216,10 +215,12 @@
           <div class="transformer_creation_line">
 
             <app-dropdown [options]="listTypeTransformers" placeholder="Tipo de Transformador" [isRequired]="true"
-              size="medium" [minItemsForScroll]= 2 [control]="form.get('transformer_type')!" formControlName="transformer_type"></app-dropdown>
+              size="medium" [minItemsForScroll]=2 [control]="form.get('transformer_type')!"
+              formControlName="transformer_type"></app-dropdown>
 
-            <app-dropdown [options]="listTypeTransformersOwner" placeholder="Propriedade" [isRequired]="true" size="medium"
-              [control]="form.get('transformer_type')!" [minItemsForScroll]= 2  formControlName="transformer_type"></app-dropdown>
+            <app-dropdown [options]="listTypeTransformersOwner" placeholder="Propriedade" [isRequired]="true"
+              size="medium" [control]="form.get('transformer_type')!" [minItemsForScroll]=2
+              formControlName="transformer_type"></app-dropdown>
           </div>
         </div>
 

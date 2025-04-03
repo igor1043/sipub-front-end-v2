@@ -21,6 +21,8 @@ import { NotificationComponent } from "../../../../desing-system/ui-components/n
 import { CreateConsumerUnitMockService, Dependency } from 'app/core/mocks/consumer-unit/create.consumer.unit.mock';
 import { ContainerInfoDateComponent } from "./components/container-info-date/container-info-date.component";
 import { DialogConfig, DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
+import { InputDateComponent } from "../../../../desing-system/ui-components/inputs/input-date/input-date.component";
+import { ModuleDropdownComponent } from "../../../../desing-system/ui-components/module-dropdown/module-dropdown.component";
 
 
 @Component({
@@ -42,8 +44,10 @@ import { DialogConfig, DialogType, MessageDialogComponent } from "../../../../de
     LoadingComponent,
     NotificationComponent,
     ContainerInfoDateComponent,
-    MessageDialogComponent
-  ],
+    MessageDialogComponent,
+    InputDateComponent,
+    ModuleDropdownComponent
+],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']
 })
@@ -175,6 +179,12 @@ export class CreateConsumerUnitComponent {
       this.form.get('selected_document')?.reset('');
       this.form.get('selected_account')?.reset('');
     });
+
+    this.form.get('switch_cip_cosip')?.valueChanges.subscribe((isCipCosip: boolean) => {
+      this.form.get('unit_implementation_date')?.reset('');
+      console.log('CIP/COSIP:', isCipCosip);
+    });
+
     this.setupLocationListener();
   }
 
