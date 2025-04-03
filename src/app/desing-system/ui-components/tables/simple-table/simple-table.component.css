@@ -305,9 +305,9 @@ mat-form-field {
 
 .page-size-select select {
   padding: 0.3rem 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--gray-200);
   border-radius: 4px;
-  background: white;
+  background: transparent;
   font-size: 0.9rem;
 }
 
@@ -319,15 +319,17 @@ mat-form-field {
 
 .nav-button {
   padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--gray-200);
   border-radius: 4px;
-  background: white;
+  background: transparent;
   cursor: pointer;
+  color: var(--gray-800);
   transition: all 0.2s;
 }
 
 .nav-button:hover:not(:disabled) {
-  background: #f5f5f5;
+  background: var(--color-primary);
+  color: var(--gray-100);
 }
 
 .nav-button:disabled {
@@ -343,26 +345,29 @@ mat-form-field {
 .page-number, .page-dots {
   min-width: 32px;
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--gray-300);
+  color: var(--black);
   border-radius: 4px;
-  background: white;
+  background: transparent;
   cursor: pointer;
 }
 
 .page-number:hover:not(.active) {
-  background: #f5f5f5;
+  background: var(--white);
 }
 
 .page-number.active {
-  background: #007bff;
-  color: white;
-  border-color: #007bff;
+  background: var(--color-primary);
+  color: var(--white);
+  border-color: var(--color-primary);
 }
 
 .page-dots {
   border: none;
   background: transparent;
   cursor: default;
+  color: var(--gray-800);
+
 }
 
 /* Adicione estilos para a mensagem */
@@ -370,5 +375,10 @@ mat-form-field {
   text-align: center;
   padding: 20px;
   font-size: 18px;
-  color: #666;
+  color: var(--gray-800);
+}
+
+.mat-tooltip {
+  font-size: 14px;
+  background: var(--gray-800);
 }

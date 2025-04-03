@@ -86,17 +86,17 @@ export class ReportsComponent implements OnInit {
   }
 
   private carregarModulos(contaId: number): void {
-    this.isLoading = true;
-    this.modulesMock.getModules().subscribe({
-      next: (modulos) => {
-        this.modules = modulos;
-        this.isLoading = false;
-      },
-      error: (erro) => {
-        console.error('Erro ao carregar módulos:', erro);
-        this.isLoading = false;
-      }
-    });
+    // this.isLoading = true;
+    // this.modulesMock.getModulesActive().subscribe({
+    //   next: (modulos) => {
+    //     this.modules = modulos;
+    //     this.isLoading = false;
+    //   },
+    //   error: (erro) => {
+    //     console.error('Erro ao carregar módulos:', erro);
+    //     this.isLoading = false;
+    //   }
+    // });
   }
 
   onModuleSelected(module: Module | null) {

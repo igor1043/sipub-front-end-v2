@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export interface ColumnConfig {
   key: string;
@@ -33,7 +34,8 @@ export interface ColumnConfig {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatTooltipModule
   ],
   templateUrl: './simple-table.component.html',
   styleUrls: ['./simple-table.component.css']
@@ -169,7 +171,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   getDisplayedRange(): string {
     const start = this.currentPage * this.pageSize + 1;
     const end = Math.min((this.currentPage + 1) * this.pageSize, this.totalItems);
-    return `${start}-${end} de ${this.totalItems} itens`;
+    return `${start}-${end} de ${this.totalItems} Itens`;
   }
 
   onPageSizeChange(): void {
