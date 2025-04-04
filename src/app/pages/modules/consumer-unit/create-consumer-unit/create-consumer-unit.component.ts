@@ -1,6 +1,6 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { ButtonComponent } from '../../../../desing-system/ui-components/button/button.component';
-import { SwitchComponent } from 'app/desing-system/ui-components/switch/switch.component';
+import { SwitchItemComponent } from 'app/desing-system/ui-components/switch/switch-item.component';
 import { TabsComponent } from 'app/desing-system/ui-components/tabs/tabs.component';
 import { TextComponent } from 'app/desing-system/ui-components/text/text.component';
 import { DividerComponent } from 'app/desing-system/ui-components/divider/divider.component';
@@ -33,7 +33,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    SwitchComponent,
+    SwitchItemComponent,
     TabsComponent,
     TextComponent,
     DividerComponent,

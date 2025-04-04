@@ -1,0 +1,58 @@
+<app-text class="page-title" text="Cadastro de Conta" size="large"></app-text>
+<div class="account-container">
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="account-form">
+        <div class="form-content">
+            <!-- Seção de Campos do Formulário -->
+            <div class="form-fields">
+                <!-- Inputs -->
+                <div class="input-group">
+                    <app-input-text [control]="form.get('name')!" formControlName="name" placeholder="Nome"
+                        size="medium" type="text">
+                    </app-input-text>
+
+                    <app-input-text [control]="form.get('account_access')!" formControlName="account_access"
+                        placeholder="Acesso a conta" size="medium" type="text">
+                    </app-input-text>
+
+                    <app-input-text [control]="form.get('cnpj')!" formControlName="cnpj" placeholder="CNPJ"
+                        size="medium" type="text">
+                    </app-input-text>
+                </div>
+
+                <!-- Switches -->
+                <div class="switch-group">
+                    <app-switch-item formControlName="billing" size="medium" label="Faturamento">
+                    </app-switch-item>
+
+                    <app-switch-item formControlName="city_hall" size="medium" label="Prefeitura">
+                    </app-switch-item>
+
+                    <app-switch-item formControlName="administrators" size="medium" label="Administradores">
+                    </app-switch-item>
+                </div>
+            </div>
+
+            <!-- Seção de Upload de Imagem -->
+            <div class="image-upload">
+                <div class="upload-title">
+                    <app-text text="Imagens da conta" size="medium"></app-text>
+                </div>
+                <app-single-image-upload></app-single-image-upload>
+            </div>
+        </div>
+
+        <app-divider type="small"></app-divider>
+
+        <div formGroupName="modules">
+            <div *ngFor="let module of modulesList">
+              <app-module-access 
+                [moduleId]="module.id" 
+                [controlName]="module.id.toString()">
+              </app-module-access>
+            </div>
+          </div>
+        <app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onSubmit()"> </app-button>
+
+    </form>
+</div>

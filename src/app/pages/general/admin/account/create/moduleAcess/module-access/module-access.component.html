@@ -1,0 +1,9 @@
+<div class="module-access-container">
+  <div class="module-info">
+
+    <app-svg-icon class="icon" [svgUrl]="getModuleInfoById(moduleId)?.iconUrl "  />
+    <app-text [text]="getModuleInfoById(moduleId)?.name || 'Módulo não encontrado'" size="small" [color]="'var(--gray-900)'"></app-text>
+    <app-switch-item [formControlName]="controlName" size="medium" ></app-switch-item>
+  </div>
+ 
+</div>

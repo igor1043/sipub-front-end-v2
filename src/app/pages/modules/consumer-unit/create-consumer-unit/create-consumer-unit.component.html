@@ -52,7 +52,7 @@
             <app-dropdown [options]="listModalities" placeholder="Modalidade" [size]="'medium'"
               [control]="form.get('modality')!" formControlName="modality"></app-dropdown>
 
-            <app-switch formControlName="switch_cip_cosip" size="medium" label="CIP/Cosip"></app-switch>
+            <app-switch-item-item-item formControlName="switch_cip_cosip" size="medium" label="CIP/Cosip"></app-switch-item-item-item>
           </div>
 
           <div class="images_area">
@@ -61,7 +61,7 @@
 
             <app-container-info-date [creationDate]="'05/09/2025'" [updateDate]="'05/09/2025'">
             </app-container-info-date>
-            <app-switch formControlName="switch_consumer_is_active" size="medium" label="Ativa"></app-switch>
+            <app-switch-item-item formControlName="switch_consumer_is_active" size="medium" label="Ativa"></app-switch-item-item>
           </div>
         </div>
 
@@ -193,7 +193,7 @@
               placeholder="Distância do QGBT (m)" size="medium" type="number"></app-input-text>
           </div>
         </div>
-        <app-switch formControlName="switch_white_tariff" size="medium" label="Possui Tarifa Branca"></app-switch>
+        <app-switch-item formControlName="switch_white_tariff" size="medium" label="Possui Tarifa Branca"></app-switch-item>
         <app-divider type="small"></app-divider>
 
         <div class="container_transformer">

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './general/dashboard/dashboard.component';
-import { AccountComponent } from './general/admin/account/account.component';
+import { AccountComponent } from './general/admin/account/create/account.component';
 import { PageNotFoundComponent } from './general/page-not-found/page-not-found.component';
 import { LayoutComponent } from '../pages/layout/layout.component';
 import { LoginComponent } from './general/login/login.component';

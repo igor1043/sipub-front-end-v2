@@ -4,25 +4,25 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-switch',
+  selector: 'app-switch-item',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './switch.component.html',
-  styleUrls: ['./switch.component.css'],
+  templateUrl: './switch-item.component.html',
+  styleUrls: ['./switch-item.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SwitchComponent),
+      useExisting: forwardRef(() => SwitchItemComponent),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => SwitchComponent),
+      useExisting: forwardRef(() => SwitchItemComponent),
       multi: true
     }
   ]
 })
-export class SwitchComponent implements ControlValueAccessor, Validator {
+export class SwitchItemComponent implements ControlValueAccessor, Validator {
   @Input() label: string = '';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() isRequired: boolean = false;

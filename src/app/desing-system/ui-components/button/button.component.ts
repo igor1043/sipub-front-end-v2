@@ -6,7 +6,7 @@ import { SvgIconComponent } from '../../ui-components/svg-icon/svg-icon.componen
   selector: 'app-button',
   imports: [CommonModule, SvgIconComponent,],
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss'],
+  styleUrls: ['./button.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class ButtonComponent {

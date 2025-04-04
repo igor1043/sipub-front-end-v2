@@ -1,0 +1,34 @@
+<div class="upload-container" 
+     (click)="fileInput.click()" 
+     (dragover)="onDragOver($event)" 
+     (dragleave)="onDragLeave($event)" 
+     (drop)="onDrop($event)" 
+     [class.dragover]="isDragging">
+  <input type="file" #fileInput class="hidden-input" (change)="onFileSelected($event)">
+
+  <!-- Exibe instruções quando não há imagem -->
+  <ng-container *ngIf="!preview">
+    <div class="upload-content">
+      <app-svg-icon class="upload-icon" [svgUrl]="'/assets/icons/ic_upload.svg'" color="var(--color-primary)"></app-svg-icon>
+      <p class="upload-instructions">
+        Arraste ou selecione uma imagem
+      </p>
+      <p class="upload-details">
+        Formatos aceitos: JPEG, PNG<br>
+        Tamanho máximo: {{ maxFileSize }}MB
+      </p>
+    </div>
+  </ng-container>
+
+  <!-- Exibe a imagem carregada ocupando o container -->
+  <ng-container *ngIf="preview">
+    <img [src]="preview.url" class="uploaded-image">
+    <div class="file-info">
+      {{ preview.file.name }} - {{ formatFileSize(preview.file.size) }}
+    </div>
+    <button class="remove-btn" (click)="removeImage(); $event.stopPropagation()">&times;</button>
+  </ng-container>
+</div>
+
+<!-- Mensagem de erro -->
+<div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
