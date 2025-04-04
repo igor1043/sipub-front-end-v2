@@ -20,4 +20,11 @@
     }
   </div>
   }
+
+  <div class="footer-container" *ngIf="showErrorContainer">
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-700)' />
+    <span class="required-text">
+      Campo obrigatório
+    </span>
+  </div>
 </div>

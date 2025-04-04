@@ -29,7 +29,7 @@ import { Account } from 'app/core/interfaces/account.interface';
     ReportListComponent,
     DynamicFormComponent,
     LoadingComponent
-]
+  ]
 })
 export class ReportsComponent implements OnInit {
   //mocks
@@ -42,7 +42,7 @@ export class ReportsComponent implements OnInit {
   selectedSubItem: ReportSubItem | null = null;
 
   modules: Module[] = []
-  listAccounts :Account [] = []
+  listAccounts: Account[] = []
 
   selectedModule: Module | null = null;
   selectedAccount: Account | null = null;
@@ -56,15 +56,16 @@ export class ReportsComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       selected_account: [null, Validators.required],
+      selected_module: [null, Validators.required],
     });
 
     this.form.get('selected_account')?.valueChanges.subscribe(contaId => {
       this.selectedAccount = this.listAccounts.find(a => a.id === contaId) || null;
-      this.selectedModule = null; 
+      this.selectedModule = null;
       this.modules = [];
       this.reportGroups = [];
       this.selectedSubItem = null;
-  
+
       if (contaId) {
         this.carregarModulos(contaId);
       }
@@ -86,24 +87,24 @@ export class ReportsComponent implements OnInit {
   }
 
   private carregarModulos(contaId: number): void {
-    // this.isLoading = true;
-    // this.modulesMock.getModulesActive().subscribe({
-    //   next: (modulos) => {
-    //     this.modules = modulos;
-    //     this.isLoading = false;
-    //   },
-    //   error: (erro) => {
-    //     console.error('Erro ao carregar módulos:', erro);
-    //     this.isLoading = false;
-    //   }
-    // });
+    this.isLoading = true;
+    this.modulesMock.getListModulesActive().subscribe({
+      next: (modulos) => {
+        this.modules = modulos;
+        this.isLoading = false;
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar módulos:', erro);
+        this.isLoading = false;
+      }
+    });
   }
 
   onModuleSelected(module: Module | null) {
     this.selectedModule = module;
     this.selectedSubItem = null;
     this.reportGroups = [];
-    
+
     if (module) {
       this.isLoading = true;
       this.reportMock.getReportsByModule(module.id).subscribe({

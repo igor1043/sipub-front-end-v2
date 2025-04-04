@@ -76,3 +76,22 @@
 .rotated {
   transform: rotate(180deg);
 }
+
+.ic-alert {
+  margin-right: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  height: 16px;
+  width: 16px;
+}
+
+.required-text {
+  font-size: 0.75rem;
+  color: var(--red-700);
+}
+
+.footer-container {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
