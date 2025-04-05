@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormGroupDirective, ControlContainer, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { modules } from 'app/core/interfaces/module.interface';
 import { TextComponent } from "../../../../../../../desing-system/ui-components/text/text.component";
@@ -12,8 +12,8 @@ import { SwitchItemComponent } from "../../../../../../../desing-system/ui-compo
   imports: [CommonModule, ReactiveFormsModule, TextComponent, SvgIconComponent, SwitchItemComponent],
   templateUrl: './module-access.component.html',
   styleUrls: ['./module-access.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }] 
 })
-
 export class ModuleAccessComponent {
   @Input() moduleId!: number;
   @Input() controlName!: string;  

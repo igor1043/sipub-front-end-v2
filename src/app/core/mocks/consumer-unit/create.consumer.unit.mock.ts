@@ -168,4 +168,14 @@ export class CreateConsumerUnitMockService {
 
     return of(propertyTypes).pipe(delay(800));
   }
+
+
+// Mock para status
+getStatuses() {
+  const statuses: Dependency[] = [
+    { id: 30, name: 'Ativo', type: 'status' },
+    { id: 31, name: 'Inativo', type: 'status' },
+  ];
+  return of(statuses).pipe(delay(800));
+}
 }

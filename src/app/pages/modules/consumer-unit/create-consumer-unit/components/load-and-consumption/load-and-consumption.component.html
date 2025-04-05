@@ -1,0 +1,38 @@
+<app-text class="title-load-consumption" text="Carga e Consumo" size="large"></app-text>
+
+<form [formGroup]="equipmentForm">
+  <div class="row_item_load">
+    <app-input-text [control]="equipmentForm.get('equipmentName')!" formControlName="equipmentName"
+      placeholder="Equipamento" size="medium" type="text"></app-input-text>
+
+    <app-input-text [control]="equipmentForm.get('patrimonyNumber')!" formControlName="patrimonyNumber"
+      placeholder="N do Patrimônio" size="medium" type="text"></app-input-text>
+
+    <app-input-text [control]="equipmentForm.get('load')!" formControlName="load" placeholder="Carga da Unidade (W)"
+      size="medium" type="number"></app-input-text>
+
+    <app-input-text [control]="equipmentForm.get('power')!" formControlName="power" placeholder="Potência (Kwh)"
+      size="medium" type="number"></app-input-text>
+
+    <app-dropdown [options]="voltageOptions" placeholder="Tensão" [size]="'medium'"
+      [control]="equipmentForm.get('voltage')!" formControlName="voltage"></app-dropdown>
+
+    <app-dropdown [options]="phaseOptions" placeholder="fase" [size]="'medium'" [control]="equipmentForm.get('phase')!"
+      formControlName="phase"></app-dropdown>
+
+    <app-input-text [control]="equipmentForm.get('lifetime')!" formControlName="lifetime" placeholder="Vida Útil (anos)"
+      size="medium" type="number"></app-input-text>
+
+    <app-dropdown [options]="statusOptions" placeholder="Status" [size]="'medium'"
+      [control]="equipmentForm.get('status')!" formControlName="status"></app-dropdown>
+
+  </div>
+</form>
+
+<app-button class="bottom" mode="primary" size="large" [text]="buttonText" 
+  (clicked)="handleAdd()" [enable]="isFormValid"></app-button>
+
+<app-simple-table [data]="equipmentList" [columns]="tableColumns" [pageSize]="pageSize" [currentPage]="currentPage"
+  [crudEnabled]="true" (onAdd)="handleAdd()" (onEdit)="handleEdit($event)" (onDelete)="handleDelete($event)"
+  (onSelect)="handleSelect($event)" (onBulkDelete)="handleBulkDelete($event)" (pageChanged)="handlePageChange($event)">
+</app-simple-table>

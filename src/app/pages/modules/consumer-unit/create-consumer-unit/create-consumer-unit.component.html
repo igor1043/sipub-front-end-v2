@@ -52,7 +52,7 @@
             <app-dropdown [options]="listModalities" placeholder="Modalidade" [size]="'medium'"
               [control]="form.get('modality')!" formControlName="modality"></app-dropdown>
 
-            <app-switch-item-item-item formControlName="switch_cip_cosip" size="medium" label="CIP/Cosip"></app-switch-item-item-item>
+            <app-switch-item formControlName="switch_cip_cosip" size="medium" label="CIP/Cosip"></app-switch-item>
           </div>
 
           <div class="images_area">
@@ -61,7 +61,7 @@
 
             <app-container-info-date [creationDate]="'05/09/2025'" [updateDate]="'05/09/2025'">
             </app-container-info-date>
-            <app-switch-item-item formControlName="switch_consumer_is_active" size="medium" label="Ativa"></app-switch-item-item>
+            <app-switch-item formControlName="switch_consumer_is_active" size="medium" label="Ativa"></app-switch-item>
           </div>
         </div>
 
@@ -230,7 +230,8 @@
 
       <!-- Tab 3: Carga e Consumo -->
       <ng-template #appCustomTab>
-        <p>Conteúdo da Tab 3</p>
+        <app-load-and-consumption ></app-load-and-consumption>
+        
       </ng-template>
 
       <!-- Tab 4: Geração -->
@@ -240,8 +241,7 @@
     </app-tabs>
   </form>
 
-  <app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onClickLogin()">
-  </app-button>
+  <app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onClickLogin()">  </app-button>
 
 
   <app-loading [isLoading]="isLoading"></app-loading>

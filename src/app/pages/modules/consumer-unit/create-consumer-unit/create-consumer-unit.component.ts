@@ -23,6 +23,7 @@ import { ContainerInfoDateComponent } from "./components/container-info-date/con
 import { DialogConfig, DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
 import { InputDateComponent } from "../../../../desing-system/ui-components/inputs/input-date/input-date.component";
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadAndConsumptionComponent } from "./components/load-and-consumption/load-and-consumption.component";
 
 
 @Component({
@@ -45,8 +46,9 @@ import { ActivatedRoute, Router } from '@angular/router';
     NotificationComponent,
     ContainerInfoDateComponent,
     MessageDialogComponent,
-    InputDateComponent
-  ],
+    InputDateComponent,
+    LoadAndConsumptionComponent
+],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']
 })
@@ -236,6 +238,7 @@ export class CreateConsumerUnitComponent {
   }
 
   onClickLogin() {
+    console.log('Form values:', this.form.value);
     if (this.form.valid) {
       // Aqui você pode enviar os dados para o servidor
     } else {
@@ -246,7 +249,6 @@ export class CreateConsumerUnitComponent {
         positiveButton: {
           label: 'Voltar',
           action: () => {
-            console.log('Usuário confirmou logout');
           }
         },
       });

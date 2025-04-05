@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextComponent } from "../../../../../desing-system/ui-components/inputs/input-text/input-text.component";
 import { TextComponent } from "../../../../../desing-system/ui-components/text/text.component";
@@ -27,9 +27,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit{
   form: FormGroup;
-  modulesList: any[] = [{id:1, status: false}, {id:2, status: false}]; // Exemplo de módulos
+  modulesList: any[] = [{id:1, status: false}, {id:2, status: false}];
+
+  ngOnInit() {
+    this.loadModules(this.modulesList);
+  }
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -43,7 +47,7 @@ export class AccountComponent {
       modules: this.fb.group({}), 
     });
   }
-  // Método para carregar os módulos (exemplo)
+
   loadModules(modulesData: { id: number, status: boolean }[]) {
     this.modulesList = modulesData;
     const modulesGroup = this.form.get('modules') as FormGroup;
@@ -54,10 +58,11 @@ export class AccountComponent {
       );
     });
   }
+
   onSubmit() {
     const formValue = this.form.value;
     const modules = Object.keys(formValue.modules).map(idStr => ({
-      id: +idStr, // Converte a string para número
+      id: +idStr,
       status: formValue.modules[idStr]
     }));
     console.log(modules);

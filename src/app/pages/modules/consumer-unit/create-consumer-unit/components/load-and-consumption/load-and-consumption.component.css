@@ -1,0 +1,39 @@
+.row_item_load {
+  margin-top: 20px;
+  display: flex;
+  gap: 1rem;
+  /* Espaço entre os elementos */
+  width: 100%;
+}
+
+.row_item_load>* {
+  flex: 1;
+  /* Faz todos os elementos filhos terem o mesmo tamanho */
+  min-width: 0;
+  /* Resolve problemas de overflow com conteúdo longo */
+}
+
+/* Opcional: Ajuste para componentes específicos se necessário */
+.row_item_load app-input-text,
+.row_item_load app-dropdown {
+  width: 100%;
+}
+
+::ng-deep .status-badge {
+  padding: 4px 8px;
+  border-radius: 10px;
+  display: inline-block;
+  border: 1px solid transparent;
+}
+
+::ng-deep .status-active {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  color: #ffffff;
+}
+
+::ng-deep .status-inactive { 
+  background-color: #F44336;
+  border-color: #F44336;
+  color: #ffffff;
+}

@@ -8,7 +8,7 @@
     'large': size === 'large'
   }"
   [style.--button-color]="buttonColor" 
-  [disabled]="disabled || isLoading"
+  [disabled]="!enable || isLoading"
   (click)="onClick()">
 
   

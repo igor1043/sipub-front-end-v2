@@ -45,7 +45,6 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   @Input() columns: ColumnConfig[] = [];
   @Input() selectedItem: T | null = null;
   @Input() sortingEnabled: boolean = true;
-  @Input() totalItems = 0;
   @Input() pageSize = 10;
   @Input() currentPage = 0;
   @Input() crudEnabled = true;
@@ -63,6 +62,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
 
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<T>();
+  fullData: T[] = [];
   selectedItems = new Set<any>();
   isAllSelected = false;
   showFilter = false;
@@ -70,6 +70,7 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   selectedColumn: string = 'all';
   filterableColumns: ColumnConfig[] = [];
 
+  totalItems = 0; 
   private sortConnected = false;
 
   ngAfterViewInit(): void {
@@ -84,10 +85,10 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
       this.filterableColumns = this.columns.filter(c => !c.imageOptions);
     }
     if (changes['data']) {
-      this.dataSource.data = this.data;
+      this.fullData = this.data;
+      this.currentPage = 0;
+      this.updatePagedData();
       this.selectedItems.clear();
-      this.updateSelectAllState();
-      this.sortConnected = false;
     }
     if (changes['sortingEnabled'] && this.sort) {
       this.sort.disabled = !this.sortingEnabled;
@@ -119,21 +120,41 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
     }
   }
 
-  applyFilter(): void {
-    this.dataSource.filterPredicate = (data: T, filter: string): boolean => {
-      const searchText = filter.toLowerCase();
-      
+  filterData(data: T[]): T[] {
+    const searchText = this.filterValue.trim().toLowerCase();
+    if (!searchText) {
+      return data;
+    }
+    return data.filter(item => {
       if (this.selectedColumn === 'all') {
-        return Object.values(data).some(value => 
-          value?.toString().toLowerCase().includes(searchText)
+        return Object.values(item).some(val => 
+          val?.toString().toLowerCase().includes(searchText)
         );
       }
-      
-      const cellValue = data[this.selectedColumn as keyof T];
+      const cellValue = item[this.selectedColumn as keyof T];
       return cellValue?.toString().toLowerCase().includes(searchText) || false;
-    };
+    });
+  }
 
-    this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  updatePagedData(): void {
+    const filteredData = this.filterData(this.fullData);
+    let sortedData = filteredData;
+    if (this.sort && this.sort.active && this.sort.direction) {
+      sortedData = this.dataSource.sortData(filteredData, this.sort);
+    }
+    this.totalItems = sortedData.length;
+    const startIndex = this.currentPage * this.pageSize;
+    const pagedData = sortedData.slice(startIndex, startIndex + this.pageSize);
+    this.dataSource.data = pagedData;
+  }
+
+  applyFilter(): void {
+    this.currentPage = 0;
+    this.updatePagedData();
+  }
+  private updateSelectAllState(): void {
+    this.isAllSelected = this.dataSource.data.length > 0 && 
+                       this.selectedItems.size === this.dataSource.data.length;
   }
 
   toggleSelection(row: T, event: MouseEvent): void {
@@ -169,63 +190,71 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   }
 
   getDisplayedRange(): string {
-    const start = this.currentPage * this.pageSize + 1;
+    const start = this.totalItems === 0 ? 0 : this.currentPage * this.pageSize + 1;
     const end = Math.min((this.currentPage + 1) * this.pageSize, this.totalItems);
     return `${start}-${end} de ${this.totalItems} Itens`;
   }
 
   onPageSizeChange(): void {
     this.currentPage = 0;
-    this.emitPageChange();
-  }
-
-  nextPage(): void {
-    if (this.currentPage < this.totalPages - 1) {
-      this.currentPage++;
-      this.emitPageChange();
-    }
-  }
-
-  previousPage(): void {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-      this.emitPageChange();
-    }
-  }
-
-  firstPage(): void {
-    this.currentPage = 0;
-    this.emitPageChange();
-  }
-
-  lastPage(): void {
-    this.currentPage = Math.max(0, this.totalPages - 1);
-    this.emitPageChange();
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.totalItems / this.pageSize);
-  }
-
-  private emitPageChange(): void {
+    this.updatePagedData();
     this.pageChanged.emit({
       page: this.currentPage,
       pageSize: this.pageSize
     });
   }
 
-  private updateSelectAllState(): void {
-    this.isAllSelected = this.dataSource.data.length > 0 && 
-                       this.selectedItems.size === this.dataSource.data.length;
+  nextPage(): void {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.updatePagedData();
+      this.pageChanged.emit({
+        page: this.currentPage,
+        pageSize: this.pageSize
+      });
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updatePagedData();
+      this.pageChanged.emit({
+        page: this.currentPage,
+        pageSize: this.pageSize
+      });
+    }
+  }
+
+  firstPage(): void {
+    this.currentPage = 0;
+    this.updatePagedData();
+    this.pageChanged.emit({
+      page: this.currentPage,
+      pageSize: this.pageSize
+    });
+  }
+
+  lastPage(): void {
+    this.currentPage = Math.max(0, this.totalPages - 1);
+    this.updatePagedData();
+    this.pageChanged.emit({
+      page: this.currentPage,
+      pageSize: this.pageSize
+    });
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
   }
 
   private emitSelectedItems(): void {
-    const selectedItemsArray = this.dataSource.data.filter(row => this.selectedItems.has(row.id));
+    const selectedItemsArray = this.fullData.filter(row => this.selectedItems.has(row.id));
     this.onSelectedItemsChange.emit(selectedItemsArray);
   }
 
   emitBulkDelete(): void {
-    const selectedItemsArray = this.data.filter(item => this.selectedItems.has(item.id));
+    const selectedItemsArray = this.fullData.filter(item => this.selectedItems.has(item.id));
     this.onBulkDelete.emit(selectedItemsArray);
     this.clearSelections();
   }
@@ -255,7 +284,11 @@ export class SimpleTableComponent<T extends { id: any }> implements OnChanges, A
   goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages) {
       this.currentPage = page;
-      this.emitPageChange();
+      this.updatePagedData();
+      this.pageChanged.emit({
+        page: this.currentPage,
+        pageSize: this.pageSize
+      });
     }
   }
 }

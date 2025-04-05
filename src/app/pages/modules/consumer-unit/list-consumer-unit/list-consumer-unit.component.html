@@ -8,7 +8,7 @@
   
   </form>
   
-  <app-simple-table [data]="consumerUnitData" [columns]="tableColumns" [totalItems]="totalItems" [pageSize]="pageSize"
+  <app-simple-table [data]="consumerUnitData" [columns]="tableColumns" [pageSize]="pageSize"
     [currentPage]="currentPage" [crudEnabled]="true" (onAdd)="handleAdd()" (onEdit)="handleEdit($event)"
     (onDelete)="handleDelete($event)" (onSelect)="handleSelect($event)" (onBulkDelete)="handleBulkDelete($event)"
     (pageChanged)="handlePageChange($event)">

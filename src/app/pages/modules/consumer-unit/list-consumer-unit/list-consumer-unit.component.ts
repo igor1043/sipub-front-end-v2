@@ -101,10 +101,9 @@ export class ListConsumerUnitComponent implements OnInit {
   }
 
   private updateConsumerUnitData(): void {
-    const start = this.currentPage * this.pageSize;
-    const end = start + this.pageSize;
-    this.consumerUnitData = this.allConsumerUnits.slice(start, end);
-    this.totalItems = this.allConsumerUnits.length;
+    this.consumerUnitData = this.allConsumerUnits;
+    console.log('Consumer Unit Data:', this.consumerUnitData);
+
   }
 
   private carregarListaUnidadeConsumidora(accountId: number): void {
@@ -120,12 +119,6 @@ export class ListConsumerUnitComponent implements OnInit {
         this.isLoading = false;
       }
     });
-  }
-
-  private updatePageData(): void {
-    const startIndex = this.currentPage * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.consumerUnitData = this.allConsumerUnits.slice(startIndex, endIndex);
   }
 
   handleAdd() {
@@ -145,8 +138,6 @@ export class ListConsumerUnitComponent implements OnInit {
         label: 'Sim',
         action: () => {
           this.allConsumerUnits = this.allConsumerUnits.filter(item => item.id !== consumerUnit.id);
-          this.totalItems = this.allConsumerUnits.length;
-          this.updatePageData();
         }
       },
       negativeButton: {
@@ -159,15 +150,11 @@ export class ListConsumerUnitComponent implements OnInit {
   }
 
   handleSelect(consumerUnit: ConsumerUnit) {
-    console.log('Unidade consumidora selecionada:', consumerUnit);
+
     this.selectedConsumerUnit = consumerUnit;
   }
 
   handlePageChange(event: { page: number, pageSize: number }) {
-    console.log('Mudança de página:', event);
-    this.currentPage = event.page;
-    this.pageSize = event.pageSize;
-    this.updatePageData();
   }
 
   handleBulkDelete(items: ConsumerUnit[]): void {

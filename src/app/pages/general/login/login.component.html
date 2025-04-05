@@ -50,7 +50,7 @@
         class="bottom" 
         mode="primary" 
         size="large" 
-        [disabled]="!loginForm.valid || isLoading" 
+        [enable]="loginForm.valid || !isLoading" 
         [text]="'Acessar'"
         (clicked)="onLogin()">
       </app-button>

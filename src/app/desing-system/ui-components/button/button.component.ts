@@ -12,7 +12,7 @@ import { SvgIconComponent } from '../../ui-components/svg-icon/svg-icon.componen
 export class ButtonComponent {
   @Input() mode: 'primary' | 'secondary' = 'primary'; // Modo do botão
   @Input() size: 'small' | 'medium' | 'large' = 'medium'; // Tamanho do botão
-  @Input() disabled: boolean = false; // Estado de desabilitado
+  @Input() enable: boolean = true; // Estado de desabilitado
   @Input() isLoading: boolean = false; // Estado de carregamento
   @Input() text: string = ''; // Texto do botão
   @Input() buttonColor?: string; // Cor personalizada para o botão
@@ -24,7 +24,7 @@ export class ButtonComponent {
   constructor() { }
 
   onClick(): void {
-    if (!this.disabled && !this.isLoading) {
+    if (this.enable && !this.isLoading) {
       this.clicked.emit();
     }
   }
