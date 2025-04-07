@@ -1,0 +1,77 @@
+<app-text class="title-generation" text="Dados da Geração" size="large"></app-text>
+
+<app-text class="title-font-generation" text="Tipo de Fonte de Geração" size="small"></app-text>
+
+<form [formGroup]="generationForm">
+
+<div class="radio-group">
+  @for (option of generationSourceOptions; track option.value) {
+    <app-radio-item
+      [label]="option.label"
+      [value]="option.value"
+      name="generationSource"
+      [disabled]="false"
+      formControlName="generationSource"
+      [size]="'medium'">
+    </app-radio-item>
+  }
+</div>
+
+@if (generationForm.get('generationSource')?.value === 'solar') {
+  <app-text class="title-generation-solar" text="Dados dos Geradores Solares" size="large"></app-text>
+
+    <div class="form-row">
+      <app-dropdown [options]="manufacturerOptions" placeholder="Fabricante do(s) Módulo(s) Gerador(es)" 
+        [size]="'medium'" [control]="generationForm.get('manufacturer')!" formControlName="manufacturer">
+      </app-dropdown>
+
+      <app-dropdown [options]="modelOptions" placeholder="Modelo do(s) Módulo(s) Gerador(es)" 
+        [size]="'medium'" [control]="generationForm.get('model')!" formControlName="model">
+      </app-dropdown>
+    </div>
+
+    <div class="form-row">
+      <app-input-text [control]="generationForm.get('unitPower')!" formControlName="unitPower" 
+        placeholder="Potência Unitária (KWp)" size="medium" type="number" (input)="calculateTotalPower()"></app-input-text>
+
+      <app-input-text [control]="generationForm.get('quantity')!" formControlName="quantity" 
+        placeholder="Quantidade" size="medium" type="number" (input)="calculateTotalPower()"></app-input-text>
+
+      <app-input-text [control]="generationForm.get('installedModules')!" formControlName="installedModules" 
+        placeholder="Quantidade de Módulos Geradores" size="medium" type="number" (input)="calculateInstalledPower()"></app-input-text>
+    </div>
+
+    <div class="form-row">
+      <app-input-text [control]="generationForm.get('totalPower')!" formControlName="totalPower" 
+        placeholder="Potência Total do(s) Módulo(s) Gerador(es) (KW)" size="medium" type="number" [disabled]="true"></app-input-text>
+    </div>
+
+    <div class="form-row">
+      <app-input-text [control]="generationForm.get('area')!" formControlName="area" 
+        placeholder="Área do(s) Módulo(s) Gerador(es) (M²)" size="medium" type="number"></app-input-text>
+
+      <app-input-text [control]="generationForm.get('installedPower')!" formControlName="installedPower" 
+        placeholder="Potência Instalada (kW)" size="medium" type="number" [disabled]="true"></app-input-text>
+      
+      <app-dropdown [options]="generationTypeOptions" placeholder="Tipo de Geração" 
+        [size]="'medium'" [control]="generationForm.get('generationType')!" formControlName="generationType">
+      </app-dropdown>
+
+      <app-dropdown [options]="statusOptions" placeholder="Status" 
+        [size]="'medium'" [control]="generationForm.get('status')!" formControlName="status">
+      </app-dropdown>
+    </div>
+
+  <app-button class="submit-button" mode="primary" size="large" [text]="isEditing ? 'Atualizar' : 'Adicionar'" 
+    (clicked)="handleAdd()" [enable]="generationForm.valid"></app-button>
+
+  <app-simple-table [data]="generatorList" [columns]="tableColumns" [pageSize]="pageSize" [currentPage]="currentPage"
+    [crudEnabled]="true" (onAdd)="handleAdd()" (onEdit)="handleEdit($event)" (onDelete)="handleDelete($event)"
+    (onSelect)="handleSelect($event)" (onBulkDelete)="handleBulkDelete($event)" (pageChanged)="handlePageChange($event)">
+  </app-simple-table>
+} @else if (generationForm.get('generationSource')?.value) {
+  <div class="unavailable-message">
+    {{ unavailableMessage }}
+  </div>
+}
+  </form>

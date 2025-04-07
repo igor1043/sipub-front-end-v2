@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { TextComponent } from "../../../../../../desing-system/ui-components/text/text.component";
-import { InputTextComponent } from "../../../../../../desing-system/ui-components/inputs/input-text/input-text.component";
-import { DropdownComponent } from "../../../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
-import { ButtonComponent } from "../../../../../../desing-system/ui-components/button/button.component";
+import { TextComponent } from "../../../../../../../desing-system/ui-components/text/text.component";
+import { InputTextComponent } from "../../../../../../../desing-system/ui-components/inputs/input-text/input-text.component";
+import { DropdownComponent } from "../../../../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
+import { ButtonComponent } from "../../../../../../../desing-system/ui-components/button/button.component";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SimpleTableComponent } from "../../../../../../desing-system/ui-components/tables/simple-table/simple-table.component";
+import { SimpleTableComponent } from "../../../../../../../desing-system/ui-components/tables/simple-table/simple-table.component";
 import { Equipment } from './list-equipment-interface';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -34,7 +34,7 @@ export class LoadAndConsumptionComponent implements OnInit {
   isEditing = false;
   currentEditId: number | null = null;
 
-  @Input() initialEquipmentList: Equipment[] = []; // Novo input para lista inicial
+  @Input() initialEquipmentList: Equipment[] = []; 
   @Output() equipmentListChanged = new EventEmitter<Equipment[]>();
 
   equipmentList: Equipment[] = [];
@@ -112,10 +112,8 @@ export class LoadAndConsumptionComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Inicializa com a lista recebida ou com array vazio
     this.equipmentList = this.initialEquipmentList ? [...this.initialEquipmentList] : [];
     
-    // Encontra o maior ID para continuar a sequência
     if (this.equipmentList.length > 0) {
       this.nextId = Math.max(...this.equipmentList.map(e => e.id)) + 1;
     }

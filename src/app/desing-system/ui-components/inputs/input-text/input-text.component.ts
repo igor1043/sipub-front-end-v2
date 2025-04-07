@@ -45,8 +45,19 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
 
   ngOnInit() {
     if (this.control) {
+      if(this.control.value !== null || this.control.value !== '') {
+        this.writeValue(this.control.value);
+        this.control.setValue(this.control.value, { emitEvent: false });
+
+        setTimeout(() => {
+          if (this.inputText && this.inputText.nativeElement) {
+            this.inputText.nativeElement.value = this.control.value;
+          }
+        });
+      }
       this.controlSubscription = this.control.valueChanges.subscribe(value => {
         if (value === '' || value === null) {
+
           this.writeValue('');
           this.control.setValue('', { emitEvent: false });
   

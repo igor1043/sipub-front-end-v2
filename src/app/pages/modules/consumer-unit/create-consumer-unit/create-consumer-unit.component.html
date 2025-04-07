@@ -193,7 +193,8 @@
               placeholder="Distância do QGBT (m)" size="medium" type="number"></app-input-text>
           </div>
         </div>
-        <app-switch-item formControlName="switch_white_tariff" size="medium" label="Possui Tarifa Branca"></app-switch-item>
+        <app-switch-item formControlName="switch_white_tariff" size="medium"
+          label="Possui Tarifa Branca"></app-switch-item>
         <app-divider type="small"></app-divider>
 
         <div class="container_transformer">
@@ -230,18 +231,19 @@
 
       <!-- Tab 3: Carga e Consumo -->
       <ng-template #appCustomTab>
-        <app-load-and-consumption ></app-load-and-consumption>
-        
+        <app-load-and-consumption [initialEquipmentList]="form.value.equipments || []"
+          (equipmentListChanged)="onEquipmentListChanged($event)"></app-load-and-consumption>
+
       </ng-template>
 
       <!-- Tab 4: Geração -->
       <ng-template #appCustomTab>
-        <p>Conteúdo da Tab 4</p>
+        <app-generation></app-generation>
       </ng-template>
     </app-tabs>
   </form>
 
-  <app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onClickLogin()">  </app-button>
+  <app-button class="bottom" mode="primary" size="large" [text]="'Salvar'" (clicked)="onClickLogin()"> </app-button>
 
 
   <app-loading [isLoading]="isLoading"></app-loading>

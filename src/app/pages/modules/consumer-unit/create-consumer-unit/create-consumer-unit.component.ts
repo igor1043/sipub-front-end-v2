@@ -4,7 +4,7 @@ import { SwitchItemComponent } from 'app/desing-system/ui-components/switch/swit
 import { TabsComponent } from 'app/desing-system/ui-components/tabs/tabs.component';
 import { TextComponent } from 'app/desing-system/ui-components/text/text.component';
 import { DividerComponent } from 'app/desing-system/ui-components/divider/divider.component';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextComponent } from 'app/desing-system/ui-components/inputs/input-text/input-text.component';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +23,9 @@ import { ContainerInfoDateComponent } from "./components/container-info-date/con
 import { DialogConfig, DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
 import { InputDateComponent } from "../../../../desing-system/ui-components/inputs/input-date/input-date.component";
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadAndConsumptionComponent } from "./components/load-and-consumption/load-and-consumption.component";
+import { LoadAndConsumptionComponent } from "./components/pages/load-and-consumption/load-and-consumption.component";
+import { Equipment } from './components/pages/load-and-consumption/list-equipment-interface';
+import { GenerationComponent } from "./components/pages/generation/generation.component";
 
 
 @Component({
@@ -47,7 +49,8 @@ import { LoadAndConsumptionComponent } from "./components/load-and-consumption/l
     ContainerInfoDateComponent,
     MessageDialogComponent,
     InputDateComponent,
-    LoadAndConsumptionComponent
+    LoadAndConsumptionComponent,
+    GenerationComponent
 ],
   templateUrl: './create-consumer-unit.component.html',
   styleUrls: ['./create-consumer-unit.component.css']
@@ -162,6 +165,8 @@ export class CreateConsumerUnitComponent {
       transformer_power: [''],
       transformer_type: [''],
       transformer_owner: [''],
+      // tab 3 - Carga e Cosumo
+      equipments: this.fb.array([]) 
     });
 
     this.form.get('document_number')?.disable();
@@ -576,7 +581,23 @@ export class CreateConsumerUnitComponent {
       return null;
     };
   }
-
+  onEquipmentListChanged(equipments: Equipment[]) {
+    // Atualiza o FormArray com os novos equipamentos
+    const equipmentsFormArray = this.form.get('equipments') as FormArray;
+    
+    // Limpa o array existente
+    while (equipmentsFormArray.length !== 0) {
+      equipmentsFormArray.removeAt(0);
+    }
+    
+    // Adiciona os novos equipamentos
+    equipments.forEach(equipment => {
+      equipmentsFormArray.push(this.fb.group(equipment));
+    });
+    
+    // Atualiza o valor do controle
+    this.form.get('equipments')?.setValue(equipments);
+  }
 
 }
 
