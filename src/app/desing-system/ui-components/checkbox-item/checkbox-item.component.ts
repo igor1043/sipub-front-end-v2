@@ -1,12 +1,11 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, FormControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkbox-item',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './checkbox-item.component.html',
   styleUrls: ['./checkbox-item.component.css'],
   providers: [
@@ -14,29 +13,27 @@ import { FormsModule } from '@angular/forms';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CheckboxItemComponent),
       multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => CheckboxItemComponent),
-      multi: true
     }
   ]
 })
-export class CheckboxItemComponent implements ControlValueAccessor, Validator {
+export class CheckboxItemComponent implements ControlValueAccessor {
   @Input() label: string = '';
   @Input() value: any;
-  @Input() name: string = '';
-  @Input() size: 'small' | 'medium' | 'large' = 'medium';
-  @Input() isRequired: boolean = false;
+  @Input() selectedValues: any[] = [];
+  @Input() isMultiple: boolean = true;
   @Input() disabled: boolean = false;
-  @Input() mode: 'single' | 'multiple' = 'multiple'; // Modo de seleção
 
-  selectedValue: any;
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  isChecked: boolean = false;
 
-  writeValue(value: any): void {
-    this.selectedValue = value;
+  private onChange: any = () => {};
+  private onTouched: any = () => {};
+
+  writeValue(val: any): void {
+    if (this.isMultiple) {
+      this.isChecked = Array.isArray(val) && val.includes(this.value);
+    } else {
+      this.isChecked = val === this.value;
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -47,48 +44,25 @@ export class CheckboxItemComponent implements ControlValueAccessor, Validator {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+  setDisabledState(disabled: boolean): void {
+    this.disabled = disabled;
   }
 
-  validate(control: FormControl) {
-    if (this.isRequired && !control.value) {
-      return { required: true };
-    }
-    return null;
-  }
+  onToggle(): void {
+    if (this.disabled) return;
 
-  onChangeHandler(event: Event) {
-    if (!this.disabled) {
-      const isChecked = (event.target as HTMLInputElement).checked;
-      
-      if (this.mode === 'single') {
-        this.selectedValue = isChecked ? this.value : null;
-      } else {
-        // Modo múltiplo
-        if (!this.selectedValue || !Array.isArray(this.selectedValue)) {
-          this.selectedValue = [];
-        }
-        
-        if (isChecked) {
-          this.selectedValue = [...this.selectedValue, this.value];
-        } else {
-          this.selectedValue = this.selectedValue.filter((v: any) => v !== this.value);
-        }
-      }
-      
-      this.onChange(this.selectedValue);
-      this.onTouched();
-    }
-  }
+    this.isChecked = !this.isChecked;
 
-  isChecked(): boolean {
-    if (this.mode === 'single') {
-      return this.selectedValue === this.value;
+    if (this.isMultiple) {
+      const updated = this.isChecked
+        ? [...(this.selectedValues || []), this.value]
+        : (this.selectedValues || []).filter(v => v !== this.value);
+
+      this.onChange(updated);
     } else {
-      return this.selectedValue && Array.isArray(this.selectedValue) 
-        ? this.selectedValue.includes(this.value)
-        : false;
+      this.onChange(this.isChecked ? this.value : null);
     }
+
+    this.onTouched();
   }
 }

@@ -1,14 +1,9 @@
-<div class="checkbox-container" [class]="size">
-  <label class="checkbox-label">
-    <input 
-      type="checkbox" 
-      [name]="name" 
-      [value]="value" 
-      [checked]="isChecked()" 
-      [disabled]="disabled" 
-      (change)="onChangeHandler($event)"
-    >
-    <span class="checkbox-custom"></span>
-    <span class="checkbox-text">{{ label }}</span>
-  </label>
+<div class="checkbox-container" [class.disabled]="disabled" (click)="onToggle()">
+  <input
+    type="checkbox"
+    [checked]="isChecked"
+    [disabled]="disabled"
+    (click)="$event.stopPropagation()"
+  />
+  <span class="label">{{ label }}</span>
 </div>

@@ -17,6 +17,16 @@
   }
 </div>
 
+<div class="checkbox-group">
+  <app-checkbox-item
+    *ngFor="let item of ['banana', 'maçã', 'laranja']"
+    [label]="item"
+    [value]="item"
+    [selectedValues]="generationForm.get('selectedOptions')?.value"
+    [isMultiple]="true"
+    formControlName="selectedOptions"
+  ></app-checkbox-item>
+</div>
 @if (generationForm.get('generationSource')?.value === 'solar') {
   <app-text class="title-generation-solar" text="Dados dos Geradores Solares" size="large"></app-text>
 

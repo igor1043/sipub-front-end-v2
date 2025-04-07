@@ -57,6 +57,8 @@ export class GenerationComponent implements OnInit {
 
   generatorList: Generator[] = [];
   solicitationItems: string[] = [];
+  myValue: boolean = false
+
   nextId = 1;
   unavailableMessage = 'Esta funcionalidade não está disponível para o tipo de geração selecionado.';
 
@@ -118,6 +120,7 @@ export class GenerationComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.generationForm = this.fb.group({
+      selectedOptions: this.fb.control<any[]>([]),
       generationSource: [''],
       manufacturer: ['', Validators.required],
       model: ['', Validators.required],

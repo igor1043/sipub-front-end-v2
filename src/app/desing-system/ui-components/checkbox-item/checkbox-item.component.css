@@ -1,99 +1,15 @@
 .checkbox-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  .checkbox-label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .checkbox-label input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-  }
-  
-  .checkbox-custom {
-    position: relative;
-    display: inline-block;
-    background-color: transparent;
-    border: 2px solid var(--color-primary);
-    border-radius: 4px;
-    transition: all 0.3s;
-  }
-  
-  .checkbox-label input:checked ~ .checkbox-custom {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-  }
-  
-  .checkbox-label input:checked ~ .checkbox-custom::after {
-    content: "";
-    position: absolute;
-    display: block;
-    left: 6px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
-  
-  .checkbox-text {
-    margin-left: 10px;
-    font-size: 1rem;
-  }
-  
-  /* Tamanhos */
-  .checkbox-container.small .checkbox-text {
-    font-size: 0.875rem;
-  }
-  
-  .checkbox-container.medium .checkbox-text {
-    font-size: 1rem;
-  }
-  
-  .checkbox-container.large .checkbox-text {
-    font-size: 1.125rem;
-  }
-  
-  .checkbox-container.small .checkbox-custom {
-    width: 16px;
-    height: 16px;
-  }
-  
-  .checkbox-container.small input:checked ~ .checkbox-custom::after {
-    left: 5px;
-    top: 1px;
-    width: 4px;
-    height: 8px;
-  }
-  
-  .checkbox-container.medium .checkbox-custom {
-    width: 20px;
-    height: 20px;
-  }
-  
-  .checkbox-container.medium input:checked ~ .checkbox-custom::after {
-    left: 6px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-  }
-  
-  .checkbox-container.large .checkbox-custom {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .checkbox-container.large input:checked ~ .checkbox-custom::after {
-    left: 8px;
-    top: 3px;
-    width: 6px;
-    height: 12px;
-  }
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-container input {
+  margin-right: 10px;
+}
+
+.checkbox-container.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
