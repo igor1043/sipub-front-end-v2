@@ -1,0 +1,12 @@
+<div class="container">
+    <h2>Mapa de Iluminação Pública</h2>
+
+    <app-dropdown-checkbox 
+    [options]="lightingOptions" 
+    placeholder="Selecione os tipos de iluminação"
+    [size]="'medium'"
+    [control]="form.get('lighting_types')!" 
+    formControlName="lighting_types">
+    </app-dropdown-checkbox>
+
+</div>

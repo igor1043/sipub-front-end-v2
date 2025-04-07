@@ -83,7 +83,7 @@ export class MenuService {
           title: module.name,
           icon: module.iconUrl,
           subItems: [
-            { title: 'Mapa', route: '/public-lighting/map' },
+            { title: 'Mapa', route: '/public-illumination/map' },
             { title: 'Ordens de Serviço', route: '/public-lighting/service-orders' }
           ],
           isModule: true

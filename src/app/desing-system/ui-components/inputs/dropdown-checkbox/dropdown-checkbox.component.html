@@ -1,0 +1,57 @@
+<div class="input-container" [class]="size">
+  <div class="floating-label">
+    <app-svg-icon 
+      class="dropdown-arrow" 
+      [color]="'var(--gray-900)'" 
+      [svgUrl]="'/assets/icons/arrow_down.svg'"
+      [class.rotated]="isDropdownVisible">
+    </app-svg-icon>
+    <input 
+      class="input-dropdown" 
+      type="text" 
+      [value]="displayText" 
+      (input)="onInputChange($event)" 
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      readonly
+      />
+      <label 
+        class="hint" 
+        [class.float]="shouldLabelFloat()">
+        {{ placeholder }}
+      </label>
+      <div 
+        class="dropdown-list" 
+        *ngIf="isDropdownVisible" 
+        [style.max-height]="dropdownMaxHeight">
+        <div 
+          class="dropdown-option" 
+          *ngFor="let option of filteredOptions" 
+          (click)="toggleOption(option, $event)">
+          <input 
+            type="checkbox" 
+            [checked]="isSelected(option.id)"
+            class="checkbox-input"
+            (click)="$event.stopPropagation()"
+          />
+          <span>
+            {{ option.name }}
+          </span>
+        </div>
+      </div>
+  </div>
+
+  <div class="footer-container" *ngIf="showErrorContainer">
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_warning.svg" color='var(--red-700)' />
+    <span class="required-text">
+      Campo obrigatório
+    </span>
+  </div>
+
+  <div class="footer-container" *ngIf="!showErrorContainer && alertText">
+    <app-svg-icon class="ic-alert" svgUrl="/assets/icons/ic_help.svg" color='var(--gray-700)' />
+    <span class="alert-text">
+      {{ alertText }}
+    </span>
+  </div>
+</div>

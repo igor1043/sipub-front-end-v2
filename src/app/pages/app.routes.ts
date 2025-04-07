@@ -13,6 +13,7 @@ import { MonthlyMonitoringConsumerUnitComponent } from './modules/consumer-unit/
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReportsComponent } from './general/manager/reports/reports.component';
+import { MapPublicIlluminationComponent } from './modules/public-illumination/map-public-illumination/map-public-illumination.component';
 
 export const routes: Routes = [
   {
@@ -58,6 +59,18 @@ export const routes: Routes = [
             canActivate: [AuthGuard],
             data: { breadcrumb: 'Relarórios' }
           },]
+      },
+      {
+        path: 'public-illumination',
+        data: { breadcrumb: 'Iluminação Pública' },
+        children: [
+          {
+            path: 'map',
+            component: MapPublicIlluminationComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Mapa' }
+          },
+        ]
       },
       {
         path: 'consumer-unit',
