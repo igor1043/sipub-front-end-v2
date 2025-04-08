@@ -9,6 +9,7 @@ import { ButtonComponent } from "../../../../../../../desing-system/ui-component
 import { SimpleTableComponent } from "../../../../../../../desing-system/ui-components/tables/simple-table/simple-table.component";
 import { RadioItemComponent } from "../../../../../../../desing-system/ui-components/radio-item/radio-item.component";
 import { CheckboxItemComponent } from "../../../../../../../desing-system/ui-components/checkbox-item/checkbox-item.component";
+import { RadioGroupComponent } from "../../../../../../../desing-system/ui-components/radio-group/radio-group.component";
 
 interface DropdownOption {
   id: number;
@@ -44,7 +45,8 @@ interface Generator {
     ButtonComponent,
     SimpleTableComponent,
     RadioItemComponent,
-    CheckboxItemComponent
+    CheckboxItemComponent,
+    RadioGroupComponent
 ]
 })
 export class GenerationComponent implements OnInit {
@@ -62,13 +64,6 @@ export class GenerationComponent implements OnInit {
   nextId = 1;
   unavailableMessage = 'Esta funcionalidade não está disponível para o tipo de geração selecionado.';
 
-  generationSourceOptions = [
-    { value: 'solar', label: 'Solar' },
-    { value: 'hidraulica', label: 'Hidráulica' },
-    { value: 'eolica', label: 'Eólica' },
-    { value: 'biomassa', label: 'Biomassa' },
-    { value: 'cogeracao', label: 'Cogeração Qualificada' }
-  ];
 
 
   tableColumns = [
@@ -118,10 +113,17 @@ export class GenerationComponent implements OnInit {
     { id: 2, name: 'Inativo', type: 'status' }
   ];
 
+  generationSourceOptions = [
+    { value: 1, label: 'Solar' },
+    { value: 2, label: 'Hidráulica' },
+    { value: 3, label: 'Eólica' },
+    { value: 4, label: 'Biomassa' },
+    { value: 5, label: 'Cogeração Qualificada' }
+  ];
+
   constructor(private fb: FormBuilder) {
     this.generationForm = this.fb.group({
-      selectedOptions: this.fb.control<any[]>([]),
-      generationSource: [''],
+      generationSource: ['', Validators.required],
       manufacturer: ['', Validators.required],
       model: ['', Validators.required],
       unitPower: ['', [Validators.required, Validators.min(0)]],
@@ -306,5 +308,9 @@ export class GenerationComponent implements OnInit {
     const installedModules = parseFloat(this.generationForm.get('installedModules')?.value) || 0;
     const installedPower = unitPower * installedModules;
     this.generationForm.get('installedPower')?.setValue(installedPower.toFixed(2));
+  }
+
+  get isSolar(): boolean {
+    return this.generationForm.get('generationSource')?.value === 1;
   }
 }
