@@ -26,6 +26,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoadAndConsumptionComponent } from "./components/pages/load-and-consumption/load-and-consumption.component";
 import { Equipment } from './components/pages/load-and-consumption/list-equipment-interface';
 import { GenerationComponent } from "./components/pages/generation/generation.component";
+import { GenerationData } from './components/pages/generation/GenerationData';
 
 
 @Component({
@@ -91,6 +92,12 @@ export class CreateConsumerUnitComponent {
   listModalities: Dependency[] = []
 
   accounts: Account[] = [];
+
+  myGenerationData: GenerationData = {
+    generatorList: [], 
+    generationSource: 1, 
+    selectedFeatures: ['inversor', 'micro'] 
+  };
 
   @ViewChild('messageDialog') messageDialog!: MessageDialogComponent;
 
@@ -166,7 +173,13 @@ export class CreateConsumerUnitComponent {
       transformer_type: [''],
       transformer_owner: [''],
       // tab 3 - Carga e Cosumo
-      equipments: this.fb.array([]) 
+      equipments: this.fb.array([]) ,
+      // tab 4 - Geração
+      generationData: this.fb.group({
+        generatorList: [[]],
+        generationSource: [1, Validators.required],
+        selectedFeatures: [['inversor', 'micro']]
+      }) 
     });
 
     this.form.get('document_number')?.disable();
@@ -599,5 +612,9 @@ export class CreateConsumerUnitComponent {
     this.form.get('equipments')?.setValue(equipments);
   }
 
+  
+  onGenerationDataChanged(data: GenerationData) {
+    this.myGenerationData = data;
+  }
 }
 

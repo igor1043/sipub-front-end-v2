@@ -8,27 +8,13 @@ import { DropdownComponent } from "../../../../../../../desing-system/ui-compone
 import { ButtonComponent } from "../../../../../../../desing-system/ui-components/button/button.component";
 import { SimpleTableComponent } from "../../../../../../../desing-system/ui-components/tables/simple-table/simple-table.component";
 import { RadioItemComponent } from "../../../../../../../desing-system/ui-components/radio-item/radio-item.component";
-import { CheckboxItemComponent } from "../../../../../../../desing-system/ui-components/checkbox-item/checkbox-item.component";
-import { RadioGroupComponent } from "../../../../../../../desing-system/ui-components/radio-group/radio-group.component";
+import { CheckboxItem, CheckboxListComponent } from "../../../../../../../desing-system/ui-components/checkbox-list/checkbox-list.component";
+import { GenerationData, GeneratorItem } from './GenerationData';
 
 interface DropdownOption {
   id: number;
   name: string;
   type: string;
-}
-
-interface Generator {
-  id: number;
-  manufacturer: string;
-  model: string;
-  unitPower: number;
-  quantity: number;
-  installedModules: number;
-  totalPower: number;
-  area: number;
-  installedPower: number;
-  generationType: string;
-  status: string;
 }
 
 @Component({
@@ -45,8 +31,7 @@ interface Generator {
     ButtonComponent,
     SimpleTableComponent,
     RadioItemComponent,
-    CheckboxItemComponent,
-    RadioGroupComponent
+    CheckboxListComponent
 ]
 })
 export class GenerationComponent implements OnInit {
@@ -54,17 +39,19 @@ export class GenerationComponent implements OnInit {
   isEditing = false;
   currentEditId: number | null = null;
 
-  @Input() initialGeneratorList: Generator[] = [];
-  @Output() generatorListChanged = new EventEmitter<Generator[]>();
+  @Input() initialData: GenerationData = {
+    generatorList: [],
+    generationSource: 1,
+    selectedFeatures: []
+  };
+  
+  @Output() generationDataChanged = new EventEmitter<GenerationData>();
 
-  generatorList: Generator[] = [];
+  generatorList: GeneratorItem[] = [];
   solicitationItems: string[] = [];
-  myValue: boolean = false
 
   nextId = 1;
   unavailableMessage = 'Esta funcionalidade não está disponível para o tipo de geração selecionado.';
-
-
 
   tableColumns = [
     { key: 'id', header: 'ID' },
@@ -78,7 +65,7 @@ export class GenerationComponent implements OnInit {
     {
       key: 'status',
       header: 'Status',
-      cellClass: (element: Generator) => {
+      cellClass: (element: GeneratorItem) => {
         return element.status === 'Ativo'
           ? 'status-badge status-active'
           : 'status-badge status-inactive'
@@ -121,9 +108,18 @@ export class GenerationComponent implements OnInit {
     { value: 5, label: 'Cogeração Qualificada' }
   ];
 
+  defaultGenerationSource = 1; 
+
+  items: CheckboxItem[] = [
+    { id: 1, name: 'Possui Inversor',      value: 'inversor' },
+    { id: 2, name: 'Possui MicroInversor', value: 'micro'    }
+  ];
+
   constructor(private fb: FormBuilder) {
     this.generationForm = this.fb.group({
-      generationSource: ['', Validators.required],
+      generationSource: [this.defaultGenerationSource, Validators.required],
+      selectedFeatures: [[]],
+      // inputs para cadastrar gerador solar
       manufacturer: ['', Validators.required],
       model: ['', Validators.required],
       unitPower: ['', [Validators.required, Validators.min(0)]],
@@ -138,15 +134,29 @@ export class GenerationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.generatorList = this.initialGeneratorList ? [...this.initialGeneratorList] : [];
+    this.generatorList = this.initialData.generatorList ? [...this.initialData.generatorList] : [];
 
     if (this.generatorList.length > 0) {
       this.nextId = Math.max(...this.generatorList.map(g => g.id)) + 1;
     }
 
-    this.generationForm.valueChanges.subscribe(() => {
-      this.generatorListChanged.emit(this.generatorList);
+    this.generationForm.patchValue({
+      generationSource: this.initialData.generationSource || this.defaultGenerationSource,
+      selectedFeatures: this.initialData.selectedFeatures || []
     });
+
+    this.generationForm.valueChanges.subscribe(() => {
+      this.emitGenerationData();
+    });
+  }
+
+  private emitGenerationData() {
+    const generationData: GenerationData = {
+      generatorList: this.generatorList,
+      generationSource: this.generationForm.get('generationSource')?.value,
+      selectedFeatures: this.generationForm.get('selectedFeatures')?.value
+    };
+    this.generationDataChanged.emit(generationData);
   }
 
   addOrUpdateGenerator() {
@@ -164,7 +174,7 @@ export class GenerationComponent implements OnInit {
   }
 
   private addGenerator() {
-    const newGenerator: Generator = {
+    const newGenerator: GeneratorItem = {
       id: this.nextId++,
       manufacturer: this.getOptionName(this.generationForm.value.manufacturer, 'manufacturer'),
       model: this.getOptionName(this.generationForm.value.model, 'model'),
@@ -180,13 +190,11 @@ export class GenerationComponent implements OnInit {
 
     this.generatorList = [...this.generatorList, newGenerator];
     this.resetForm();
-    this.generatorListChanged.emit(this.generatorList);
+    this.emitGenerationData();
   }
 
-
-
   private updateGenerator() {
-    const updatedGenerator: Generator = {
+    const updatedGenerator: GeneratorItem = {
       id: this.currentEditId!,
       manufacturer: this.getOptionName(this.generationForm.value.manufacturer, 'manufacturer'),
       model: this.getOptionName(this.generationForm.value.model, 'model'),
@@ -205,7 +213,7 @@ export class GenerationComponent implements OnInit {
       this.generatorList[index] = updatedGenerator;
       this.generatorList = [...this.generatorList];
       this.resetForm();
-      this.generatorListChanged.emit(this.generatorList);
+      this.emitGenerationData();
     }
   }
 
@@ -258,7 +266,7 @@ export class GenerationComponent implements OnInit {
     this.addOrUpdateGenerator();
   }
 
-  handleEdit(generator: Generator) {
+  handleEdit(generator: GeneratorItem) {
     this.isEditing = true;
     this.currentEditId = generator.id;
 
@@ -276,12 +284,12 @@ export class GenerationComponent implements OnInit {
     });
   }
 
-  handleDelete(generator: Generator) {
+  handleDelete(generator: GeneratorItem) {
     this.generatorList = this.generatorList.filter(g => g.id !== generator.id);
-    this.generatorListChanged.emit(this.generatorList);
+    this.emitGenerationData();
   }
 
-  handleSelect(generator: Generator) {
+  handleSelect(generator: GeneratorItem) {
     console.log('Selected generator:', generator);
   }
 
@@ -290,10 +298,10 @@ export class GenerationComponent implements OnInit {
     this.pageSize = event.pageSize;
   }
 
-  handleBulkDelete(items: Generator[]): void {
+  handleBulkDelete(items: GeneratorItem[]): void {
     const idsToDelete = items.map(item => item.id);
     this.generatorList = this.generatorList.filter(g => !idsToDelete.includes(g.id));
-    this.generatorListChanged.emit(this.generatorList);
+    this.emitGenerationData();
   }
 
   calculateTotalPower() {

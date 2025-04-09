@@ -1,9 +1,0 @@
-<div class="checkbox-container" [class.disabled]="disabled" (click)="onToggle()">
-  <input
-    type="checkbox"
-    [checked]="isChecked"
-    [disabled]="disabled"
-    (click)="$event.stopPropagation()"
-  />
-  <span class="label">{{ label }}</span>
-</div>

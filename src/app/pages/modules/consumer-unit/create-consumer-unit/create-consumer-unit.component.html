@@ -238,7 +238,8 @@
 
       <!-- Tab 4: Geração -->
       <ng-template #appCustomTab>
-        <app-generation></app-generation>
+        <app-generation [initialData]="myGenerationData" (generationDataChanged)="onGenerationDataChanged($event)">
+        </app-generation>
       </ng-template>
     </app-tabs>
   </form>

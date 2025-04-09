@@ -1,0 +1,110 @@
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-item input[type="checkbox"] {
+  /* Esconde o checkbox padrão */
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.checkbox-custom {
+  position: relative;
+  display: inline-block;
+  background-color: var(--background-color);
+  border: 2px solid var(--color-primary);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Cria o checkmark (V) */
+.checkbox-custom:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -60%) rotate(45deg);
+}
+
+.checkbox-item input:checked ~ .checkbox-custom {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checkbox-item input:checked ~ .checkbox-custom:after {
+  display: block;
+}
+
+.checkbox-item input:disabled ~ .checkbox-custom {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkbox-text {
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+/* Tamanhos de texto */
+.checkbox-list.small .checkbox-text {
+  font-size: 0.875rem; /* 14px */
+}
+
+.checkbox-list.medium .checkbox-text {
+  font-size: 1rem; /* 16px */
+}
+
+.checkbox-list.large .checkbox-text {
+  font-size: 1.125rem; /* 18px */
+}
+
+/* Tamanho small (16x16) */
+.checkbox-list.small .checkbox-custom {
+  width: 16px;
+  height: 16px;
+}
+
+.checkbox-list.small .checkbox-custom:after {
+  width: 4px;
+  height: 8px;
+  transform: translate(-50%, -60%) rotate(45deg);
+}
+
+/* Tamanho medium (20x20) */
+.checkbox-list.medium .checkbox-custom {
+  width: 20px;
+  height: 20px;
+}
+
+.checkbox-list.medium .checkbox-custom:after {
+  width: 5px;
+  height: 10px;
+  transform: translate(-50%, -60%) rotate(45deg);
+}
+
+/* Tamanho large (24x24) */
+.checkbox-list.large .checkbox-custom {
+  width: 24px;
+  height: 24px;
+}
+
+.checkbox-list.large .checkbox-custom:after {
+  width: 6px;
+  height: 12px;
+  transform: translate(-50%, -60%) rotate(45deg);
+}

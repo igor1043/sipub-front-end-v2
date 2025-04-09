@@ -1,0 +1,14 @@
+<div class="checkbox-list" [class]="size">
+  <label *ngFor="let item of items" class="checkbox-item">
+    <input
+      #cb
+      type="checkbox"
+      [value]="item.value"
+      [checked]="isSelected(item.value)"
+      [disabled]="disabled"
+      (change)="onSelectionChange(item.value, cb.checked)"
+    />
+    <span class="checkbox-custom"></span>
+    <span class="checkbox-text">{{ item.name }}</span>
+  </label>
+</div>

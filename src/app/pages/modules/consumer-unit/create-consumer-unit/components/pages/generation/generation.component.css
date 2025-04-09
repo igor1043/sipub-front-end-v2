@@ -1,12 +1,34 @@
 .title-generation {
-  margin-bottom: 20px;
+  display: flex;
+  margin-top: 5px;
+}
+
+.title-font-generation {
+  display: flex;
+  margin-top: 10px;
 }
 
 .radio-group {
   display: flex;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-top: 5px;
   flex-wrap: wrap;
+}
+
+.title-data-solicitation {
+  display: flex;
+  margin-top: 25px;
+}
+
+.checkbox-list {
+  display: flex;
+  margin-top: 15px;
+}
+
+.title-generation-solar {
+  display: flex;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .unavailable-message {
@@ -41,10 +63,8 @@
   flex: 1;
   min-width: 0;
 }
-
-.submit-button {
-  margin-top: 20px;
-  margin-bottom: 20px;
+.button-container {
+  display: flex;
 }
 
 ::ng-deep .status-badge {
@@ -64,4 +84,59 @@
   background-color: #F44336;
   border-color: #F44336;
   color: #ffffff;
+}
+
+/* Responsividade para telas pequenas (até 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-row > * {
+    width: 100%;
+    flex: none;
+  }
+  
+  .checkbox-list {
+    flex-direction: column;
+  }
+  
+  .submit-button {
+    width: 100%;
+  }
+  
+  /* Ajustes para a tabela em dispositivos móveis */
+  app-simple-table {
+    overflow-x: auto;
+    display: block;
+  }
+}
+
+/* Responsividade para telas muito pequenas (até 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding: 8px;
+  }
+  
+  .title-generation, 
+  .title-font-generation,
+  .title-data-solicitation,
+  .title-generation-solar {
+    font-size: 1.2rem;
+  }
+  
+  /* Ajustes adicionais para elementos de formulário */
+  app-input-text, app-dropdown {
+    width: 100%;
+  }
 }

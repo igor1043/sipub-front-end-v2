@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { RadioGroupComponent } from './radio-group.component';
+import { CheckboxListComponent } from './checkbox-list.component';
 
-describe('RadioGroupComponent', () => {
-  let component: RadioGroupComponent;
-  let fixture: ComponentFixture<RadioGroupComponent>;
+describe('CheckboxListComponent', () => {
+  let component: CheckboxListComponent;
+  let fixture: ComponentFixture<CheckboxListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RadioGroupComponent ]
+      declarations: [ CheckboxListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RadioGroupComponent);
+    fixture = TestBed.createComponent(CheckboxListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
