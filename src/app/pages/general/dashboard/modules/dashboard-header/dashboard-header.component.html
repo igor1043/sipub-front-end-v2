@@ -1,0 +1,32 @@
+<div class="header-container">
+  <div class="account-section">
+    <div *ngIf="loadingImage" class="logo-loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+    
+    <img *ngIf="hasLogo() && !loadingImage" 
+         class="logo" 
+         [src]="accountLogo" 
+         alt="Logo da conta"
+         (error)="imageLoadError = true; accountLogo = undefined" />
+
+    <div class="account-info">
+      <span class="label">Conta</span>
+      <div class="name">
+        {{ accountName }}
+      </div>
+      <a *ngIf="accountUrl" class="url" [href]="accountUrl" target="_blank">{{ accountUrl }}</a>
+    </div>
+  </div>
+
+  <div class="module-section">
+    <div class="icon-container">
+      <img *ngIf="moduleSelected?.iconUrl" [src]="moduleSelected?.iconUrl" alt="Ícone do módulo" class="module-icon"/>
+    </div>
+    
+    <div class="module-info">
+      <span class="label">Módulo</span>
+      <div class="name">{{ moduleSelected?.name }}</div>
+    </div>
+  </div>
+</div>

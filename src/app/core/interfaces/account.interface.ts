@@ -8,4 +8,5 @@ export interface Account {
     billing: boolean;
     state: string;
     city: string;
+    url_account: string;
   }

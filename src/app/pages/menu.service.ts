@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Module, ModuleType } from 'app/core/interfaces/module.interface';
-import { ModulesMockService } from 'app/core/mocks/modules.mock';
+import { getAvailableModules, Module, modules, ModuleType } from 'app/core/interfaces/module.interface';
+import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 import { firstValueFrom } from 'rxjs';
 
 export interface MenuItem {
@@ -17,7 +17,7 @@ export interface MenuItem {
 })
 export class MenuService {
 
-  constructor(private modulesMockService: ModulesMockService) { }
+  constructor(private localStorageService: LocalStorageService) { }
 
   private fixedMenuItems: MenuItem[] = [
     {
@@ -72,7 +72,13 @@ export class MenuService {
   ];
 
   getMenuItems(): MenuItem[] {
-    const moduleItems = this.modulesMockService.getModulesActive().map(module => ({ ...this.getModuleMenuConfig(module) }));
+    const availableIds = this.localStorageService.getAvailableModules();
+    const availableModules = getAvailableModules(availableIds);
+    
+    const moduleItems = availableModules.map(module => ({
+      ...this.getModuleMenuConfig(module)
+    }));
+  
     return [...this.fixedMenuItems, ...moduleItems];
   }
 

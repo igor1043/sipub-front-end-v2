@@ -14,7 +14,8 @@ export class AccountsMockService {
       is_coordinator: false,
       billing: true,
       state: 'SP',
-      city: 'São Paulo'
+      city: 'São Paulo',
+      url_account: 'https://www.example.com'
     },
     {
       id: 2,
@@ -25,7 +26,8 @@ export class AccountsMockService {
       is_coordinator: true,
       billing: false,
       state: 'RJ',
-      city: 'Rio de Janeiro'
+      city: 'Rio de Janeiro',
+      url_account: 'https://www.example.com'
     },
     {
       id: 3,
@@ -36,7 +38,8 @@ export class AccountsMockService {
       is_coordinator: false,
       billing: true,
       state: 'MG',
-      city: 'Belo Horizonte'
+      city: 'Belo Horizonte',
+      url_account: 'https://www.example.com'
     },
     {
       id: 4,
@@ -47,7 +50,8 @@ export class AccountsMockService {
       is_coordinator: true,
       billing: true,
       state: 'RS',
-      city: 'Porto Alegre'
+      city: 'Porto Alegre',
+      url_account: 'https://www.example.com'
     },
     {
       id: 5,
@@ -58,7 +62,8 @@ export class AccountsMockService {
       is_coordinator: false,
       billing: false,
       state: 'BA',
-      city: 'Salvador'
+      city: 'Salvador',
+      url_account: 'https://www.example.com'
     }
   ];
 

@@ -56,7 +56,7 @@ export class TopBarComponent implements OnInit {
     this.breadcrumbs = this.buildBreadcrumbs();
 
     this.accountAlias = account?.alias;
-    this.getImageAccount(account?.id_account!!)
+    this.getImageAccount(account?.id!!)
   }
 
   private buildBreadcrumbs(): string[] {

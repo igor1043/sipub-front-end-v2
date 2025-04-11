@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthResponse } from '../services/auth/models/auth.model';
 import { User } from './models/user.model';
-import { Account } from './models/account.model';
+import { Account } from '../interfaces/account.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,9 @@ export class LocalStorageService {
 
   private readonly USER_KEY = 'currentUser';
   private readonly ACCOUNT_KEY = 'currentAccount';
+  private readonly ACCOUNT_SELECTED_KEY = 'accountSelected';
+  private readonly MODULES_KEY = 'availableModules';
+  private readonly CURRENT_MODULE_KEY = 'currentModule';
 
   constructor() {}
 
@@ -27,20 +30,33 @@ export class LocalStorageService {
     };
 
     const account: Account = {
+      id: response.data.acl?.id_account || 0,
+      name: response.data.account_name,
       alias: response.data.alias,
+      created_at: "Data Não Disponível",
+      is_admin: response.data.acl?.is_admin_account || false,
+      is_coordinator: response.data.acl?.is_coordinator || false,
+      billing: false,
       state: response.data.state || '',
       city: response.data.city || '',
-      id_account: response.data.acl?.id_account || 0,
-      module_groups: response.data.module_groups || []
+      url_account: "https://www.example.com",
     };
 
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
     localStorage.setItem(this.ACCOUNT_KEY, JSON.stringify(account));
+    localStorage.setItem(this.ACCOUNT_SELECTED_KEY, JSON.stringify(account));
+    
+    const availableModules = [1, 16];
+    this.saveAvailableModules(availableModules);
+    this.setCurrentModule(availableModules[0]);
   }
 
   logout(): void {
     localStorage.removeItem(this.USER_KEY);
     localStorage.removeItem(this.ACCOUNT_KEY);
+    localStorage.removeItem(this.ACCOUNT_SELECTED_KEY);
+    localStorage.removeItem(this.MODULES_KEY);
+    localStorage.removeItem(this.CURRENT_MODULE_KEY);
   }
 
   getCurrentUser(): User | null {
@@ -51,5 +67,40 @@ export class LocalStorageService {
   getCurrentAccount(): Account | null {
     const accountJson = localStorage.getItem(this.ACCOUNT_KEY);
     return accountJson ? JSON.parse(accountJson) : null;
-  }  
+  }
+
+  getAccountSelected(): Account | null {
+    const accountSelectedJson = localStorage.getItem(this.ACCOUNT_SELECTED_KEY);
+    return accountSelectedJson ? JSON.parse(accountSelectedJson) : null;
+  }
+
+  setAccountSelected(account: Account): void {
+    localStorage.setItem(this.ACCOUNT_SELECTED_KEY, JSON.stringify(account));
+  }
+
+  clearAccountSelected(): void {
+    localStorage.removeItem(this.ACCOUNT_SELECTED_KEY);
+  }
+
+  saveAvailableModules(moduleIds: number[]): void {
+    localStorage.setItem(this.MODULES_KEY, JSON.stringify(moduleIds));
+  }
+
+  getAvailableModules(): number[] {
+    const modulesJson = localStorage.getItem(this.MODULES_KEY);
+    return modulesJson ? JSON.parse(modulesJson) : [];
+  }
+
+  getCurrentModule(): number | null {
+    const moduleJson = localStorage.getItem(this.CURRENT_MODULE_KEY);
+    return moduleJson ? JSON.parse(moduleJson) : null;
+  }
+
+  setCurrentModule(moduleId: number): void {
+    localStorage.setItem(this.CURRENT_MODULE_KEY, JSON.stringify(moduleId));
+  }
+
+  clearCurrentModule(): void {
+    localStorage.removeItem(this.CURRENT_MODULE_KEY);
+  }
 }

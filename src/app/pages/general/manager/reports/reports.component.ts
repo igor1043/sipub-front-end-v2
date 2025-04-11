@@ -8,11 +8,11 @@ import { ReportListComponent } from '../components/report-list/report-list.compo
 import { DynamicFormComponent } from '../components/dynamic-form.html/dynamic-form.component';
 import { ReportGroup, ReportSubItem } from '../components/report-list/report.interface';
 import { ReportMockService } from 'app/core/mocks/report.mock';
-import { Module } from 'app/core/interfaces/module.interface';
-import { ModulesMockService } from 'app/core/mocks/modules.mock';
+import { getAvailableModules, Module, modules } from 'app/core/interfaces/module.interface';
 import { AccountsMockService } from 'app/core/mocks/accounts.mock';
 import { LoadingComponent } from "../../../../desing-system/ui-components/loading/loading.component";
 import { Account } from 'app/core/interfaces/account.interface';
+import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 
 
 @Component({
@@ -34,7 +34,6 @@ import { Account } from 'app/core/interfaces/account.interface';
 export class ReportsComponent implements OnInit {
   //mocks
   private reportMock = inject(ReportMockService);
-  private modulesMock = inject(ModulesMockService);
   private accountsMock = inject(AccountsMockService);
 
   form: FormGroup;
@@ -49,11 +48,14 @@ export class ReportsComponent implements OnInit {
 
   isLoading = false;
 
+  availableModuleIds: number[] = [];
+
   ngOnInit(): void {
     this.carregarContas();
+    this.availableModuleIds = this.localStorageService.getAvailableModules();
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private localStorageService: LocalStorageService) {
     this.form = this.fb.group({
       selected_account: [null, Validators.required],
       selected_module: [null, Validators.required],
@@ -88,16 +90,10 @@ export class ReportsComponent implements OnInit {
 
   private carregarModulos(contaId: number): void {
     this.isLoading = true;
-    this.modulesMock.getListModulesActive().subscribe({
-      next: (modulos) => {
-        this.modules = modulos;
-        this.isLoading = false;
-      },
-      error: (erro) => {
-        console.error('Erro ao carregar módulos:', erro);
-        this.isLoading = false;
-      }
-    });
+    const availableIds = this.localStorageService.getAvailableModules();
+    this.modules = getAvailableModules(availableIds);
+    this.isLoading = false;
+
   }
 
   onModuleSelected(module: Module | null) {
