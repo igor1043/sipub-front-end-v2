@@ -1,0 +1,15 @@
+.dashboard-grid {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  align-items: start;
+  margin-bottom: 10px;
+}
+
+.dashboard-grid.dense {
+  grid-auto-flow: dense;
+}
+
+.dashboard-grid > * {
+  display: block;
+}
