@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -21,60 +21,57 @@ export type ChartOptions = {
   xaxis: ApexXAxis;
   fill: ApexFill;
   title: ApexTitleSubtitle;
+  colors: string[];
 };
 
 @Component({
   selector: 'app-apex-chart',
   standalone: true,
   imports: [CommonModule, NgApexchartsModule],
-  template: `
-    <div id="chart">
-      <apx-chart
-        [series]="chartOptions.series"
-        [chart]="chartOptions.chart"
-        [dataLabels]="chartOptions.dataLabels"
-        [plotOptions]="chartOptions.plotOptions"
-        [yaxis]="chartOptions.yaxis"
-        [xaxis]="chartOptions.xaxis"
-        [fill]="chartOptions.fill"
-        [title]="chartOptions.title"
-      ></apx-chart>
-    </div>
-  `,
-  styles: [
-    `
-      #chart {
-        max-width: 100%;
-        margin: 35px auto;
-      }
-    `
-  ]
+  templateUrl: './apex-chart.component.html',
+  styleUrls: ['./apex-chart.component.css']
 })
 export class ApexChartComponent {
+  @Input() chartData: any[] = [];
+  @Input() categories: string[] = [];
+  @Input() chartTitle: string = 'Gráfico de Barras';
+  @Input() yAxisSuffix: string = '%';
+  @Input() height: number = 350;
+  @Input() barColor: string = '#FF0000'; 
+
   public chartOptions: ChartOptions;
 
   constructor() {
-    this.chartOptions = <ChartOptions>{
-      series: [
-        {
-          name: 'Inflation',
-          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
-        }
-      ],
+    this.chartOptions = this.createChartOptions();
+  }
+
+  ngOnChanges() {
+    this.chartOptions = this.createChartOptions();
+  }
+
+  private createChartOptions(): ChartOptions {
+    return {
+      series: [{
+        name: 'Valores',
+        data: this.chartData
+      }],
       chart: {
-        height: 350,
+        height: this.height,
         type: 'bar'
       },
       plotOptions: {
         bar: {
+          borderRadius: 4,
+          borderRadiusApplication: 'end',
           dataLabels: {
             position: 'top'
           }
         }
       },
+      colors: [this.barColor], // Usa a cor vermelha definida
       dataLabels: {
         enabled: true,
-        formatter: val => val + '%',
+        formatter: (val) => val + this.yAxisSuffix,
         offsetY: -20,
         style: {
           fontSize: '12px',
@@ -82,13 +79,10 @@ export class ApexChartComponent {
         }
       },
       xaxis: {
-        categories: [
-          'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ],
-        position: 'top',
+        categories: this.categories,
+        position: 'bottom',
         labels: {
-          offsetY: -18
+          offsetY: 0
         },
         axisBorder: {
           show: false
@@ -96,34 +90,13 @@ export class ApexChartComponent {
         axisTicks: {
           show: false
         },
-        crosshairs: {
-          fill: {
-            type: 'gradient',
-            gradient: {
-              colorFrom: '#D8E3F0',
-              colorTo: '#BED1E6',
-              stops: [0, 100],
-              opacityFrom: 0.4,
-              opacityTo: 0.5
-            }
-          }
-        },
         tooltip: {
-          enabled: true,
-          offsetY: -35
+          enabled: true
         }
       },
       fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'light',
-          type: 'horizontal',
-          shadeIntensity: 0.25,
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [50, 0, 100, 100]
-        }
+        type: 'solid',
+        opacity: 1
       },
       yaxis: {
         axisBorder: {
@@ -134,16 +107,19 @@ export class ApexChartComponent {
         },
         labels: {
           show: false,
-          formatter: val => val + '%'
+          formatter: (val) => val + this.yAxisSuffix
         }
       },
       title: {
-        text: 'Monthly Inflation in Argentina, 2002',
+        text: this.chartTitle,
         floating: false,
-        offsetY: 320,
+        offsetY: 0,
         align: 'center',
+        margin: 10,
         style: {
-          color: '#444'
+          color: '#444',
+          fontSize: '16px',
+          fontWeight: 'bold'
         }
       }
     };

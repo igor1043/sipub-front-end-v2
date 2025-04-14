@@ -1,3 +1,15 @@
-<p>
-  apex-chart works!
-</p>
+<div class="chart-container">
+  <div id="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [dataLabels]="chartOptions.dataLabels"
+      [plotOptions]="chartOptions.plotOptions"
+      [yaxis]="chartOptions.yaxis"
+      [xaxis]="chartOptions.xaxis"
+      [fill]="chartOptions.fill"
+      [title]="chartOptions.title"
+      barColor="#FF0000"
+    ></apx-chart>
+  </div>
+</div>
