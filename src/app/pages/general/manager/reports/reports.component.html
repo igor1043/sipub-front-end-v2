@@ -14,9 +14,6 @@
 
       <app-module-dropdown
         [modules]="modules"
-        [selectedModule]="selectedModule"
-        (selectedModuleChange)="onModuleSelected($event)"
-        [control]="form.get('selected_module')!"
         formControlName="selected_module"
         [disabled]="!form.get('selected_account')?.value">
       </app-module-dropdown>

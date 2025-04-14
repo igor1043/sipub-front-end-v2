@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Optional, Output, Self } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Optional, Output, Self } from '@angular/core';
 import { Module } from 'app/core/interfaces/module.interface';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from "../svg-icon/svg-icon.component";
-import { AbstractControl, ControlValueAccessor, NgControl } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,16 +10,20 @@ import { Subscription } from 'rxjs';
   templateUrl: './module-dropdown.component.html',
   styleUrls: ['./module-dropdown.component.css'],
   imports: [CommonModule, SvgIconComponent],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => ModuleDropdownComponent),
+    multi: true
+  }]
 })
 export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   @Input() modules: Module[] = [];
-  @Input() selectedModule: Module | null = null; // Novo input para valor selecionado
   @Input() disabled = false;
-  @Input() control!: AbstractControl;
-  @Output() selectedModuleChange = new EventEmitter<Module | null>();
 
   isOpen = false;
+  selectedModule: Module | null = null; 
+  private controlSub?: Subscription;
 
   private controlSubscription!: Subscription;
 
@@ -28,60 +32,54 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
       this.ngControl.valueAccessor = this;
     }
   }
-
   toggleDropdown() {
-    if (!this.disabled) { // Só permite abrir se não estiver desabilitado
+    if (!this.disabled) { 
       this.isOpen = !this.isOpen;
     }
   }
 
   toggleSelection(module: Module) {
     if (this.disabled) return;
-    const newSelection = this.selectedModule?.id === module.id ? null : module;
-    this.selectedModule = newSelection;
-    this.selectedModuleChange.emit(this.selectedModule);
-    this.onChange(newSelection?.id || null);
-  
-    if (this.control) {
-      this.control.updateValueAndValidity();
-    }
-  
+
+    const next = this.selectedModule?.id === module.id ? null : module;
+    this.selectedModule = next;
+    this.onChange(next?.id ?? null);
+    this.onTouched();
     this.isOpen = false;
   }
   
   ngOnInit(): void {
-    if (this.ngControl && this.ngControl.control) {
-      this.controlSubscription = this.ngControl.control.valueChanges.subscribe(value => {
-        if (value === '' || value === null) {
-          this.clearSelection();
-        }
-      });
+    if (this.ngControl?.control) {
+      this.controlSub = this.ngControl.control.valueChanges
+        .subscribe(value => {
+          if (value === null || value === '') {
+            this.clearSelection();
+          }
+        });
     }
   }
+
 
   private clearSelection(): void {
     this.selectedModule = null;
     this.isOpen = false;
-    this.selectedModuleChange.emit(this.selectedModule);
+
   }
 
   get showErrorContainer(): boolean {
-    return this.control ? this.control.invalid : false;
+    const ctrl = this.ngControl?.control;
+    return !!(ctrl && ctrl.invalid);
   }
-
   ngOnDestroy(): void {
-    if (this.controlSubscription) {
-      this.controlSubscription.unsubscribe();
-    }
+    this.controlSub?.unsubscribe();
   }
 
   writeValue(id: any): void {
-    if (id !== undefined && id !== null) {
-      const selectedOption = this.modules.find(opt => opt.id === id);
-      if (selectedOption) {
-        console.log('Selected ModuleDropDown:', selectedOption, this.control.invalid);
-        this.selectedModule = selectedOption;
-      }
+    if (id === null || id === undefined || id === '') {
+      this.clearSelection();
+    } else {
+      const opt = this.modules.find(m => m.id === id);
+      this.selectedModule = opt || null;
     }
   }
 
@@ -93,6 +91,9 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
     this.onTouched = fn;
   }
 
-  private onChange: any = () => { };
-  private onTouched: any = () => { };
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+  private onChange: (value: any) => void = () => {};
+  private onTouched: () => void = () => {};
 }

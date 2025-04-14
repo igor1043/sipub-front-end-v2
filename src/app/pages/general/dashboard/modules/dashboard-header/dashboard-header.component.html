@@ -1,9 +1,10 @@
+<!-- dashboard-header.component.html -->
 <div class="header-container">
   <div class="account-section">
     <div *ngIf="loadingImage" class="logo-loading">
       <mat-spinner diameter="40"></mat-spinner>
     </div>
-    
+
     <img *ngIf="hasLogo() && !loadingImage" 
          class="logo" 
          [src]="accountLogo" 
@@ -12,9 +13,7 @@
 
     <div class="account-info">
       <span class="label">Conta</span>
-      <div class="name">
-        {{ accountName }}
-      </div>
+      <div class="name">{{ accountName }}</div>
       <a *ngIf="accountUrl" class="url" [href]="accountUrl" target="_blank">{{ accountUrl }}</a>
     </div>
   </div>
@@ -23,10 +22,37 @@
     <div class="icon-container">
       <img *ngIf="moduleSelected?.iconUrl" [src]="moduleSelected?.iconUrl" alt="Ícone do módulo" class="module-icon"/>
     </div>
-    
+
     <div class="module-info">
       <span class="label">Módulo</span>
       <div class="name">{{ moduleSelected?.name }}</div>
+    </div>
+  </div>
+
+  <div class="change-button">
+    <app-button mode="primary" size="medium" [text]="'Alterar'" (clicked)="onChangeAccount()"></app-button>
+  </div>
+</div>
+
+<app-loading [isLoading]="isLoading"></app-loading>
+
+<div *ngIf="showDropdownSelector && !isLoading" class="modal-overlay">
+  <div class="modal-content">
+    <button class="close-button" (click)="fecharModal()">✕</button>
+
+    <div class="form-section">
+      <app-dropdown 
+        [options]="accountOptions" 
+        placeholder="Selecione a conta" 
+        [control]="form.get('selected_account')!"
+        formControlName="selected_account">
+      </app-dropdown>
+
+      <app-module-dropdown
+        [modules]="modules"
+        formControlName="selected_module"
+        [disabled]="!form.get('selected_account')?.value">
+      </app-module-dropdown>
     </div>
   </div>
 </div>
