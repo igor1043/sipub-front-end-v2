@@ -69,10 +69,25 @@ export class SidebarComponent implements OnInit {
   }
 
   toggleMenuItem(item: MenuItem): void {
+    if (this.minimized) {
+      this.expandSidebar(); // Expande o sidebar primeiro
+      // Aguarda a próxima detecção de mudanças para garantir a expansão
+      setTimeout(() => {
+        if (this.hasSubItems(item)) {
+          item.isOpen = true;
+          this.closeSiblingSubmenus(item);
+        } else if (item.route) {
+          this.navigateTo(item.route);
+        }
+        this.cdr.detectChanges();
+      }, 0);
+      return;
+    }
+  
+    // Lógica original para sidebar expandido
     if (this.hasSubItems(item)) {
       item.isOpen = !item.isOpen;
-      // Fecha outros subitens do mesmo nível
-      // this.closeSiblingSubmenus(item);
+      this.closeSiblingSubmenus(item);
     } else if (item.route) {
       this.navigateTo(item.route);
     }
@@ -134,7 +149,7 @@ export class SidebarComponent implements OnInit {
   expandSidebar(): void {
     clearTimeout(this.collapseTimeout);
     this.minimized = false;
-    this.minimizedChange.emit(this.minimized);
+    this.minimizedChange.emit(this.minimized); // Notifica o componente pai
     this.cdr.detectChanges();
   }
 

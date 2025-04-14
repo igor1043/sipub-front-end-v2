@@ -28,12 +28,12 @@
           class="dropdown-option" 
           *ngFor="let option of filteredOptions" 
           (click)="toggleOption(option, $event)">
-          <input 
-            type="checkbox" 
-            [checked]="isSelected(option.id)"
-            class="checkbox-input"
-            (click)="$event.stopPropagation()"
-          />
+            <input 
+              type="checkbox" 
+              [checked]="isSelected(option.id)"
+              class="checkbox-input"
+              (click)="$event.stopPropagation(); toggleOption(option, $event)"
+            />
           <span>
             {{ option.name }}
           </span>
