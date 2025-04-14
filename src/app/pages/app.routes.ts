@@ -88,24 +88,18 @@ export const routes: Routes = [
             canActivate: [AuthGuard],
             data: { breadcrumb: 'Criar Unidade' }
           },
-          {
-            path: 'edit/:id',  
-            component: CreateConsumerUnitComponent,
-            canActivate: [AuthGuard],
-            data: { breadcrumb: 'Editar Unidade' }
-          },
+          /*           {
+                      path: 'edit/:id',  
+                      component: CreateConsumerUnitComponent,
+                      canActivate: [AuthGuard],
+                      data: { breadcrumb: 'Editar Unidade' }
+                    }, */
           {
             path: 'monthly-monitoring',
             component: MonthlyMonitoringConsumerUnitComponent,
             canActivate: [AuthGuard],
             data: { breadcrumb: 'Monitoramento Mensal' }
           },
-          {
-            path: 'edit/:id',
-            component: CreateConsumerUnitComponent,
-            canActivate: [AuthGuard],
-            data: { breadcrumb: 'Editar' }
-          }
         ]
       },
       {

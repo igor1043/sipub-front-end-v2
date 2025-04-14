@@ -126,7 +126,7 @@ export class ListConsumerUnitComponent implements OnInit {
   }
 
   handleEdit(consumerUnit: ConsumerUnit) {
-    this.router.navigate(['consumer-unit/edit', consumerUnit.id]);
+    //this.router.navigate(['consumer-unit/edit', consumerUnit.id]);
   }
 
   handleDelete(consumerUnit: ConsumerUnit) {

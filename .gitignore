@@ -2,3 +2,4 @@
 /.angular/cache
 /.angular
 /src/assets/environments.json
+/dist
