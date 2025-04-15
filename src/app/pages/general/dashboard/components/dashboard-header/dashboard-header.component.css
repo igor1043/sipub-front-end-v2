@@ -1,6 +1,5 @@
 /* Container Principal */
 .header-container {
-<<<<<<< HEAD
     display: flex;
     background: transparent;
     width: 75%;
@@ -98,17 +97,6 @@
   }
   
   
-=======
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 60%;
-  padding: 20px;
-  margin: 20px;
-  border: 1px solid var(--gray-200);
-  border-radius: 12px;
-  background: var(--background-color);
-}
 
 /* Seções Internas */
 .account-section {
@@ -244,4 +232,3 @@
   align-items: center;
   justify-content: center;
 }
->>>>>>> b678a6c82c664ef4a26a556f3c92971e647009ba
