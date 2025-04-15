@@ -1,13 +1,38 @@
-<div class="map-container">
-  <google-map [center]="center" [zoom]="zoom" (mapInitialized)="onMapReady($event)" height="500px" width="100%">
-    <map-marker *ngFor="let unit of consumerUnits" [position]="{ lat: unit.lat, lng: unit.lng }" [options]="{
-    icon: {
-      url: unit.icon,
-      scaledSize: scaledSize
-    }
-  }" (mapClick)="onMarkerClick(unit)">
-    </map-marker>
-
+<div class="container">
+  <google-map
+    [center]="center"
+    [zoom]="zoom"
+    [options]="mapOptions"
+    (mapInitialized)="onMapReady($event)"
+    height="100%"
+    width="100%"
+  >
+    <map-marker
+      *ngFor="let unit of consumerUnits"
+      [position]="{ lat: unit.lat, lng: unit.lng }"
+      [options]="{
+        icon: {
+          url: unit.icon,
+          scaledSize: scaledSize
+        }
+      }"
+      (mapClick)="onMarkerClick(unit)"
+    ></map-marker>
   </google-map>
 
+  <div class="map-controls">
+    <button class="toggle-button" (click)="toggleSidebar()">
+      {{ showSidebar ? 'Ocultar Lista' : 'Mostrar Lista' }}
+    </button>
+  </div>
+
+  <!-- Sidebar condicional -->
+  <div class="sidebar" *ngIf="showSidebar">
+    <h3>Pontos Visíveis ({{ visibleUnits.length }})</h3>
+    <ul>
+      <li *ngFor="let unit of visibleUnits" (click)="onMarkerClick(unit)" class="unit-item">
+        {{ unit.name }}
+      </li>
+    </ul>
+  </div>
 </div>
