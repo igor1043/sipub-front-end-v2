@@ -27,6 +27,7 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
   @Input() modules: Module[] = [];
   @Input() disabled = false;
   @Input() control!: AbstractControl;
+  
   isOpen = false;
 
   selectedModule: Module | null = null; 
@@ -42,9 +43,9 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
 
   toggleSelection(module: Module) {
     if (this.disabled) return;
-    this.writeValue(module)
     const next = this.selectedModule?.id === module.id ? null : module;
     this.selectedModule = next;
+    this.writeValue(module);
     this.onChange(next?.id ?? null);
     this.onTouched();
     this.isOpen = false;
@@ -53,14 +54,10 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
   ngOnInit(): void {
     this.controlSubscription = this.control.valueChanges.subscribe(value => {
       if (value === '' || value === null) {
-
-        setTimeout(() => {
-  
-        });
+        this.clearSelection();
       }
     });
   }
-
 
   private clearSelection(): void {
     this.selectedModule = null;
