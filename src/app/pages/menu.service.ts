@@ -100,6 +100,7 @@ export class MenuService {
           title: module.name,
           icon: module.iconUrl,
           subItems: [
+            { title: 'Mapa de Unidades', route: '/consumer-unit/map' },
             { title: 'Lista de Unidades', route: '/consumer-unit/list' },
             { title: 'Cadastro de Unidade', route: '/consumer-unit/add' },
             { title: 'Monitoramento Mensal', route: '/consumer-unit/monthly-monitoring' },

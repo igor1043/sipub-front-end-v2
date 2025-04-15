@@ -1,0 +1,13 @@
+<div class="map-container">
+  <google-map [center]="center" [zoom]="zoom" (mapInitialized)="onMapReady($event)" height="500px" width="100%">
+    <map-marker *ngFor="let unit of consumerUnits" [position]="{ lat: unit.lat, lng: unit.lng }" [options]="{
+    icon: {
+      url: unit.icon,
+      scaledSize: scaledSize
+    }
+  }" (mapClick)="onMarkerClick(unit)">
+    </map-marker>
+
+  </google-map>
+
+</div>

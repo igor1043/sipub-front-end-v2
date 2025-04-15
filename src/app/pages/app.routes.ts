@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReportsComponent } from './general/manager/reports/reports.component';
 import { MapPublicIlluminationComponent } from './modules/public-illumination/map-public-illumination/map-public-illumination.component';
+import { MapConsumerUnitComponent } from './modules/consumer-unit/map-consumer-unit/map-consumer-unit.component';
 
 export const routes: Routes = [
   {
@@ -76,6 +77,12 @@ export const routes: Routes = [
         path: 'consumer-unit',
         data: { breadcrumb: 'Unidade Consumidora' },
         children: [
+          {
+            path: 'map',
+            component: MapConsumerUnitComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Mapa de Unidades' }
+          },
           {
             path: 'list',
             component: ListConsumerUnitComponent,
