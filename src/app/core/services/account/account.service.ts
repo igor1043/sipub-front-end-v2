@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AccountResponse } from './models/account.model';
 import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 import { AccountConfigurationResponse } from './models/account.image.model';
+import { mapBeAccountToAccount } from 'app/core/interfaces/account.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
 
-  private apiUrl = `${environment.apiUrl}/account`;
-
   constructor(private http: HttpClient, private localStorageService: LocalStorageService,) { }
 
   getAccounts(): Observable<AccountResponse> {
-    // Faz a requisição GET
-    return this.http.get<AccountResponse>(this.apiUrl).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/account`).pipe(
+      map(response => ({
+        meta: response.meta,
+        data: response.data.map((beAccount: any) => mapBeAccountToAccount(beAccount))
+      })),
       catchError((error) => {
         console.error('Erro na requisição de contas:', error);
         return throwError(() => new Error('Erro ao obter a lista de contas'));

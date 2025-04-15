@@ -14,6 +14,7 @@ import { DropdownComponent } from "../../../../../desing-system/ui-components/in
 import { ModuleDropdownComponent } from "../../../../../desing-system/ui-components/module-dropdown/module-dropdown.component";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountsMockService } from 'app/core/mocks/accounts.mock';
+import { AccountResponse } from 'app/core/services/account/models/account.model';
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
@@ -73,10 +74,16 @@ export class DashboardHeaderComponent implements OnInit {
     const moduleValid = this.form.get('selected_module')?.valid;
 
     if (accountValid && moduleValid) {
+      this.moduleSelected = this.form.get('selected_module')?.value
+      if(this.accountSelected != null)  {
+        this.localStorageService.setAccountSelected(this.accountSelected);
+      }
+      if (this.moduleSelected != null) {
+        this.localStorageService.setCurrentModule(this.moduleSelected.id);
+      }
       this.fecharModal();
     }
   }
-
 
   async ngOnInit(): Promise<void> {
     if (this.accountSelected) {
@@ -97,22 +104,22 @@ export class DashboardHeaderComponent implements OnInit {
 
   onChangeAccount(): void {
     this.showDropdownSelector = true;
-    this.carregarContas();
+    this.loadListAccount();
   }
 
-  private carregarContas(): void {
+  async loadListAccount(): Promise<void> {
     this.isLoading = true;
-    this.accountsMock.getAccounts().subscribe({
-      next: (accounts) => {
-        this.listAccounts = accounts;
-        this.isLoading = false;
-
-      },
-      error: () => {
-        this.isLoading = false;
-        console.error('Erro ao carregar a lista de contas');
-      }
-    });
+    try {
+      const response: AccountResponse = await firstValueFrom(
+        this.accountService.getAccounts()
+      );
+      console.log('Lista de contas:', response.data);
+      this.listAccounts = response.data;
+    } catch (error) {
+      console.error('Erro ao carregar a lista de contas', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   fecharModal(): void {

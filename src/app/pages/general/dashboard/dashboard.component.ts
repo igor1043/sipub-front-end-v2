@@ -7,6 +7,7 @@ import { DashboardPublicIlluminationComponent } from './modules/public-illuminat
 import { DashboardHeaderComponent } from "./components/dashboard-header/dashboard-header.component";
 import { DividerComponent } from "../../../desing-system/ui-components/divider/divider.component";
 import { SvgIconComponent } from "../../../desing-system/ui-components/svg-icon/svg-icon.component";
+import { DashboardConsumerUnitComponent } from './modules/consumer-unit/dashboard-consumer-unit/dashboard-consumer-unit.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +28,7 @@ export class DashboardComponent implements OnInit {
 
   private moduleComponentMap: Record<number, Type<any>> = {
     [ModuleType.PublicIllumination.id]: DashboardPublicIlluminationComponent,
+    [ModuleType.ConsumerUnit.id]: DashboardConsumerUnitComponent,
 
     // [ModuleEnum.SAFETY]: DashboardSafetyComponent,
     // [ModuleEnum.WATER_SUPPLY]: DashboardWaterComponent,

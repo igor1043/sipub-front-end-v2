@@ -9,5 +9,5 @@ export interface AccountResponse {
     method: string;
     links: any[];
   };
-  data: Account[];
+  data: Account[]; 
 }

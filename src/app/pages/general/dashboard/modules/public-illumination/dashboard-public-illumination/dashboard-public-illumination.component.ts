@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppDashboardLayoutComponent } from "../../../components/app-dashboard-layout/dashboard-layout.component";
-import { ApexChartComponent } from "../../../components/apex-chart/apex-chart.component";
+import { ApexChartComponent } from "../../../../../../desing-system/ui-components/apex-chart/apex-chart.component";
 import { LuminousPointCountComponent } from "../luminous-point-count/luminous-point-count.component";
 import { PublicIlluminationCountComponent } from "../public-illumination-count/public-illumination-count.component";
 import { EnergyConsumptionCardComponent } from "../energy-consumption-card/energy-consumption-card.component";
