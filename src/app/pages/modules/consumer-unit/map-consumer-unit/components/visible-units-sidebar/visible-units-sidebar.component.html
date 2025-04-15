@@ -1,0 +1,22 @@
+<div class="sidebar" [class.sidebar-open]="show">
+  <h3>Unidades Visíveis</h3>
+  <small>{{ units.length }} Unidades</small>
+
+  <ul class="unit-list">
+    <li *ngFor="let unit of units" class="unit-item" (click)="onClick(unit)">
+      <div class="icon-box">
+        <img [src]="unit.icon" alt="Ícone" />
+      </div>
+
+      <div class="unit-info">
+        <strong>{{ unit.name }}</strong>
+        <div>{{ unit.street }}, {{ unit.number }}</div>
+        <div class="neighborhood">{{ unit.neiborhod }}</div>
+      </div>
+
+      <div class="unit-status" [ngClass]="unit.status">
+        {{ unit.status === 'ativa' ? 'Ativa' : 'Inativa' }}
+      </div>
+    </li>
+  </ul>
+</div>

@@ -8,10 +8,9 @@
   overflow: hidden;
 }
 
-/* Área de controles na esquerda */
 .map-controls {
   width: 40px;
-  background-color: #f8f9fa;
+  background-color: var(--background_color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,32 +19,17 @@
   z-index: 10;
 }
 
-/* Container do mapa ocupa o restante */
 .map-container {
   position: relative;
   flex: 1;
   height: 100%;
 }
 
-/* Sidebar na direita com animação */
-.sidebar {
-  position: absolute;
-  right: -300px; /* Escondida inicialmente */
-  top: 0;
-  width: 300px;
-  height: 100%;
-  background-color: white;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-  transition: right 0.3s ease;
-  z-index: 5;
-  overflow-y: auto;
-}
 
 .sidebar.sidebar-open {
   right: 0;
 }
 
-/* Estilos do botão de toggle */
 .toggle-button {
   display: flex;
   align-items: center;
@@ -66,7 +50,6 @@
   color: #202124;
 }
 
-/* Restante do CSS permanece igual ao anterior */
 .sidebar h3 {
   margin-top: 0;
   padding: 1rem;
@@ -92,7 +75,7 @@
 
 .loading-indicator {
   position: absolute;
-  bottom: 10px;
+  top: 10px;
   left: 10px;
   background-color: white;
   border-radius: 4px;
