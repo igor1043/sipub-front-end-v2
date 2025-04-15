@@ -53,7 +53,8 @@ export class DashboardHeaderComponent implements OnInit {
       this.accountSelected = this.listAccounts.find(a => a.id === accountId) || null;
       this.selectedModule = null;
       this.modules = [];
-
+    
+      console.log('Conta selecionada:', this.accountSelected);
       if (accountId) {
         this.carregarModulos(accountId);
       }

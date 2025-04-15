@@ -2,36 +2,38 @@ import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Optional
 import { Module } from 'app/core/interfaces/module.interface';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from "../svg-icon/svg-icon.component";
-import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-module-dropdown',
   templateUrl: './module-dropdown.component.html',
   styleUrls: ['./module-dropdown.component.css'],
+  standalone: true,
   imports: [CommonModule, SvgIconComponent],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => ModuleDropdownComponent),
-    multi: true
-  }]
+  providers: [    {
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => ModuleDropdownComponent),
+        multi: true,
+      },
+      {
+        provide: NG_VALIDATORS,
+        useExisting: forwardRef(() => ModuleDropdownComponent),
+        multi: true,
+      }]
 })
 export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   @Input() modules: Module[] = [];
   @Input() disabled = false;
-
+  @Input() control!: AbstractControl;
   isOpen = false;
+
   selectedModule: Module | null = null; 
-  private controlSub?: Subscription;
 
   private controlSubscription!: Subscription;
 
-  constructor(@Self() @Optional() public ngControl: NgControl) {
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
-    }
-  }
+
   toggleDropdown() {
     if (!this.disabled) { 
       this.isOpen = !this.isOpen;
@@ -40,7 +42,7 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
 
   toggleSelection(module: Module) {
     if (this.disabled) return;
-
+    this.writeValue(module)
     const next = this.selectedModule?.id === module.id ? null : module;
     this.selectedModule = next;
     this.onChange(next?.id ?? null);
@@ -49,14 +51,14 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
   }
   
   ngOnInit(): void {
-    if (this.ngControl?.control) {
-      this.controlSub = this.ngControl.control.valueChanges
-        .subscribe(value => {
-          if (value === null || value === '') {
-            this.clearSelection();
-          }
+    this.controlSubscription = this.control.valueChanges.subscribe(value => {
+      if (value === '' || value === null) {
+
+        setTimeout(() => {
+  
         });
-    }
+      }
+    });
   }
 
 
@@ -67,19 +69,23 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
   }
 
   get showErrorContainer(): boolean {
-    const ctrl = this.ngControl?.control;
-    return !!(ctrl && ctrl.invalid);
-  }
-  ngOnDestroy(): void {
-    this.controlSub?.unsubscribe();
+    return this.control ? this.control.invalid : false;
   }
 
-  writeValue(id: any): void {
-    if (id === null || id === undefined || id === '') {
+  
+  ngOnDestroy(): void {
+    if (this.controlSubscription) {
+      this.controlSubscription.unsubscribe();
+    }
+  }
+
+  writeValue(module: Module): void {
+    console.log('writeValue', module);
+    if (module === null || module === undefined) {
+      this.control.setValue(null, { emitEvent: false });
       this.clearSelection();
     } else {
-      const opt = this.modules.find(m => m.id === id);
-      this.selectedModule = opt || null;
+      this.control.setValue(this.selectedModule);
     }
   }
 

@@ -57,6 +57,7 @@
       <app-module-dropdown 
         [modules]="modules" 
         formControlName="selected_module"
+        [control]="form.get('selected_module')!"
         [disabled]="!form.get('selected_account')?.value">
       </app-module-dropdown>
     </div>
