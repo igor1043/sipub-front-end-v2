@@ -1,5 +1,13 @@
 <div class="container">
-  <google-map
+  <div class="map-controls">
+    <button class="toggle-button" (click)="toggleSidebar()">
+      <i class="material-icons">{{ showSidebar ? 'chevron_left' : 'chevron_right' }}</i>
+    </button>
+    <!-- Adicione outros ícones de controle aqui se necessário -->
+  </div>
+
+  <div class="container-map">
+    <google-map
     [center]="center"
     [zoom]="zoom"
     [options]="mapOptions"
@@ -19,11 +27,6 @@
       (mapClick)="onMarkerClick(unit)"
     ></map-marker>
   </google-map>
-
-  <div class="map-controls">
-    <button class="toggle-button" (click)="toggleSidebar()">
-      {{ showSidebar ? 'Ocultar Lista' : 'Mostrar Lista' }}
-    </button>
   </div>
 
   <!-- Sidebar condicional -->

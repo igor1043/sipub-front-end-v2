@@ -1,6 +1,7 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface ConsumerUnit {
   id: string;
@@ -85,15 +86,20 @@ export class ConsumerUnitsMapComponent implements OnInit {
     this.map = map;
 
     map.addListener('bounds_changed', () => {
-      this.ngZone.run(() => {
-        this.updateVisibleUnits();
-      });
+      if (this.showSidebar === true) {
+        this.ngZone.run(() => {
+          this.updateVisibleUnits();
+        });
+      }
+
     });
 
     map.addListener('idle', () => {
-      this.ngZone.run(() => {
-        this.updateVisibleUnits();
-      });
+      if (this.showSidebar === true) {
+        this.ngZone.run(() => {
+          this.updateVisibleUnits();
+        });
+      }
     });
 
     this.updateVisibleUnits();
