@@ -22,7 +22,7 @@ import { AccountsMockService } from 'app/core/mocks/accounts.mock';
 })
 export class DashboardHeaderComponent implements OnInit {
   @Input() accountSelected: Account | null = null;
-  @Input() moduleSelected: Module | null = null;;
+  @Input() moduleSelected: Module | null = null;
 
   accountName: string = '';
   accountUrl: string = '';

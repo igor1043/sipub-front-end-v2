@@ -1,26 +1,27 @@
-<!-- dashboard-header.component.html -->
 <div class="header-container">
+  
   <div class="account-section">
-    <div *ngIf="loadingImage" class="logo-loading">
-      <mat-spinner diameter="40"></mat-spinner>
-    </div>
+    <div class="icon-container">
+      <div *ngIf="loadingImage" class="logo-loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
 
-    <img *ngIf="hasLogo() && !loadingImage" 
-         class="logo" 
-         [src]="accountLogo" 
-         alt="Logo da conta"
-         (error)="imageLoadError = true; accountLogo = undefined" />
+      <img *ngIf="hasLogo() && !loadingImage" class="logo" [src]="accountLogo" alt="Account logo"
+        (error)="imageLoadError = true; accountLogo = undefined">
+    </div>
 
     <div class="account-info">
       <span class="label">Conta</span>
       <div class="name">{{ accountName }}</div>
-      <a *ngIf="accountUrl" class="url" [href]="accountUrl" target="_blank">{{ accountUrl }}</a>
+      <a *ngIf="accountUrl" class="url" [href]="accountUrl" target="_blank">
+        {{ accountUrl }}
+      </a>
     </div>
   </div>
 
   <div class="module-section">
     <div class="icon-container">
-      <img *ngIf="moduleSelected?.iconUrl" [src]="moduleSelected?.iconUrl" alt="Ícone do módulo" class="module-icon"/>
+      <img *ngIf="moduleSelected?.iconUrl" [src]="moduleSelected?.iconUrl" alt="Module icon" class="logo">
     </div>
 
     <div class="module-info">
@@ -29,16 +30,21 @@
     </div>
   </div>
 
+  <!-- Botão de Alteração -->
   <div class="change-button">
     <app-button mode="primary" size="medium" [text]="'Alterar'" (clicked)="onChangeAccount()"></app-button>
   </div>
 </div>
 
+<!-- Loading -->
 <app-loading [isLoading]="isLoading"></app-loading>
 
+<!-- Modal de Seleção -->
 <div *ngIf="showDropdownSelector && !isLoading" class="modal-overlay">
   <div class="modal-content">
-    <button class="close-button" (click)="fecharModal()">✕</button>
+    <div class="close-wrapper">
+      <button class="close-button" (click)="fecharModal()">✕</button>
+    </div>
 
     <div class="form-section">
       <app-dropdown 
@@ -48,8 +54,8 @@
         formControlName="selected_account">
       </app-dropdown>
 
-      <app-module-dropdown
-        [modules]="modules"
+      <app-module-dropdown 
+        [modules]="modules" 
         formControlName="selected_module"
         [disabled]="!form.get('selected_account')?.value">
       </app-module-dropdown>
