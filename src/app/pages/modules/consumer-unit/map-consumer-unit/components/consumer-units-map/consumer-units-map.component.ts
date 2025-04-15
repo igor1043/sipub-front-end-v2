@@ -16,7 +16,7 @@ export interface ConsumerUnit {
   templateUrl: './consumer-units-map.component.html',
   styleUrls: ['./consumer-units-map.component.css'],
   standalone: true,
-  imports: [GoogleMapsModule, CommonModule]
+  imports: [GoogleMapsModule, CommonModule, MatIconModule]
 })
 export class ConsumerUnitsMapComponent implements OnInit {
   @Input() consumerUnits: ConsumerUnit[] = [];
@@ -30,6 +30,7 @@ export class ConsumerUnitsMapComponent implements OnInit {
   visibleUnits: ConsumerUnit[] = [];
 
   showSidebar = true;
+  isLoading = true;
 
   mapOptions: google.maps.MapOptions = {
     streetViewControl: false,

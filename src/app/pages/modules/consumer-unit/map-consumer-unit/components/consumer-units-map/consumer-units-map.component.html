@@ -1,36 +1,49 @@
 <div class="container">
+  <!-- Controles no lado esquerdo -->
   <div class="map-controls">
     <button class="toggle-button" (click)="toggleSidebar()">
       <i class="material-icons">{{ showSidebar ? 'chevron_left' : 'chevron_right' }}</i>
     </button>
-    <!-- Adicione outros ícones de controle aqui se necessário -->
+    <!-- Outros botões de controle podem ser adicionados aqui -->
   </div>
 
-  <div class="container-map">
+  <!-- Container do mapa (ocupa todo o espaço restante) -->
+  <div class="map-container">
     <google-map
-    [center]="center"
-    [zoom]="zoom"
-    [options]="mapOptions"
-    (mapInitialized)="onMapReady($event)"
-    height="100%"
-    width="100%"
-  >
-    <map-marker
-      *ngFor="let unit of consumerUnits"
-      [position]="{ lat: unit.lat, lng: unit.lng }"
-      [options]="{
-        icon: {
-          url: unit.icon,
-          scaledSize: scaledSize
-        }
-      }"
-      (mapClick)="onMarkerClick(unit)"
-    ></map-marker>
-  </google-map>
+      [center]="center"
+      [zoom]="zoom"
+      [options]="mapOptions"
+      (mapInitialized)="onMapReady($event)"
+      height="100%"
+      width="100%"
+    >
+      <!-- Marcadores do mapa -->
+      <map-marker
+        *ngFor="let unit of consumerUnits"
+        [position]="{ lat: unit.lat, lng: unit.lng }"
+        [options]="{
+          icon: {
+            url: unit.icon,
+            scaledSize: scaledSize
+          }
+        }"
+        (mapClick)="onMarkerClick(unit)"
+      ></map-marker>
+    </google-map>
+
+    <!-- Loading indicator -->
+    <div class="loading-indicator" *ngIf="isLoading">
+      <div class="loading-content">
+        <div class="spinner">
+          <i class="material-icons spin">refresh</i>
+        </div>
+        <span>Carregando Pontos</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Sidebar condicional -->
-  <div class="sidebar" *ngIf="showSidebar">
+  <!-- Sidebar no lado direito com animação -->
+  <div class="sidebar" [class.sidebar-open]="showSidebar">
     <h3>Pontos Visíveis ({{ visibleUnits.length }})</h3>
     <ul>
       <li *ngFor="let unit of visibleUnits" (click)="onMarkerClick(unit)" class="unit-item">
