@@ -84,7 +84,7 @@ export class MenuService {
 
   private getModuleMenuConfig(module: Module): MenuItem {
     switch (module.id) {
-      case ModuleType.PublicLighting.id:
+      case ModuleType.PublicIllumination.id:
         return {
           title: module.name,
           icon: module.iconUrl,

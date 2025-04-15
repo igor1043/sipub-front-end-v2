@@ -1,0 +1,28 @@
+<!-- energy-consumption-card.component.html -->
+<div class="energy-card">
+  <h2>Consumo de Energia</h2>
+  
+  <div class="data-section">
+    <h3>Concessionária</h3>
+    <div class="data-row">
+      <span>Custo Total:</span>
+      <strong>{{ data.data.dealership.total_cost }}</strong>
+    </div>
+    <div class="data-row">
+      <span>Consumo Total:</span>
+      <strong>{{ data.data.dealership.total_consumption_kwh }}</strong>
+    </div>
+  </div>
+
+  <div class="data-section">
+    <h3>Cidade</h3>
+    <div class="data-row">
+      <span>Custo Total:</span>
+      <strong>{{ data.data.city.total_cost }}</strong>
+    </div>
+    <div class="data-row">
+      <span>Consumo Total:</span>
+      <strong>{{ data.data.city.total_consumption_kwh }}</strong>
+    </div>
+  </div>
+</div>

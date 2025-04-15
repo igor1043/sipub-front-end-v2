@@ -45,7 +45,7 @@ export const ModuleType = {
     name: "Focos de Dengue",
     iconUrl: "/assets/ic_modules/ic_dengue_outbreaks.svg",
   },
-  PublicLighting: {
+  PublicIllumination: {
     id: 1,
     name: "Iluminação Pública",
     iconUrl: "/assets/ic_modules/ic_public_illumination.svg",

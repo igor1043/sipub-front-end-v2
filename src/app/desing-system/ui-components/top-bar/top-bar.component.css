@@ -113,4 +113,11 @@
   .account-section {
     margin-right: 0.5rem; /* Reduz o espaçamento se necessário */
   }
+
+  .fullscreen_button {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
 }

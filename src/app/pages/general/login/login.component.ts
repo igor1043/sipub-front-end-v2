@@ -56,14 +56,6 @@ export class LoginComponent implements OnInit {
     this.themeService.toggleTheme();
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      console.log('Dados enviados:', this.loginForm.value);
-    } else {
-      console.log('Formulário inválido');
-    }
-  }
-
   onForgotPasswordClick() {
     console.log('Redirecionando para a página de recuperação de senha');
     //this.router.navigate(['/forgot-password']); // Redireciona para a página de recuperação de senha

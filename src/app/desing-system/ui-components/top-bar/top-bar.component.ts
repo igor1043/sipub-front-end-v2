@@ -127,4 +127,16 @@ export class TopBarComponent implements OnInit {
     this.localStorageService.logout();
     this.router.navigate(['/login']);
   }
+
+  toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
 }

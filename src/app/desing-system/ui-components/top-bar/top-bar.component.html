@@ -21,39 +21,35 @@
 
   <div class="account-section" *ngIf="accountAlias">
     <!-- Imagem da conta -->
-    <img 
-      *ngIf="urlImage && !imageLoadError"
-      class="account-image"
-      [src]="urlImage"
-      alt="Account image"
-      (error)="handleImageError()"
-    >
-    
+    <img *ngIf="urlImage && !imageLoadError" class="account-image" [src]="urlImage" alt="Account image"
+      (error)="handleImageError()">
+
     <!-- Divider -->
-    <div 
-      *ngIf="urlImage && !imageLoadError"
-      class="account-divider"
-    ></div>
-  
+    <div *ngIf="urlImage && !imageLoadError" class="account-divider"></div>
+
     <!-- Nome da conta -->
     <span class="account-name">
       {{ accountAlias }}
     </span>
   </div>
-  
+
   <!-- Botões de tema e logout -->
   <div class="actions">
+
+    <!-- Ícone de tela cheia -->
+    <app-svg-icon class="fullscreen_button" [color]="'var(--gray-800)'" (click)="toggleFullscreen()"
+      [svgUrl]="'/assets/icons/ic_fullscreen.svg'"></app-svg-icon>
+
     <!-- Ícone de tema -->
     <div class="theme-toggle" (click)="toggleTheme()">
-      <img *ngIf="isDarkTheme" class="button_dark" src="/assets/images/ic_light.svg" alt="Light Theme"  />
-      <img *ngIf="!isDarkTheme" class="button_light" src="/assets/images/ic_dark.svg" alt="Dark Theme"  />
+      <img *ngIf="isDarkTheme" class="button_dark" src="/assets/images/ic_light.svg" alt="Light Theme" />
+      <img *ngIf="!isDarkTheme" class="button_light" src="/assets/images/ic_dark.svg" alt="Dark Theme" />
     </div>
 
     <!-- Ícone de logout -->
     <app-svg-icon class="logout_button" [color]="'var(--gray-800)'" (click)="logout()"
       [svgUrl]="'/assets/icons/ic_logout.svg'"></app-svg-icon>
   </div>
-</div>
 
-<!-- Adicione isso no final do template -->
-<app-message-dialog #messageDialog></app-message-dialog>
+  <!-- Adicione isso no final do template -->
+  <app-message-dialog #messageDialog></app-message-dialog>

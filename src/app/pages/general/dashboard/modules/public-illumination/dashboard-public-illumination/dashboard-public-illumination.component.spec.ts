@@ -3,15 +3,14 @@ import {  ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { DashboardHeaderComponent } from './dashboard-header.component';
+import { Dashboard_publicIlluminationComponent } from './dashboard-public-illumination.component';
 
-describe('DashboardHeaderComponent', () => {
-  let component: DashboardHeaderComponent;
-  let fixture: ComponentFixture<DashboardHeaderComponent>;
-
+describe('Dashboard_publicIlluminationComponent', () => {
+  let component: Dashboard_publicIlluminationComponent;
+  let fixture: ComponentFixture<Dashboard_publicIlluminationComponent>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardHeaderComponent);
+    fixture = TestBed.createComponent(Dashboard_publicIlluminationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

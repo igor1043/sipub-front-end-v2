@@ -1,0 +1,48 @@
+.red-card {
+    background-color: #FF4C4C; /* Red tone */
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 100%;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 8px;
+  }
+  
+  .icon {
+    font-size: 28px;
+    margin-right: 12px;
+    color: #fff;
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+  }
+  
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .info-label {
+    font-weight: bold;
+    color: #f9f9f9;
+  }
+  
+  .info-value {
+    font-weight: bold;
+    color: #fff;
+  }
+  

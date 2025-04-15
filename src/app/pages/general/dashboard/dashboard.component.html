@@ -3,61 +3,48 @@
 
 <app-divider type="small"></app-divider>
 
-<app-dashboard-layout [columns]="3">
-  <div style="background-color: lightblue; height: 150px;">Widget 2</div>
-  <div style="background-color: lightblue; height: 150px;">Widget 2</div>
-  <div style="background-color: lightgreen; height: 150px;">Widget 3</div>
-</app-dashboard-layout>
-<app-dashboard-layout [columns]="2">
-  <app-apex-chart
-  [chartData]="[4.2, 5.1, 6.8, 8.5, 4.4, 3.9, 7.2, 9.1, 5.5, 6.2, 7.8, 8.9]"
-  [categories]="['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']"
-  [chartTitle]="'Vendas Mensais em 2023'"
-  [yAxisSuffix]="'k'"
-  [height]="400">
-</app-apex-chart>
-  <div style="background-color: lightblue; height: 100px;">Widget 2</div>
-  <div style="background-color: lightgreen; height: 100px;">Widget 3</div>
-  <div style="background-color: lightsalmon; height: 100px;">Widget 4</div>
-</app-dashboard-layout>
+<ng-container *ngIf="dashboardComponent" [ngComponentOutlet]="dashboardComponent"></ng-container>
 
+<ng-container *ngIf="!dashboardComponent">
+  <div class="welcome-container">
+    <div class="welcome-container">
+      <header class="header">
+        <div class="logo-title-container">
+          <app-svg-icon class="logo" [svgUrl]="'/assets/icons/ic_logo_sipub_mini.svg'"></app-svg-icon>
+          <div class="title-container">
+            <h1>Bem-vindo à Nova Versão do Sipub!</h1>
+            <p class="subtitle">Explore a nova cara do Sipub com um design mais moderno e funcionalidades incríveis.</p>
+          </div>
+        </div>
+      </header>
 
-<div class="welcome-container">
-  <header class="header">
-    <div class="logo-title-container">
-      <app-svg-icon class="logo" [svgUrl]="'/assets/icons/ic_logo_sipub_mini.svg'"></app-svg-icon>
-      <div class="title-container">
-        <h1>Bem-vindo à Nova Versão do Sipub!</h1>
-        <p class="subtitle">Explore a nova cara do Sipub com um design mais moderno e funcionalidades incríveis.</p>
-      </div>
+      <section class="features-section">
+        <h2>O que mudou?</h2>
+        <div class="features-container">
+          <div class="feature-card">
+            <app-svg-icon class="feature-icon" [color]="'var(--color-primary)'"
+              [svgUrl]="'/assets/icons/ic_design.svg'"></app-svg-icon>
+            <h3>Design Moderno</h3>
+            <p>Agora, o app tem uma interface mais intuitiva e agradável de usar.</p>
+          </div>
+          <div class="feature-card">
+            <app-svg-icon class="feature-icon" [color]="'var(--color-primary)'"
+              [svgUrl]="'/assets/icons/ic_performance.svg'"></app-svg-icon>
+            <h3>Desempenho Melhorado</h3>
+            <p>Funções mais rápidas e responsivas para otimizar sua experiência.</p>
+          </div>
+          <div class="feature-card">
+            <app-svg-icon class="feature-icon" [color]="'var(--color-primary)'"
+              [svgUrl]="'/assets/icons/ic_usability.svg'"></app-svg-icon>
+            <h3>Maior Usabilidade</h3>
+            <p>Com navegação simplificada, agora é ainda mais fácil gerenciar os serviços de sua prefeitura.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>Fique ligado! Muitas outras novidades estão a caminho.</p>
+      </footer>
     </div>
-  </header>
-
-  <section class="features-section">
-    <h2>O que mudou?</h2>
-    <div class="features-container">
-      <div class="feature-card">
-        <app-svg-icon class="feature-icon" [color]="'var(--color-primary)'"
-          [svgUrl]="'/assets/icons/ic_design.svg'"></app-svg-icon>
-        <h3>Design Moderno</h3>
-        <p>Agora, o app tem uma interface mais intuitiva e agradável de usar.</p>
-      </div>
-      <div class="feature-card">
-        <app-svg-icon class="feature-icon" [color]="'var(--color-primary)'"
-          [svgUrl]="'/assets/icons/ic_performance.svg'"></app-svg-icon>
-        <h3>Desempenho Melhorado</h3>
-        <p>Funções mais rápidas e responsivas para otimizar sua experiência.</p>
-      </div>
-      <div class="feature-card">
-        <app-svg-icon class="feature-icon" [color]="'var(--color-primary)'"
-          [svgUrl]="'/assets/icons/ic_usability.svg'"></app-svg-icon>
-        <h3>Maior Usabilidade</h3>
-        <p>Com navegação simplificada, agora é ainda mais fácil gerenciar os serviços de sua prefeitura.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <p>Fique ligado! Muitas outras novidades estão a caminho.</p>
-  </footer>
-</div>
+  </div>
+</ng-container>
