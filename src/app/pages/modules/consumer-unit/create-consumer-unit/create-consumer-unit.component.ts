@@ -290,9 +290,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar a lista de contas',
-          7000,
           'Recarregue a página e tente novamente',
           undefined,
+          7000,
           () => { }
         );
       }
@@ -310,9 +310,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar a lista de classes',
-          7000,
           'Recarregue a página e tente novamente',
           undefined,
+          7000,
           () => { }
         );
       }
@@ -330,9 +330,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar a lista de modalidades',
-          7000,
           'Recarregue a página e tente novamente',
           undefined,
+          7000,
           () => { }
         );
       }
@@ -350,9 +350,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar a lista de classes',
-          7000,
           'Recarregue a página e tente novamente',
           undefined,
+          7000,
           () => { }
         );
       }
@@ -370,9 +370,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar a lista de documentos',
-          7000,
           'Recarregue a página e tente novamente',
           undefined,
+          7000,
           () => { }
         );
       }
@@ -390,8 +390,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar os níveis de tensão',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });
@@ -408,8 +409,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar os tipos de conexão',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });
@@ -426,8 +428,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar as tensões de atendimento',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });
@@ -444,8 +447,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar os padrões de entrada',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });
@@ -462,8 +466,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar as isolação do ramal de entrada',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });
@@ -480,8 +485,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar as isolação do ramal de entrada',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });
@@ -498,8 +504,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar as zonas',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });
@@ -516,8 +523,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar os tipos de transformadores',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });
@@ -534,8 +542,9 @@ export class CreateConsumerUnitComponent {
         this.isLoading = false;
         this.notificationService.showError(
           'Erro ao carregar os tipos de transformadores',
+          'Recarregue a página e tente novamente',
+          undefined,
           7000,
-          'Recarregue a página e tente novamente'
         );
       }
     });

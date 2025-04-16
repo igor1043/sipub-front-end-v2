@@ -43,7 +43,7 @@ export class NotificationService {
     this.notificationsSubject.next(current.filter(n => n.id !== id));
   }
 
-  showSuccess(title: string, duration: number = 5000, description?: string, icon?: string, onComplete?: () => void): void {
+  showSuccess(title: string, description?: string, icon?: string, duration: number = 5000, onComplete?: () => void): void {
     const notification: NotificationData = {
       id: this.generateId(),
       type: 'success',
@@ -56,7 +56,7 @@ export class NotificationService {
     this.addNotification(notification);
   }
 
-  showError(title: string, duration: number = 5000, description?: string, icon?: string, onComplete?: () => void): void {
+  showError(title: string, description?: string, icon?: string, duration: number = 5000, onComplete?: () => void): void {
     const notification: NotificationData = {
       id: this.generateId(),
       type: 'error',
@@ -69,7 +69,7 @@ export class NotificationService {
     this.addNotification(notification);
   }
 
-  showWarning(title: string, duration: number = 5000, description?: string, icon?: string, onComplete?: () => void): void {
+  showWarning(title: string, description?: string, icon?: string, duration: number = 5000, onComplete?: () => void): void {
     const notification: NotificationData = {
       id: this.generateId(),
       type: 'warning',
@@ -82,7 +82,7 @@ export class NotificationService {
     this.addNotification(notification);
   }
 
-  showInfo(title: string, duration: number = 5000, description?: string, icon?: string, onComplete?: () => void): void {
+  showInfo(title: string, description?: string, icon?: string, duration: number = 5000, onComplete?: () => void): void {
     const notification: NotificationData = {
       id: this.generateId(),
       type: 'info',

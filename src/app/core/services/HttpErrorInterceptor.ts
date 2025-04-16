@@ -53,8 +53,10 @@ function isTokenError(error: HttpErrorResponse): boolean {
 function handleTokenError(router: Router, notificationService: NotificationService, localStorageService: LocalStorageService): void {
   const snackBarRef = notificationService.showError(
     'Sessão expirada.',
-    2000,
-    'Faça login novamente para continuar');
+    'Faça login novamente para continuar',
+    undefined,
+    2000
+  );
   //snackBarRef.afterDismissed().subscribe(() => {
     //localStorageService.logout()
     //router.navigate(['/login']);

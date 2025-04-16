@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { VisibleUnitsSidebarComponent } from "../visible-units-sidebar/visible-units-sidebar.component";
 import { getConsumerUnitsInArea } from './points.mock';
+import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
+import { NotificationComponent } from "../../../../../../desing-system/ui-components/notification/notification.component";
 
 
 export interface ConsumerUnit {
@@ -24,7 +26,7 @@ export interface ConsumerUnit {
   templateUrl: './consumer-units-map.component.html',
   styleUrls: ['./consumer-units-map.component.css'],
   standalone: true,
-  imports: [GoogleMapsModule, CommonModule, MatIconModule, VisibleUnitsSidebarComponent]
+  imports: [GoogleMapsModule, CommonModule, MatIconModule, VisibleUnitsSidebarComponent,  NotificationComponent]
 })
 export class ConsumerUnitsMapComponent implements OnInit {
   @Input() consumerUnits: ConsumerUnit[] = [];
@@ -97,7 +99,7 @@ export class ConsumerUnitsMapComponent implements OnInit {
     }
   }
 
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone, private notificationService: NotificationService) { }
 
   onMapReady(map: google.maps.Map) {
     this.map = map;
@@ -235,10 +237,12 @@ export class ConsumerUnitsMapComponent implements OnInit {
         if (this.map) {
           this.updateVisibleUnits();
         }
+        this.notificationService.showError('Acorreu um erro no carregamento dos marcadores do mapa, tente novamente');
+
       })
       .catch(error => {
         this.isLoading = false;
-        console.error('Error loading units:', error);
+        this.notificationService.showError('Acorreu um erro no carregamento dos marcadores do mapa, tente novamente');
       });
   }
 }
