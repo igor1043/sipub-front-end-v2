@@ -219,7 +219,7 @@ export class LoadAndConsumptionComponent implements OnInit {
   }
 
   handleSelect(equipment: Equipment) {
-    console.log('Selected equipment:', equipment);
+    
   }
 
   handlePageChange(event: { page: number, pageSize: number }) {

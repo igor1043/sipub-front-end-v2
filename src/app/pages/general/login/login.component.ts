@@ -57,17 +57,17 @@ export class LoginComponent implements OnInit {
   }
 
   onForgotPasswordClick() {
-    console.log('Redirecionando para a página de recuperação de senha');
+
     //this.router.navigate(['/forgot-password']); // Redireciona para a página de recuperação de senha
   }
 
   onRegisterClick() {
-    console.log('Redirecionando para a página de cadastro');
+ 
     //this.router.navigate(['/register']); // Redireciona para a página de cadastro
   }
 
   onFacilitaTechClick() {
-    console.log('Redirecionando para Facilita.tech');
+
     //this.router.navigate(['/facilita-tech']); // Redireciona para a página Facilita.tech
   }
 

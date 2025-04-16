@@ -206,7 +206,7 @@ export class CreateConsumerUnitComponent {
 
     this.form.get('switch_cip_cosip')?.valueChanges.subscribe((isCipCosip: boolean) => {
       this.form.get('unit_implementation_date')?.reset('');
-      console.log('CIP/COSIP:', isCipCosip);
+     
     });
 
     this.setupLocationListener();
@@ -245,18 +245,18 @@ export class CreateConsumerUnitComponent {
     const inputName = control.value;
     const isValid = this.listAccounts.some(account => account.name.toLowerCase() === inputName);
 
-    console.log('Input value:', inputName, 'List of account names:', this.listAccounts);
+   
 
     return isValid ? null : { invalidAccount: true };
   }
 
 
   onToggle(event: any) {
-    console.log(event);
+    
   }
 
   onClickLogin() {
-    console.log('Form values:', this.form.value);
+    
     if (this.form.valid) {
       // Aqui você pode enviar os dados para o servidor
     } else {
@@ -274,7 +274,7 @@ export class CreateConsumerUnitComponent {
   }
 
   onOptionSelected(selectedOption: { id: number; name: string }) {
-    console.log('Opção selecionada:', selectedOption);
+    
     // Aqui você pode fazer algo com a opção selecionada, como atualizar o formulário
   }
 

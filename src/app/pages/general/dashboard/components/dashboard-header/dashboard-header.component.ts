@@ -13,6 +13,8 @@ import { DropdownComponent } from "../../../../../desing-system/ui-components/in
 import { ModuleDropdownComponent } from "../../../../../desing-system/ui-components/module-dropdown/module-dropdown.component";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountResponse } from 'app/core/services/account/models/account.model';
+import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
+import { NotificationComponent } from "../../../../../desing-system/ui-components/notification/notification.component";
 
 @Component({
   selector: 'app-dashboard-header',
@@ -23,7 +25,8 @@ import { AccountResponse } from 'app/core/services/account/models/account.model'
     ButtonComponent,
     LoadingComponent,
     DropdownComponent,
-    ModuleDropdownComponent
+    ModuleDropdownComponent,
+    NotificationComponent
   ],
   styleUrls: ['./dashboard-header.component.css']
 })
@@ -50,7 +53,8 @@ export class DashboardHeaderComponent implements OnInit {
     private accountService: AccountService,
     private localStorageService: LocalStorageService,
     private fb: FormBuilder,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private notificationService: NotificationService,
   ) {
     this.form = this.fb.group({
       selected_account: [null, Validators.required],
@@ -129,7 +133,9 @@ export class DashboardHeaderComponent implements OnInit {
       const response: AccountResponse = await firstValueFrom(
         this.accountService.getAccounts()
       );
-      console.log('Lista de contas:', response.data);
+       
+        this.notificationService.showError('Testinho');
+
       this.listAccounts = response.data;
     } catch (error) {
       console.error('Erro ao carregar a lista de contas', error);
@@ -146,6 +152,12 @@ export class DashboardHeaderComponent implements OnInit {
     this.isLoading = true;
     const availableIds = this.localStorageService.getAvailableModules();
     this.modules = getAvailableModules(availableIds);
+
+    if (this.modules.length === 0) {
+      this.notificationService.showError('Erro', 'Nenhum módulo disponível para esta conta.');
+      this.showDropdownSelector = false;
+    }
+
     this.isLoading = false;
   }
 

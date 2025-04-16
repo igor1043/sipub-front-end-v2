@@ -122,9 +122,9 @@ export class ReportsComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log('Formulário válido', this.form.value);
+      
     } else {
-      console.log('Formulário inválido');
+      
     }
   }
 

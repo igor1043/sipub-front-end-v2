@@ -35,7 +35,7 @@ export class MapPublicIlluminationComponent {
     });
 
     this.form.get('lightingTypes')?.valueChanges.subscribe(selectedIds => {
-      console.log('Tipos selecionados (Reactive):', selectedIds);
+      
     });
   }
 
@@ -46,6 +46,6 @@ export class MapPublicIlluminationComponent {
   }
 
   onSelectionChange(selectedIds: number[]) {
-    console.log('Tipos selecionados (Template):', selectedIds);
+    
   }
 }

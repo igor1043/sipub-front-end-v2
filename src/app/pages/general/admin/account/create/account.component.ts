@@ -65,6 +65,6 @@ export class AccountComponent implements OnInit{
       id: +idStr,
       status: formValue.modules[idStr]
     }));
-    console.log(modules);
+
   }
 }

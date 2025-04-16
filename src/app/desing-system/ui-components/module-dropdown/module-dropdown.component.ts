@@ -77,7 +77,6 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
   }
 
   writeValue(module: Module): void {
-    console.log('writeValue', module);
     if (module === null || module === undefined) {
       this.control.setValue(null, { emitEvent: false });
       this.clearSelection();

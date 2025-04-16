@@ -221,7 +221,7 @@ export class MapPickerComponent implements ControlValueAccessor, OnInit {
         };
   
         addressComponents.forEach(component => {
-          console.log('Component:', component);
+
           
           // Número
           if (component.types.includes('street_number')) {

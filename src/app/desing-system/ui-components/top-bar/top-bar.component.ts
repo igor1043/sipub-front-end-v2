@@ -91,13 +91,13 @@ export class TopBarComponent implements OnInit {
         label: 'Sim',
         action: () => {
           this.confirmLogout();
-          console.log('Usuário confirmou logout');
+
         }
       },
       negativeButton: {
         label: 'Não',
         action: () => {
-          console.log('Usuário cancelou logout');
+
         }
       }
     });

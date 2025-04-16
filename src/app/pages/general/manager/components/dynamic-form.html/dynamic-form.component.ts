@@ -31,7 +31,7 @@ export class DynamicFormComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log('Dados do relatório:', this.form.value);
+ 
     }
   }
 }

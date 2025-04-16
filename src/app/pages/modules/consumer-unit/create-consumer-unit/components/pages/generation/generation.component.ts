@@ -290,7 +290,7 @@ export class GenerationComponent implements OnInit {
   }
 
   handleSelect(generator: GeneratorItem) {
-    console.log('Selected generator:', generator);
+    
   }
 
   handlePageChange(event: { page: number, pageSize: number }) {

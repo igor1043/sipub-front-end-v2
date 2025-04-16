@@ -102,7 +102,6 @@ export class ListConsumerUnitComponent implements OnInit {
 
   private updateConsumerUnitData(): void {
     this.consumerUnitData = this.allConsumerUnits;
-    console.log('Consumer Unit Data:', this.consumerUnitData);
 
   }
 
@@ -165,7 +164,7 @@ export class ListConsumerUnitComponent implements OnInit {
 
     const itemsCount = items.length;
     const itemsIds = items.map(item => item.id).join(', ');
-    console.log('Itens selecionados para exclusão:', items);
+    
     this.messageDialog.open({
       title: 'Confirmar Exclusão em Lote',
       subtitle: `Você está prestes a excluir ${itemsCount} unidade(s) consumidora(s):
@@ -188,9 +187,9 @@ export class ListConsumerUnitComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log('Formulário válido', this.form.value);
+      
     } else {
-      console.log('Formulário inválido');
+      
     }
   }
 
