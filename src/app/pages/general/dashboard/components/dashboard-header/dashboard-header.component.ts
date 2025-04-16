@@ -1,10 +1,9 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Account } from 'app/core/interfaces/account.interface';
 import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 import { AccountService } from 'app/core/services/account/account.service';
 import { AccountConfigurationResponse } from 'app/core/services/account/models/account.image.model';
 import { firstValueFrom } from 'rxjs';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { getAvailableModules, Module } from 'app/core/interfaces/module.interface';
@@ -13,17 +12,27 @@ import { LoadingComponent } from "../../../../../desing-system/ui-components/loa
 import { DropdownComponent } from "../../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
 import { ModuleDropdownComponent } from "../../../../../desing-system/ui-components/module-dropdown/module-dropdown.component";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccountsMockService } from 'app/core/mocks/accounts.mock';
 import { AccountResponse } from 'app/core/services/account/models/account.model';
+
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
-  imports: [MatProgressSpinnerModule, CommonModule, ButtonComponent, LoadingComponent, DropdownComponent, ModuleDropdownComponent],
+  imports: [
+    MatProgressSpinnerModule,
+    CommonModule,
+    ButtonComponent,
+    LoadingComponent,
+    DropdownComponent,
+    ModuleDropdownComponent
+  ],
   styleUrls: ['./dashboard-header.component.css']
 })
 export class DashboardHeaderComponent implements OnInit {
   @Input() accountSelected: Account | null = null;
   @Input() moduleSelected: Module | null = null;
+
+  @Output() accountSelectedChange = new EventEmitter<Account | null>();
+  @Output() moduleSelectedChange = new EventEmitter<Module | null>();
 
   accountName: string = '';
   accountUrl: string = '';
@@ -38,12 +47,11 @@ export class DashboardHeaderComponent implements OnInit {
   isLoading: boolean = false;
   showDropdownSelector: boolean = false;
 
-
   constructor(
     private accountService: AccountService,
-    private accountsMock: AccountsMockService,
     private localStorageService: LocalStorageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdref: ChangeDetectorRef
   ) {
     this.form = this.fb.group({
       selected_account: [null, Validators.required],
@@ -51,37 +59,46 @@ export class DashboardHeaderComponent implements OnInit {
     });
 
     this.form.get('selected_account')?.valueChanges.subscribe(accountId => {
-      this.accountSelected = this.listAccounts.find(a => a.id === accountId) || null;
-      this.selectedModule = null;
-      this.modules = [];
-    
-      console.log('Conta selecionada:', this.accountSelected);
-      if (accountId) {
+      const account = this.listAccounts.find(a => a.id === accountId) || null;
+      this.accountSelected = account;
+      if (account) {
         this.carregarModulos(accountId);
       }
-
-      this.verificaFechamentoModal();
+      this.selectedModule = null;
+      this.form.get('selected_module')?.reset(null);
     });
 
-    this.form.get('selected_module')?.valueChanges.subscribe(() => {
-      console.log('Módulo selecionado:', this.form.get('selected_module')?.value);
+    this.form.get('selected_module')?.valueChanges.subscribe(module => {
       this.verificaFechamentoModal();
     });
   }
 
-  private verificaFechamentoModal(): void {
-    const accountValid = this.form.get('selected_account')?.valid;
-    const moduleValid = this.form.get('selected_module')?.valid;
+  private async verificaFechamentoModal(): Promise<void> {
+    const selectedAccountId = this.form.get('selected_account')?.value;
+    const selectedModule = this.form.get('selected_module')?.value;
 
-    if (accountValid && moduleValid) {
-      this.moduleSelected = this.form.get('selected_module')?.value
-      if(this.accountSelected != null)  {
+    if (selectedAccountId && selectedModule) {
+      const account = this.listAccounts.find(a => a.id === selectedAccountId) || null;
+      this.accountSelected = account;
+      this.moduleSelected = selectedModule;
+
+      if (this.accountSelected) {
+        this.accountName = this.accountSelected.alias;
+        this.accountUrl = this.accountSelected.url_account;
+
+        await this.getImageAccount(this.accountSelected.id);
         this.localStorageService.setAccountSelected(this.accountSelected);
+        this.accountSelectedChange.emit(this.accountSelected);
       }
-      if (this.moduleSelected != null) {
+
+      if (this.moduleSelected) {
         this.localStorageService.setCurrentModule(this.moduleSelected.id);
+        this.moduleSelectedChange.emit(this.moduleSelected);
       }
+
       this.fecharModal();
+      this.form.reset();
+      this.cdref.detectChanges();
     }
   }
 
@@ -91,7 +108,7 @@ export class DashboardHeaderComponent implements OnInit {
       this.accountUrl = this.accountSelected.url_account;
 
       if (this.accountSelected.id) {
-        this.getImageAccount(this.accountSelected.id);
+        await this.getImageAccount(this.accountSelected.id);
       }
     }
 
@@ -124,7 +141,6 @@ export class DashboardHeaderComponent implements OnInit {
 
   fecharModal(): void {
     this.showDropdownSelector = false;
-    setTimeout(() => this.form.reset(), 0); 
   }
 
   private carregarModulos(accountId: number): void {
@@ -134,19 +150,12 @@ export class DashboardHeaderComponent implements OnInit {
     this.isLoading = false;
   }
 
-  onModuleSelected(module: Module | null) {
-    this.selectedModule = module;
-    console.log('Módulo selecionado:ww', module);
-  }
-
   get accountOptions(): { id: number, name: string }[] {
     return this.listAccounts.map(account => ({
       id: account.id,
       name: account.name
     }));
   }
-
-
 
   async getImageAccount(id_account: number): Promise<void> {
     this.loadingImage = true;
