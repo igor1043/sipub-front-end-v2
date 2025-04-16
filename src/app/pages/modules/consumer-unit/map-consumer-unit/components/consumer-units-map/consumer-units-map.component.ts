@@ -19,7 +19,6 @@ export interface ConsumerUnit {
   status: 'ativa' | 'inativa';
 }
 
-
 @Component({
   selector: 'app-consumer-units-map',
   templateUrl: './consumer-units-map.component.html',
@@ -43,17 +42,13 @@ export class ConsumerUnitsMapComponent implements OnInit {
   showSidebar = true;
   isLoading = true;
 
-  selectedIcon = {
-    url: 'assets/icons/ic_logout.svg',
-    scaledSize: this.scaledSize
-  };
+  readonly selectedIconUrl = 'assets/icons/ic_marker_consumer_unit_selected.svg';
+  private selectedUnitId: string | null = null;
 
-  selectedMarker?: google.maps.Marker;
-  
   mapOptions: google.maps.MapOptions = {
     streetViewControl: false,
     mapTypeControlOptions: {
-      position: google.maps.ControlPosition.BOTTOM_LEFT
+      position: google.maps.ControlPosition.TOP_RIGHT
     },
     styles: [
       {
@@ -104,7 +99,6 @@ export class ConsumerUnitsMapComponent implements OnInit {
 
   constructor(private ngZone: NgZone) { }
 
-
   onMapReady(map: google.maps.Map) {
     this.map = map;
     this.createMarkers();
@@ -112,7 +106,6 @@ export class ConsumerUnitsMapComponent implements OnInit {
     map.addListener('idle', () => {
       this.ngZone.run(() => {
         this.handleMapIdle();
-        console.log('Map is idle');
       });
     });
 
@@ -130,11 +123,13 @@ export class ConsumerUnitsMapComponent implements OnInit {
       const marker = new google.maps.Marker({
         position: { lat: unit.lat, lng: unit.lng },
         icon: {
-          url: unit.icon,
+          url: unit.id === this.selectedUnitId ? this.selectedIconUrl : unit.icon,
           scaledSize: this.scaledSize
         },
         map: this.map
       });
+
+      (marker as any).consumerUnitId = unit.id;
 
       marker.addListener('click', () => {
         this.ngZone.run(() => this.onMarkerClick(unit));
@@ -147,6 +142,10 @@ export class ConsumerUnitsMapComponent implements OnInit {
       map: this.map,
       markers: this.markers
     });
+  }
+
+  getIconUrl(unit: ConsumerUnit): string {
+    return this.selectedUnit?.id === unit.id ? this.selectedIconUrl : unit.icon;
   }
 
   updateVisibleUnits() {
@@ -163,34 +162,30 @@ export class ConsumerUnitsMapComponent implements OnInit {
 
   onMarkerClick(unit: ConsumerUnit) {
     this.selectedUnit = unit;
-  
-    // Reset ícone do marcador anterior, se houver
-    if (this.selectedMarker) {
-      const previousUnit = this.consumerUnits.find(u =>
-        u.lat === this.selectedMarker?.getPosition()?.lat() &&
-        u.lng === this.selectedMarker?.getPosition()?.lng()
-      );
-      if (previousUnit) {
-        this.selectedMarker.setIcon(this.defaultIcon(previousUnit));
-      }
-    }
-  
-    // Achar novo marcador
-    const marker = this.markers.find(m =>
-      m.getPosition()?.lat() === unit.lat &&
-      m.getPosition()?.lng() === unit.lng
-    );
-  
-    if (marker) {
-      marker.setIcon(this.selectedIcon);
-      this.selectedMarker = marker;
-    }
-  
+    this.selectedUnitId = unit.id;
+
     if (this.map) {
       this.map.panTo({ lat: unit.lat, lng: unit.lng });
     }
+
+    this.updateMarkerIcons();
   }
-  
+
+  private updateMarkerIcons() {
+    this.markers.forEach(marker => {
+      const markerUnitId = (marker as any).consumerUnitId;
+      const correspondingUnit = this.consumerUnits.find(u => u.id === markerUnitId);
+
+      if (correspondingUnit) {
+        const isSelected = markerUnitId === this.selectedUnitId;
+        marker.setIcon({
+          url: isSelected ? this.selectedIconUrl : correspondingUnit.icon,
+          scaledSize: this.scaledSize
+        });
+      }
+    });
+  }
+
   getScaledSize(width: number, height: number): google.maps.Size {
     return new google.maps.Size(width, height);
   }
@@ -230,6 +225,11 @@ export class ConsumerUnitsMapComponent implements OnInit {
       .then(units => {
         this.consumerUnits = units;
         this.createMarkers();
+        
+        if (this.selectedUnitId) {
+          this.selectedUnit = undefined;
+          this.selectedUnitId = null;
+        }
         this.isLoading = false;
 
         if (this.map) {
