@@ -19,6 +19,7 @@ export interface ConsumerUnit {
   status: 'ativa' | 'inativa';
 }
 
+
 @Component({
   selector: 'app-consumer-units-map',
   templateUrl: './consumer-units-map.component.html',
@@ -41,8 +42,14 @@ export class ConsumerUnitsMapComponent implements OnInit {
 
   showSidebar = true;
   isLoading = true;
-  private debounceTimer: any;
 
+  selectedIcon = {
+    url: 'assets/icons/ic_logout.svg',
+    scaledSize: this.scaledSize
+  };
+
+  selectedMarker?: google.maps.Marker;
+  
   mapOptions: google.maps.MapOptions = {
     streetViewControl: false,
     mapTypeControlOptions: {
@@ -105,19 +112,10 @@ export class ConsumerUnitsMapComponent implements OnInit {
     map.addListener('idle', () => {
       this.ngZone.run(() => {
         this.handleMapIdle();
+        console.log('Map is idle');
       });
     });
 
-    map.addListener('bounds_changed', () => {
-      clearTimeout(this.debounceTimer);
-      this.debounceTimer = setTimeout(() => {
-        this.ngZone.run(() => {
-          this.handleMapIdle();
-        });
-      }, 500); // Debounce de 500ms
-    });
-
-    // Carrega as unidades iniciais
     this.handleMapIdle();
   }
 
@@ -165,11 +163,34 @@ export class ConsumerUnitsMapComponent implements OnInit {
 
   onMarkerClick(unit: ConsumerUnit) {
     this.selectedUnit = unit;
+  
+    // Reset ícone do marcador anterior, se houver
+    if (this.selectedMarker) {
+      const previousUnit = this.consumerUnits.find(u =>
+        u.lat === this.selectedMarker?.getPosition()?.lat() &&
+        u.lng === this.selectedMarker?.getPosition()?.lng()
+      );
+      if (previousUnit) {
+        this.selectedMarker.setIcon(this.defaultIcon(previousUnit));
+      }
+    }
+  
+    // Achar novo marcador
+    const marker = this.markers.find(m =>
+      m.getPosition()?.lat() === unit.lat &&
+      m.getPosition()?.lng() === unit.lng
+    );
+  
+    if (marker) {
+      marker.setIcon(this.selectedIcon);
+      this.selectedMarker = marker;
+    }
+  
     if (this.map) {
       this.map.panTo({ lat: unit.lat, lng: unit.lng });
     }
   }
-
+  
   getScaledSize(width: number, height: number): google.maps.Size {
     return new google.maps.Size(width, height);
   }
@@ -180,7 +201,6 @@ export class ConsumerUnitsMapComponent implements OnInit {
     const bounds = this.map.getBounds();
     if (!bounds) return;
 
-    // Obtém os limites atuais do mapa
     const ne = bounds.getNorthEast();
     const sw = bounds.getSouthWest();
 
@@ -191,10 +211,8 @@ export class ConsumerUnitsMapComponent implements OnInit {
       maxLng: ne.lng()
     };
 
-    // Chama a função para carregar unidades na área visível
     this.loadUnitsInArea(boundingBox);
 
-    // Atualiza as unidades visíveis para a sidebar
     if (this.showSidebar) {
       this.updateVisibleUnits();
     }
