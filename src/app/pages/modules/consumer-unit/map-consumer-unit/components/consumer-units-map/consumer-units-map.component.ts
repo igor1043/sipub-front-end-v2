@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { VisibleUnitsSidebarComponent } from "../visible-units-sidebar/visible-units-sidebar.component";
+import { getConsumerUnitsInArea } from './points.mock';
 
 
 export interface ConsumerUnit {
@@ -30,16 +31,17 @@ export class ConsumerUnitsMapComponent implements OnInit {
 
   scaledSize = new google.maps.Size(40, 40);
   markerCluster?: MarkerClusterer;
-markers: google.maps.Marker[] = [];
+  markers: google.maps.Marker[] = [];
 
   zoom = 14;
-  center = { lat: -23.5505, lng: -46.6333 }; // SP como default
+  center = { lat: -23.5505, lng: -46.6333 };
   map?: google.maps.Map;
   selectedUnit?: ConsumerUnit;
   visibleUnits: ConsumerUnit[] = [];
 
   showSidebar = true;
   isLoading = true;
+  private debounceTimer: any;
 
   mapOptions: google.maps.MapOptions = {
     streetViewControl: false,
@@ -95,38 +97,37 @@ markers: google.maps.Marker[] = [];
 
   constructor(private ngZone: NgZone) { }
 
+
   onMapReady(map: google.maps.Map) {
     this.map = map;
-  
     this.createMarkers();
-  
-    map.addListener('bounds_changed', () => {
-      if (this.showSidebar) {
-        this.ngZone.run(() => {
-          this.updateVisibleUnits();
-        });
-      }
-    });
-  
+
     map.addListener('idle', () => {
-      if (this.showSidebar) {
-        this.ngZone.run(() => {
-          this.updateVisibleUnits();
-        });
-      }
+      this.ngZone.run(() => {
+        this.handleMapIdle();
+      });
     });
-  
-    this.updateVisibleUnits();
+
+    map.addListener('bounds_changed', () => {
+      clearTimeout(this.debounceTimer);
+      this.debounceTimer = setTimeout(() => {
+        this.ngZone.run(() => {
+          this.handleMapIdle();
+        });
+      }, 500); // Debounce de 500ms
+    });
+
+    // Carrega as unidades iniciais
+    this.handleMapIdle();
   }
 
   createMarkers() {
     if (!this.map) return;
-  
-    // Limpa clusters e marcadores anteriores, se houver
+
     if (this.markerCluster) {
       this.markerCluster.clearMarkers();
     }
-  
+
     this.markers = this.consumerUnits.map(unit => {
       const marker = new google.maps.Marker({
         position: { lat: unit.lat, lng: unit.lng },
@@ -136,15 +137,15 @@ markers: google.maps.Marker[] = [];
         },
         map: this.map
       });
-  
+
       marker.addListener('click', () => {
         this.ngZone.run(() => this.onMarkerClick(unit));
       });
-  
+
       return marker;
     });
-  
-    this.markerCluster = new MarkerClusterer({ 
+
+    this.markerCluster = new MarkerClusterer({
       map: this.map,
       markers: this.markers
     });
@@ -171,5 +172,55 @@ markers: google.maps.Marker[] = [];
 
   getScaledSize(width: number, height: number): google.maps.Size {
     return new google.maps.Size(width, height);
+  }
+
+  private handleMapIdle() {
+    if (!this.map) return;
+
+    const bounds = this.map.getBounds();
+    if (!bounds) return;
+
+    // Obtém os limites atuais do mapa
+    const ne = bounds.getNorthEast();
+    const sw = bounds.getSouthWest();
+
+    const boundingBox = {
+      minLat: sw.lat(),
+      maxLat: ne.lat(),
+      minLng: sw.lng(),
+      maxLng: ne.lng()
+    };
+
+    // Chama a função para carregar unidades na área visível
+    this.loadUnitsInArea(boundingBox);
+
+    // Atualiza as unidades visíveis para a sidebar
+    if (this.showSidebar) {
+      this.updateVisibleUnits();
+    }
+  }
+
+  loadUnitsInArea(boundingBox: {
+    minLat: number;
+    maxLat: number;
+    minLng: number;
+    maxLng: number;
+  }): void {
+    this.isLoading = true;
+
+    getConsumerUnitsInArea(boundingBox)
+      .then(units => {
+        this.consumerUnits = units;
+        this.createMarkers();
+        this.isLoading = false;
+
+        if (this.map) {
+          this.updateVisibleUnits();
+        }
+      })
+      .catch(error => {
+        this.isLoading = false;
+        console.error('Error loading units:', error);
+      });
   }
 }
