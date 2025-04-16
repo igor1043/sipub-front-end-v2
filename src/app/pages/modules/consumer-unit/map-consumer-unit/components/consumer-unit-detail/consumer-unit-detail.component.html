@@ -1,0 +1,61 @@
+<div *ngIf="consumerUnit; else loading" class="detail-container">
+  <app-text class="page-title" text="Detalhes da unidade Consumidora" size="large"></app-text>
+  <div class="content-split">
+    <!-- Informações -->
+    <div class="info-section">
+      <div class="info-line">
+        <div>
+          <app-text class="identification" text="Identificador" [bold]="true" size="small"></app-text>
+          <app-text class="id_identification" [text]="consumerUnit.id.toString()" size="small"></app-text>
+        </div>
+        <div class="status-container">
+          <app-text class="status_title" text="Status" [bold]="true" size="small"></app-text>
+          <div class="status-indicator">
+            <span class="status-dot" [style.background]="getStatusColor()"></span>
+            <app-text class="status_text" [text]="consumerUnit.status" size="small"></app-text>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h2>Informações Cadastrais</h2>
+        <p><strong>Nome:</strong> {{ consumerUnit.name }}</p>
+        <p><strong>Classificação:</strong> {{ consumerUnit.class }}</p>
+        <p><strong>Conta:</strong> {{ consumerUnit.account }}</p>
+      </div>
+
+      <div class="info-card">
+        <h2>Localização</h2>
+        <p><strong>Endereço:</strong> {{ consumerUnit.address }}</p>
+        <p><strong>Bairro:</strong> {{ consumerUnit.bairro }}</p>
+        <p class="coordinates">
+          Lat: {{ consumerUnit.latitude }} | Lng: {{ consumerUnit.longitude }}
+        </p>
+      </div>
+
+      <button class="edit-btn">Editar Unidade</button>
+    </div>
+
+    <!-- Imagem -->
+    <div class="image-section">
+      <app-text class="identification" text="Imagem da unidade" size="medium"></app-text>
+      <img [src]="consumerUnit.imageUrl" [alt]="consumerUnit.name" class="unit-img" (click)="toggleImageFullscreen()">
+
+      <div class="image-meta">
+        <p><strong>Criado em:</strong> {{ consumerUnit.createdAt }}</p>
+        <p><strong>Atualizado em:</strong> {{ consumerUnit.updatedAt }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tela cheia -->
+  <div class="fullscreen-overlay" *ngIf="showFullscreen" (click)="toggleImageFullscreen()">
+    <img [src]="consumerUnit.imageUrl" class="fullscreen-img" />
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <p>Carregando detalhes...</p>
+  </div>
+</ng-template>

@@ -1,4 +1,4 @@
-<app-dashboard-header [accountSelected]="currentAccount" [moduleSelected]="currentModule">
+<app-dashboard-header [accountSelected]="currentAccount" [moduleSelected]="currentModule" (selectionSuccess) = "loadData()">
 </app-dashboard-header>
 
 <app-divider type="small"></app-divider>

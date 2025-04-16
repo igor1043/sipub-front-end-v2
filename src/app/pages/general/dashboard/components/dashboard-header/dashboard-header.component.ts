@@ -31,8 +31,7 @@ export class DashboardHeaderComponent implements OnInit {
   @Input() accountSelected: Account | null = null;
   @Input() moduleSelected: Module | null = null;
 
-  @Output() accountSelectedChange = new EventEmitter<Account | null>();
-  @Output() moduleSelectedChange = new EventEmitter<Module | null>();
+  @Output() selectionSuccess = new EventEmitter<void>();
 
   accountName: string = '';
   accountUrl: string = '';
@@ -83,22 +82,22 @@ export class DashboardHeaderComponent implements OnInit {
       this.moduleSelected = selectedModule;
 
       if (this.accountSelected) {
-        this.accountName = this.accountSelected.alias;
+        this.accountName = this.accountSelected.name;
         this.accountUrl = this.accountSelected.url_account;
 
         await this.getImageAccount(this.accountSelected.id);
         this.localStorageService.setAccountSelected(this.accountSelected);
-        this.accountSelectedChange.emit(this.accountSelected);
       }
 
       if (this.moduleSelected) {
         this.localStorageService.setCurrentModule(this.moduleSelected.id);
-        this.moduleSelectedChange.emit(this.moduleSelected);
       }
 
       this.fecharModal();
       this.form.reset();
       this.cdref.detectChanges();
+
+      this.selectionSuccess.emit();
     }
   }
 

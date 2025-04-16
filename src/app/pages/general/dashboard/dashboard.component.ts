@@ -1,4 +1,4 @@
-import { Component, OnInit, Type } from '@angular/core';
+import {  Component, OnInit, Type } from '@angular/core';
 import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 import { Account } from 'app/core/interfaces/account.interface';
 import { getModuleById,  Module, ModuleType } from 'app/core/interfaces/module.interface';
@@ -17,7 +17,7 @@ import { DashboardConsumerUnitComponent } from './modules/consumer-unit/dashboar
     DashboardHeaderComponent,
     DividerComponent,
     SvgIconComponent
-],
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -29,18 +29,19 @@ export class DashboardComponent implements OnInit {
   private moduleComponentMap: Record<number, Type<any>> = {
     [ModuleType.PublicIllumination.id]: DashboardPublicIlluminationComponent,
     [ModuleType.ConsumerUnit.id]: DashboardConsumerUnitComponent,
-
-    // [ModuleEnum.SAFETY]: DashboardSafetyComponent,
-    // [ModuleEnum.WATER_SUPPLY]: DashboardWaterComponent,
-    // etc...
   };
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData(): void {
     this.currentAccount = this.localStorageService.getAccountSelected();
     this.currentModule = getModuleById(this.localStorageService.getCurrentModule()!);
-
     this.dashboardComponent = this.moduleComponentMap[this.currentModule?.id ?? -1] ?? null;
   }
 }
