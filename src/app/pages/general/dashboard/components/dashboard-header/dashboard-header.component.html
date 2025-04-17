@@ -8,6 +8,8 @@
 
       <img *ngIf="hasLogo() && !loadingImage" class="logo" [src]="accountLogo" alt="Account logo"
         (error)="imageLoadError = true; accountLogo = undefined">
+      <app-svg-icon *ngIf="!hasLogo() && !loadingImage" class="city-icon" color="var(--color-primary)"
+        [svgUrl]="'/assets/icons/ic_city.svg'"></app-svg-icon>
     </div>
 
     <div class="account-info">
@@ -42,8 +44,12 @@
 <!-- Modal de Seleção -->
 <div *ngIf="showDropdownSelector && !isLoading" class="modal-overlay">
   <div class="modal-content">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Selecione a conta e o módulo</h2>
+    </div>
     <div class="close-wrapper">
-      <button class="close-button" (click)="fecharModal()">✕</button>
+      <button class="close-button" (click)="closeModal()">✕</button>
     </div>
 
     <div class="form-section">

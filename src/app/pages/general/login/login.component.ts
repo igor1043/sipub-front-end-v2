@@ -12,17 +12,19 @@ import { ThemeService } from '../../../services/theme.service'; // Importe o ser
 import { firstValueFrom } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
+import { NotificationComponent } from 'app/desing-system/ui-components/notification/notification.component';
+import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatIconModule, ButtonComponent, SvgIconComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatIconModule, ButtonComponent, SvgIconComponent, NotificationComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   providers: [AuthService],
 })
 export class LoginComponent implements OnInit {
-  @HostBinding('class.dark-theme') isDarkTheme = false; 
+  @HostBinding('class.dark-theme') isDarkTheme = false;
 
   loginForm: FormGroup;
   hidePassword = true;
@@ -34,7 +36,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private themeService: ThemeService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private notificationService: NotificationService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -62,7 +65,7 @@ export class LoginComponent implements OnInit {
   }
 
   onRegisterClick() {
- 
+
     //this.router.navigate(['/register']); // Redireciona para a página de cadastro
   }
 
@@ -76,15 +79,22 @@ export class LoginComponent implements OnInit {
     this.isLoading = false;
     this.loginError = null; // Reseta a mensagem de erro ao limpar o formulário
   }
-  
+
   async onLogin() {
     if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+
+      this.notificationService.showError(
+        'Dados inválidos',
+        'Por favor, verifique seu login e senha. A senha deve ter no mínimo 5 caracteres.'
+      );
+
       return;
     }
-  
+
     this.isLoading = true;
     this.loginError = null;
-  
+
     const loginData = {
       username: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value,
@@ -92,13 +102,12 @@ export class LoginComponent implements OnInit {
       acl: true,
       module_description: true
     };
-  
+
     try {
-      // Usando firstValueFrom para converter o Observable em uma Promise
       const response = await firstValueFrom(this.authService.login(loginData));
+
       if (response) {
         this.localStorageService.saveDatalogin(response);
-
         this.router.navigate(['/dashboard']);
         this.resetPage();
       } else {
@@ -106,26 +115,33 @@ export class LoginComponent implements OnInit {
       }
     } catch (error: any) {
       console.error('Login falhou:', error);
-    
+
       let errorMessage = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
-      
+      let notificationTitle = 'Erro';
+
       if (error instanceof HttpErrorResponse) {
         switch (error.status) {
-          case 503:
-            errorMessage = 'Sistema temporariamente fora do ar. Tente novamente mais tarde.';
-            break;
           case 401:
             errorMessage = 'Usuário ou senha incorretos.';
+            notificationTitle = 'Autenticação falhou';
+            break;
+          case 503:
+            errorMessage = 'Sistema temporariamente fora do ar. Tente novamente mais tarde.';
+            notificationTitle = 'Serviço indisponível';
             break;
           case 500:
             errorMessage = 'Erro interno do servidor. Tente novamente mais tarde.';
+            notificationTitle = 'Erro no servidor';
             break;
         }
       }
-      
+
+      this.notificationService.showError(notificationTitle, errorMessage);
+
       this.loginError = errorMessage;
     } finally {
       this.isLoading = false;
     }
   }
+
 }

@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountResponse } from 'app/core/services/account/models/account.model';
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
 import { NotificationComponent } from "../../../../../desing-system/ui-components/notification/notification.component";
+import { SvgIconComponent } from "../../../../../desing-system/ui-components/svg-icon/svg-icon.component";
 
 @Component({
   selector: 'app-dashboard-header',
@@ -26,8 +27,9 @@ import { NotificationComponent } from "../../../../../desing-system/ui-component
     LoadingComponent,
     DropdownComponent,
     ModuleDropdownComponent,
-    NotificationComponent
-  ],
+    NotificationComponent,
+    SvgIconComponent
+],
   styleUrls: ['./dashboard-header.component.css']
 })
 export class DashboardHeaderComponent implements OnInit {
@@ -65,7 +67,7 @@ export class DashboardHeaderComponent implements OnInit {
       const account = this.listAccounts.find(a => a.id === accountId) || null;
       this.accountSelected = account;
       if (account) {
-        this.carregarModulos(accountId);
+        this.loadModules(accountId);
       }
       this.selectedModule = null;
       this.form.get('selected_module')?.reset(null);
@@ -97,7 +99,7 @@ export class DashboardHeaderComponent implements OnInit {
         this.localStorageService.setCurrentModule(this.moduleSelected.id);
       }
 
-      this.fecharModal();
+      this.closeModal();
       this.form.reset();
       this.cdref.detectChanges();
 
@@ -133,8 +135,13 @@ export class DashboardHeaderComponent implements OnInit {
       const response: AccountResponse = await firstValueFrom(
         this.accountService.getAccounts()
       );
-       
-        this.notificationService.showError('Testinho');
+
+      const successRange = { min: 200, max: 299 };
+      console.log('Response:', response);
+      if (response.meta.code < successRange.min || response.meta.code > successRange.max) {
+        this.notificationService.showError('Erro', 'Erro ao carregar a lista de contas.');
+        this.closeModal();
+      }
 
       this.listAccounts = response.data;
     } catch (error) {
@@ -144,18 +151,17 @@ export class DashboardHeaderComponent implements OnInit {
     }
   }
 
-  fecharModal(): void {
+  closeModal(): void {
     this.showDropdownSelector = false;
   }
 
-  private carregarModulos(accountId: number): void {
+  private loadModules(accountId: number): void {
     this.isLoading = true;
     const availableIds = this.localStorageService.getAvailableModules();
     this.modules = getAvailableModules(availableIds);
 
     if (this.modules.length === 0) {
       this.notificationService.showError('Erro', 'Nenhum módulo disponível para esta conta.');
-      this.showDropdownSelector = false;
     }
 
     this.isLoading = false;
@@ -196,7 +202,7 @@ export class DashboardHeaderComponent implements OnInit {
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent): void {
     if (this.showDropdownSelector) {
-      this.fecharModal();
+      this.closeModal();
     }
   }
 }
