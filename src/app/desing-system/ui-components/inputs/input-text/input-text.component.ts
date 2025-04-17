@@ -94,7 +94,7 @@ export class InputTextComponent implements ControlValueAccessor, Validator, OnIn
   }
 
   validate(control: FormControl) {
-    if (this.onlyNumbers || this.typeMask) {
+    if (this.onlyNumbers ) {
       let currentValue = control.value || '';
       currentValue = currentValue.toString().replace(/\D/g, '');
       if (currentValue === '') {

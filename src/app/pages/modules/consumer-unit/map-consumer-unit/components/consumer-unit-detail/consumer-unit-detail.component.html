@@ -17,20 +17,26 @@
         </div>
       </div>
 
-      <div class="info-card">
-        <h2>Informações Cadastrais</h2>
-        <p><strong>Nome:</strong> {{ consumerUnit.name }}</p>
-        <p><strong>Classificação:</strong> {{ consumerUnit.class }}</p>
-        <p><strong>Conta:</strong> {{ consumerUnit.account }}</p>
-      </div>
+      <div class="container-info">
+        <app-text class="title_info_card" text="Informações Cadastrais" [bold]="true" size="xlarge"></app-text>
+        <app-text class="name_label" text="Nome" [bold]="true" size="small"></app-text>
+        <app-text class="name_text" [text]="consumerUnit.name" size="small"></app-text>
 
-      <div class="info-card">
-        <h2>Localização</h2>
-        <p><strong>Endereço:</strong> {{ consumerUnit.address }}</p>
-        <p><strong>Bairro:</strong> {{ consumerUnit.bairro }}</p>
-        <p class="coordinates">
-          Lat: {{ consumerUnit.latitude }} | Lng: {{ consumerUnit.longitude }}
-        </p>
+        <app-text class="classfication_label" text="Classificação" [bold]="true" size="small"></app-text>
+        <app-text class="classification_text" [text]="consumerUnit.class" size="small"></app-text>
+
+        <app-text class="account_label" text="Conta" [bold]="true" size="small"></app-text>
+        <app-text class="account_text" [text]="consumerUnit.account.toString()" size="small"></app-text>
+      </div>
+      <app-divider type ="small"></app-divider>
+      <div class="location-container">
+        <app-text class="title_location_container" text="Localização" [bold]="true" size="xlarge"></app-text>
+        <app-text class="address_label" text="Endereço" [bold]="true" size="small"></app-text>
+        <app-text class="address" [text]="consumerUnit.street"  size="small"></app-text>
+        <app-text class="neiborhood_label" text="Bairro" [bold]="true" size="small"></app-text>
+        <app-text class="neiborhood" [text]="consumerUnit.neiborhood"  size="small"></app-text>
+        <app-text class="coordinates" [text]="'Lat: ' + consumerUnit.latitude + ' | Lng: ' + consumerUnit.longitude" size="xsmall"></app-text>
+
       </div>
 
       <app-button class="bottom" mode="secondary" size="large" [text]="'Editar Unidade'"> </app-button>
@@ -39,13 +45,13 @@
 
     <!-- Imagem -->
     <div class="image-section">
-      <app-text class="identification" text="Imagem da unidade" size="medium"></app-text>
-      <img class="image-container" [src]="consumerUnit.imageUrl" [alt]="consumerUnit.name" class="unit-img" (click)="toggleImageFullscreen()">
+      <app-text class="identification" text="Imagem da unidade" size="medium" [bold]="true" ></app-text>
+      <img class="image_container" [src]="consumerUnit.imageUrl" [alt]="consumerUnit.name" 
+        (click)="toggleImageFullscreen()">
 
-      <div class="image-meta">
-        <p><strong>Criado em:</strong> {{ consumerUnit.createdAt }}</p>
-        <p><strong>Atualizado em:</strong> {{ consumerUnit.updatedAt }}</p>
-      </div>
+        <app-container-info-date [creationDate]="consumerUnit.createdAt" [updateDate]="consumerUnit.updatedAt">
+        </app-container-info-date>
+
     </div>
   </div>
 

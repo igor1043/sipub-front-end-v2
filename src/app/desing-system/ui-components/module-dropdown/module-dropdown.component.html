@@ -4,7 +4,9 @@
     <img [src]="selectedModule.iconUrl" alt="Ícone" class="icon">
     <span>{{ selectedModule.name }}</span>
     } @else {
-    <span class="hint-text">Selecione um módulo</span>
+      <span class="hint-text" [ngClass]="{'error': showErrorContainer && !disabled}">
+        Selecione um módulo
+      </span>
     }
     <app-svg-icon class="dropdown-arrow" [color]="'var(--gray-900)'" [svgUrl]="'/assets/icons/arrow_down.svg'"
       [class.rotated]="isOpen"></app-svg-icon>

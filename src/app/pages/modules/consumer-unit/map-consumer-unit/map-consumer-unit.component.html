@@ -2,10 +2,11 @@
   <app-text class="title-map" text="Mapa de Unidades Consumidoras" size="large">
   </app-text>
 
-  <app-consumer-units-map> </app-consumer-units-map>
+  <app-consumer-units-map  (selectedUnitChange)="onSelectedUnitChange($event)"> </app-consumer-units-map>
 
   <app-consumer-unit-detail 
-  [unitId]=1 
-  [accountId]=1>
-</app-consumer-unit-detail>
+    *ngIf="currentConsumerUnit.unitId"
+    [unitId]="currentConsumerUnit.unitId" 
+    [accountId]="currentConsumerUnit.accountId">
+  </app-consumer-unit-detail>
 </p>

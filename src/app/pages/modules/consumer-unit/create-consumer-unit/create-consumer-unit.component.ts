@@ -19,7 +19,7 @@ import { NotificationService } from 'app/desing-system/ui-components/notificatio
 import { LoadingComponent } from "../../../../desing-system/ui-components/loading/loading.component";
 import { NotificationComponent } from "../../../../desing-system/ui-components/notification/notification.component";
 import { CreateConsumerUnitMockService, Dependency } from 'app/core/mocks/consumer-unit/create.consumer.unit.mock';
-import { ContainerInfoDateComponent } from "./components/container-info-date/container-info-date.component";
+import { ContainerInfoDateComponent } from "../../../../desing-system/components/container-info-date/container-info-date.component";
 import { DialogConfig, DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
 import { InputDateComponent } from "../../../../desing-system/ui-components/inputs/input-date/input-date.component";
 import { ActivatedRoute, Router } from '@angular/router';
@@ -140,10 +140,10 @@ export class CreateConsumerUnitComponent {
       switch_consumer_is_active: [true],
       images: [''],
       // Controles de Informações de Criação
-      created_user: ['', Validators.required],
-      holder_phone: ['', [Validators.required, Validators.minLength(15)]],
-      unit_implementation_date: ['', Validators.required],
-      holder_email: ['', [Validators.required, Validators.email]],
+      created_user: [''],
+      holder_phone: [''],
+      unit_implementation_date: [''],
+      holder_email: [''],
       // Controles de localização
       location: [''],
       street: [''],

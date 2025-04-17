@@ -1,18 +1,11 @@
 .header-container {
   display: flex;
-  align-items: center;
-  gap: 16px;
   background: transparent;
+  align-items: center; 
   width: 75%;
   padding: 0 20px 0 10px;
   border: 1px solid var(--gray-200);
   border-radius: 10px;
-}
-
-.change-button {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
 }
 
 .account-section,
@@ -24,20 +17,24 @@
   min-width: 0;
 }
 
-.account-section {
-  flex: 1;
+.change-button {
+  position: relative;
+  align-self: center; 
+  margin-bottom: 10px;  margin-top: 10px;
 }
 
 .module-section {
-  background: var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin: 0 20px;
+  flex: 1;
+  border-left: 1px solid var(--gray-200);
+  border-right: 1px solid var(--gray-200);
   padding: 8px 12px;
 }
 
-.logo {
-  height: 40px;
-}
-
-app-svg-icon,
 .city-icon {
   width: 100%;
   height: 100%;
@@ -91,36 +88,7 @@ app-svg-icon svg {
   z-index: 1000;
 }
 
-.close-button {
-  width: 10px;
-  height: 10px;
-  position: relative;
-  top: 8px;
-  right: 8px;
-  border: none;
-  background: none;
-  font-size: 24px;
-  color: var(--gray-900);
-  cursor: pointer;
-}
 
-.account-section {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex: 1;
-  min-width: 0;
-}
-
-.module-section {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  margin: 0 20px;
-  flex: 1;
-  background: var(--gray-50);
-}
 
 .account-info,
 .module-info {
@@ -175,40 +143,37 @@ app-svg-icon svg {
 
 .modal-content {
   width: 100%;
-  min-width: 480px;
-  max-width: 640px;
-  margin: 20px auto;
-  padding: 32px;
+  min-width: 35%;
+  max-width: 35%;
   position: relative;
-  border-radius: 16px;
+  border-radius: 15px;
+  padding: 20px;
   background: var(--background-color);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-.close-wrapper {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
+.close-button {
+  width: 10px;
+  height: 10px;
+  border: none;
+  background: none;
 }
 
-.close-button {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  margin: 0;
-  border: none;
-  transition: all 0.2s;
+.close-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  cursor: pointer;
+  color: var(--gray-900);
 }
 
 .form-section {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  margin: 0 32px 32px 32px;
+}
+
+.modal-header {
+  margin-bottom: 30px;
 }
 
 .logo-loading {
@@ -217,8 +182,4 @@ app-svg-icon svg {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.modal-header {
-  margin: 32px;
 }

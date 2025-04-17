@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TextComponent } from "../../../../../../desing-system/ui-components/text/text.component";
 import { ButtonComponent } from "../../../../../../desing-system/ui-components/button/button.component";
+import { ContainerInfoDateComponent } from "../../../../../../desing-system/components/container-info-date/container-info-date.component";
+import { DividerComponent } from "../../../../../../desing-system/ui-components/divider/divider.component";
 
 interface ConsumerUnitDetail {
   id: number;
@@ -9,8 +11,9 @@ interface ConsumerUnitDetail {
   name: string;
   class: string;
   cnpjCpf: string;
-  address: string;
-  bairro: string;
+  street: string;
+  number: string;
+  neiborhood: string;
   latitude: number;
   longitude: number;
   status: 'Ativo' | 'Inativo' | 'Pendente';
@@ -22,32 +25,38 @@ interface ConsumerUnitDetail {
 @Component({
   selector: 'app-consumer-unit-detail',
   standalone: true,
-  imports: [CommonModule, TextComponent, ButtonComponent],
+  imports: [CommonModule, TextComponent, ButtonComponent, ContainerInfoDateComponent, DividerComponent],
   templateUrl: './consumer-unit-detail.component.html',
   styleUrls: ['./consumer-unit-detail.component.css']
 })
-export class ConsumerUnitDetailComponent implements OnInit {
-  @Input() unitId!: number;
-  @Input() accountId!: number;
+export class ConsumerUnitDetailComponent implements OnChanges {
+  @Input() unitId: string | null = null;
+  @Input() accountId: number | null = null;
 
   consumerUnit: ConsumerUnitDetail | null = null;
-
   showFullscreen = false;
 
-  ngOnInit(): void {
-    this.loadConsumerUnitData();
+  ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['unitId'] || changes['accountId']) && this.unitId && this.accountId) {
+      this.loadConsumerUnitData();
+    } else {
+      this.consumerUnit = null;
+    }
   }
 
   private loadConsumerUnitData(): void {
+    // Aqui você faria uma chamada real à API
+    // Por enquanto, vamos simular com dados mockados
     const now = new Date();
     this.consumerUnit = {
-      id: 1,
-      account: 2,
-      name: `Unidade Escola da mata`,
+      id: Number(this.unitId),
+      account: this.accountId || 0,
+      name: `Unidade ${this.unitId}`,
       class: `Industrial`,
       cnpjCpf: '139.020.296.84',
-      address: 'Rua X',
-      bairro: 'Centro',
+      street: 'Rua X',
+      number: '45',
+      neiborhood: 'Centro',
       latitude: -16.123456,
       longitude: -54.789012,
       status: 'Ativo',
@@ -65,5 +74,4 @@ export class ConsumerUnitDetailComponent implements OnInit {
   toggleImageFullscreen(): void {
     this.showFullscreen = !this.showFullscreen;
   }
-
 }

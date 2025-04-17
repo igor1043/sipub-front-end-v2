@@ -1,4 +1,4 @@
-import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, NgZone, OnInit, Output } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,10 +7,12 @@ import { VisibleUnitsSidebarComponent } from "../visible-units-sidebar/visible-u
 import { getConsumerUnitsInArea } from './points.mock';
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
 import { NotificationComponent } from "../../../../../../desing-system/ui-components/notification/notification.component";
+import { SelectedConsumerUnit } from '../../map-consumer-unit.component';
 
 
 export interface ConsumerUnit {
   id: string;
+  accountId: number,
   name: string;
   neiborhod: string;
   street: string;
@@ -26,10 +28,11 @@ export interface ConsumerUnit {
   templateUrl: './consumer-units-map.component.html',
   styleUrls: ['./consumer-units-map.component.css'],
   standalone: true,
-  imports: [GoogleMapsModule, CommonModule, MatIconModule, VisibleUnitsSidebarComponent,  NotificationComponent]
+  imports: [GoogleMapsModule, CommonModule, MatIconModule, VisibleUnitsSidebarComponent, NotificationComponent]
 })
 export class ConsumerUnitsMapComponent implements OnInit {
   @Input() consumerUnits: ConsumerUnit[] = [];
+  @Output() selectedUnitChange = new EventEmitter<SelectedConsumerUnit>();
 
   scaledSize = new google.maps.Size(40, 40);
   markerCluster?: MarkerClusterer;
@@ -171,6 +174,10 @@ export class ConsumerUnitsMapComponent implements OnInit {
     }
 
     this.updateMarkerIcons();
+    this.selectedUnitChange.emit({
+      unitId: unit.id,
+      accountId: unit.accountId
+    });
   }
 
   private updateMarkerIcons() {
@@ -227,10 +234,10 @@ export class ConsumerUnitsMapComponent implements OnInit {
       .then(units => {
         this.consumerUnits = units;
         this.createMarkers();
-        
+
         if (this.selectedUnitId) {
-          this.selectedUnit = undefined;
-          this.selectedUnitId = null;
+          this.clearSelection();
+
         }
         this.isLoading = false;
 
@@ -242,5 +249,13 @@ export class ConsumerUnitsMapComponent implements OnInit {
         this.isLoading = false;
         this.notificationService.showError('Acorreu um erro no carregamento dos marcadores do mapa, tente novamente');
       });
+  }
+  clearSelection() {
+    this.selectedUnit = undefined;
+    this.selectedUnitId = null;
+    // this.selectedUnitChange.emit({
+    //   unitId: null,
+    //   accountId: null
+    // });
   }
 }

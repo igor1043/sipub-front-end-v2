@@ -102,6 +102,8 @@ export class ListConsumerUnitComponent implements OnInit {
       );
 
       this.listAccounts = response.data;
+      this.isLoading = false;
+
 
       const accountSelected = this.localStorageService.getAccountSelected();
       if (accountSelected) {
@@ -109,10 +111,15 @@ export class ListConsumerUnitComponent implements OnInit {
       }
     
     } catch (error) {
+      this.notificationService.showError(
+        'Erro ao carregar a lista de contas',
+        'Recarregue a página e tente novamente',
+        undefined,
+        7000,
+        () => { }
+      );
       console.error('Erro ao carregar a lista de contas', error);
-    } finally {
-      this.isLoading = false;
-    }
+    } 
   }
 
   get accountOptions(): { id: number, name: string }[] {
@@ -136,8 +143,14 @@ export class ListConsumerUnitComponent implements OnInit {
         this.isLoading = false;
       },
       error: (erro) => {
-        console.error('Erro ao carregar contas:', erro);
         this.isLoading = false;
+        this.notificationService.showError(
+          'Erro ao carregar as unidades Consumidoras',
+          'Recarregue a página e tente novamente',
+          undefined,
+          7000,
+          () => { }
+        );
       }
     });
   }

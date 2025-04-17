@@ -95,3 +95,7 @@
   align-items: center;
   margin-top: 4px;
 }
+
+.hint-text.error {
+  color: var(--gray-700);
+}

@@ -16,6 +16,7 @@ import { AccountResponse } from 'app/core/services/account/models/account.model'
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
 import { NotificationComponent } from "../../../../../desing-system/ui-components/notification/notification.component";
 import { SvgIconComponent } from "../../../../../desing-system/ui-components/svg-icon/svg-icon.component";
+import { TextComponent } from "../../../../../desing-system/ui-components/text/text.component";
 
 @Component({
   selector: 'app-dashboard-header',
@@ -28,7 +29,8 @@ import { SvgIconComponent } from "../../../../../desing-system/ui-components/svg
     DropdownComponent,
     ModuleDropdownComponent,
     NotificationComponent,
-    SvgIconComponent
+    SvgIconComponent,
+    TextComponent
 ],
   styleUrls: ['./dashboard-header.component.css']
 })

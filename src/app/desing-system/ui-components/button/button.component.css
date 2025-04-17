@@ -2,17 +2,15 @@ button {
   border-radius: 10px;
   padding: 8px 16px;
   font-family: Arial;
-  margin-top: 20px;
-  margin-bottom: 5px;
   font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Adicionando animação de transformação */
+  transition: background-color 0.3s ease, transform 0.2s ease;
   font-size: 16px;
   cursor: pointer;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   display: flex;
-  align-items: center; /* Alinha o texto e os ícones no centro */
+  align-items: center; 
   justify-content: center;
 }
 

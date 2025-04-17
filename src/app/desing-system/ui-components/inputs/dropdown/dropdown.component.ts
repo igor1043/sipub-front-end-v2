@@ -81,6 +81,7 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
     } else {
       this.displayText = '';
     }
+    this.searchTerm = ''
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -123,6 +124,7 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
     this.isFocused = false;
     setTimeout(() => {
       this.isDropdownVisible = false;
+
       if (!this.selectedId) {
         this.displayText = '';
         this.searchTerm = '';
@@ -138,6 +140,7 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   filterOptions(): void {
+    console.log("to filtrando")
     this.filteredOptions = this.options.filter(option =>
       option.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
