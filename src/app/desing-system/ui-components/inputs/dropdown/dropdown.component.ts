@@ -33,20 +33,29 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
   @Input() minItemsForScroll: number = 5;
 
   displayText: string = '';
+  selectedId: any = null;
+
   searchTerm: string = '';
   filteredOptions: { id: any, name: string }[] = [];
   isDropdownVisible: boolean = false;
   isFocused: boolean = false;
-  selectedId: any = null;
 
   private controlSubscription!: Subscription;
 
   ngOnInit(): void {
-    this.controlSubscription = this.control.valueChanges.subscribe(value => {
-      if (value === '' || value === null) {
-        this.clearSelection();
+
+    if(this.control) {
+      if(this.control.value !== null || this.control.value !== '') {
+        this.writeValue(this.control.value)
+        this.control.setValue(this.control.value, {emitEvent:false})
       }
-    });
+      this.controlSubscription = this.control.valueChanges.subscribe(value => {
+        if (value === '' || value === null) {
+          this.writeValue('');
+          this.control.setValue('', {emitEvent: false});
+        }
+      });
+    }
   }
 
   validate(): { [key: string]: any } | null {
@@ -56,20 +65,22 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
     return null;
   }
 
-  private clearSelection(): void {
-    this.selectedId = null;
-    this.displayText = '';
-    this.searchTerm = '';
-    this.filterOptions();
-    this.isDropdownVisible = false;
-  }
-
   get showErrorContainer(): boolean {
     return this.control ? this.control.invalid : false;
   }
 
   writeValue(id: any): void {
-
+    this.selectedId = id;
+  
+    console.log("to aqui", id)
+    const selectedOption = this.options.find(option => option.id === id);
+    if (selectedOption) {
+      console.log("to aqui selecionei a opção", id , selectedOption.name)
+      this.displayText = selectedOption.name;
+    } else {
+      console.log("to aqui deixei em branco", id)
+      this.displayText = '';
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -130,21 +141,11 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
     if (this.selectedId === option.id) {
       this.selectedId = null;
       this.displayText = '';
-      this.onChange(null);
-      if (this.control) {
-        this.control.setValue(null);
-        this.control.markAsTouched();
-        this.control.updateValueAndValidity();
-      }
+      this.control.setValue(null);
     } else {
       this.selectedId = option.id;
       this.displayText = option.name;
-      this.onChange(option.id);
-      if (this.control) {
-        this.control.setValue(option.id);
-        this.control.markAsTouched();
-        this.control.updateValueAndValidity();
-      }
+      this.control.setValue(option.id);
     }
     this.isDropdownVisible = false;
   }

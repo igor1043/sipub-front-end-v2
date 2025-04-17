@@ -84,7 +84,6 @@ export class ListConsumerUnitComponent implements OnInit {
   private setupListeners(): void {
     this.form.get('selected_account')?.valueChanges.subscribe(accountId => {
 
-      console.log("a conta selecionada foi", accountId)
       this.allConsumerUnits = [];
       this.consumerUnitData = [];
       this.totalItems = 0;
@@ -105,11 +104,10 @@ export class ListConsumerUnitComponent implements OnInit {
       this.listAccounts = response.data;
 
       const accountSelected = this.localStorageService.getAccountSelected();
-      if (accountSelected && this.listAccounts.some(account => account.id === accountSelected.id)) {
-        this.form.patchValue({
-          selected_account: accountSelected
-        });
+      if (accountSelected) {
+        this.form.get('selected_account')?.setValue(accountSelected.id);
       }
+    
     } catch (error) {
       console.error('Erro ao carregar a lista de contas', error);
     } finally {
