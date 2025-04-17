@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { TextComponent } from "../../../../../../desing-system/ui-components/text/text.component";
+import { ButtonComponent } from "../../../../../../desing-system/ui-components/button/button.component";
 
 interface ConsumerUnitDetail {
   id: number;
@@ -21,7 +22,7 @@ interface ConsumerUnitDetail {
 @Component({
   selector: 'app-consumer-unit-detail',
   standalone: true,
-  imports: [CommonModule, TextComponent],
+  imports: [CommonModule, TextComponent, ButtonComponent],
   templateUrl: './consumer-unit-detail.component.html',
   styleUrls: ['./consumer-unit-detail.component.css']
 })

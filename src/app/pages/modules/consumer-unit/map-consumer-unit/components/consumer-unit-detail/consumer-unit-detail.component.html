@@ -33,13 +33,14 @@
         </p>
       </div>
 
-      <button class="edit-btn">Editar Unidade</button>
+      <app-button class="bottom" mode="secondary" size="large" [text]="'Editar Unidade'"> </app-button>
+
     </div>
 
     <!-- Imagem -->
     <div class="image-section">
       <app-text class="identification" text="Imagem da unidade" size="medium"></app-text>
-      <img [src]="consumerUnit.imageUrl" [alt]="consumerUnit.name" class="unit-img" (click)="toggleImageFullscreen()">
+      <img class="image-container" [src]="consumerUnit.imageUrl" [alt]="consumerUnit.name" class="unit-img" (click)="toggleImageFullscreen()">
 
       <div class="image-meta">
         <p><strong>Criado em:</strong> {{ consumerUnit.createdAt }}</p>

@@ -237,8 +237,6 @@ export class ConsumerUnitsMapComponent implements OnInit {
         if (this.map) {
           this.updateVisibleUnits();
         }
-        this.notificationService.showError('Acorreu um erro no carregamento dos marcadores do mapa, tente novamente');
-
       })
       .catch(error => {
         this.isLoading = false;

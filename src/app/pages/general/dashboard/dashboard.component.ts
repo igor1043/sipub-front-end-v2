@@ -1,4 +1,4 @@
-import {  Component, OnInit, Type } from '@angular/core';
+import {  Component, Injector, OnInit, Type } from '@angular/core';
 import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 import { Account } from 'app/core/interfaces/account.interface';
 import { getModuleById,  Module, ModuleType } from 'app/core/interfaces/module.interface';
@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   currentAccount: Account | null = null;
   currentModule: Module | null = null;
   dashboardComponent: Type<any> | null = null;
+  dashboardInjector: Injector | null = null;
 
   private moduleComponentMap: Record<number, Type<any>> = {
     [ModuleType.PublicIllumination.id]: DashboardPublicIlluminationComponent,
@@ -32,7 +33,8 @@ export class DashboardComponent implements OnInit {
   };
 
   constructor(
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private injector: Injector
   ) {}
 
   ngOnInit(): void {
@@ -43,5 +45,14 @@ export class DashboardComponent implements OnInit {
     this.currentAccount = this.localStorageService.getAccountSelected();
     this.currentModule = getModuleById(this.localStorageService.getCurrentModule()!);
     this.dashboardComponent = this.moduleComponentMap[this.currentModule?.id ?? -1] ?? null;
+
+    if (this.currentAccount) {
+      this.dashboardInjector = Injector.create({
+        providers: [
+          { provide: 'accountId', useValue: this.currentAccount.id }
+        ],
+        parent: this.injector
+      });
+    }
   }
 }

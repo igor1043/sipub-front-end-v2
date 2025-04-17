@@ -3,7 +3,10 @@
 
 <app-divider type="small"></app-divider>
 
-<ng-container *ngIf="dashboardComponent" [ngComponentOutlet]="dashboardComponent"></ng-container>
+<ng-container *ngIf="dashboardComponent" 
+              [ngComponentOutlet]="dashboardComponent" 
+              [ngComponentOutletInjector]="dashboardInjector ?? undefined">
+</ng-container>
 
 <ng-container *ngIf="!dashboardComponent">
   <div class="welcome-container">

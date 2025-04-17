@@ -1,8 +1,8 @@
 import { Component, Input, forwardRef, Self, Optional, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, NgControl, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
 import { Subscription } from 'rxjs';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dropdown',
@@ -10,13 +10,26 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dropdown.component.css'],
   standalone: true,
   imports: [CommonModule, SvgIconComponent],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => DropdownComponent),
+    multi: true,
+  },
+  {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => DropdownComponent),
+    multi: true,
+  }]
 })
+
 export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestroy {
+
   @Input() placeholder: string = '';
   @Input() alertText: string = '';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() options: { id: any, name: string }[] = [];
   @Input() control!: AbstractControl;
+  @Input() disabled = false;
   @Input() minItemsForScroll: number = 5;
 
   displayText: string = '';
@@ -28,26 +41,19 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
 
   private controlSubscription!: Subscription;
 
-  constructor(@Self() @Optional() public ngControl: NgControl) {
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
-    }
-  }
-
   ngOnInit(): void {
-    if (this.ngControl && this.ngControl.control) {
-      this.controlSubscription = this.ngControl.control.valueChanges.subscribe(value => {
-        if (value === '' || value === null) {
-          this.clearSelection();
-        }
-      });
-    }
+    this.controlSubscription = this.control.valueChanges.subscribe(value => {
+      if (value === '' || value === null) {
+        this.clearSelection();
+      }
+    });
   }
 
-  ngOnDestroy(): void {
-    if (this.controlSubscription) {
-      this.controlSubscription.unsubscribe();
+  validate(): { [key: string]: any } | null {
+    if (this.control && this.control.invalid) {
+      return { invalid: true };
     }
+    return null;
   }
 
   private clearSelection(): void {
@@ -55,6 +61,7 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
     this.displayText = '';
     this.searchTerm = '';
     this.filterOptions();
+    this.isDropdownVisible = false;
   }
 
   get showErrorContainer(): boolean {
@@ -62,13 +69,7 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   writeValue(id: any): void {
-    if (id !== undefined && id !== null) {
-      const selectedOption = this.options.find(opt => opt.id === id);
-      if (selectedOption) {
-        this.selectedId = id;
-        this.displayText = selectedOption.name;
-      }
-    }
+
   }
 
   registerOnChange(fn: any): void {
@@ -161,6 +162,15 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
     return `${this.minItemsForScroll * itemHeight}px`;
   }
 
-  private onChange: any = () => { };
-  private onTouched: any = () => { };
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  ngOnDestroy(): void {
+    if (this.controlSubscription) {
+      this.controlSubscription.unsubscribe();
+    }
+  }
+  private onChange: (value: any) => void = () => { };
+  private onTouched: () => void = () => { };
 }

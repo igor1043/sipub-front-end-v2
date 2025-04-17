@@ -1,5 +1,5 @@
 <div class="header-container">
-  
+
   <div class="account-section">
     <div class="icon-container">
       <div *ngIf="loadingImage" class="logo-loading">
@@ -47,18 +47,12 @@
     </div>
 
     <div class="form-section">
-      <app-dropdown 
-        [options]="accountOptions" 
-        placeholder="Selecione a conta" 
-        [control]="form.get('selected_account')!"
+      <app-dropdown [options]="accountOptions" placeholder="Selecione a conta" [control]="form.get('selected_account')!"
         formControlName="selected_account">
       </app-dropdown>
 
-      <app-module-dropdown 
-        [modules]="modules" 
-        formControlName="selected_module"
-        [control]="form.get('selected_module')!"
-        [disabled]="!form.get('selected_account')?.value">
+      <app-module-dropdown [modules]="modules" formControlName="selected_module"
+        [control]="form.get('selected_module')!" [disabled]="!form.get('selected_account')?.value">
       </app-module-dropdown>
     </div>
   </div>

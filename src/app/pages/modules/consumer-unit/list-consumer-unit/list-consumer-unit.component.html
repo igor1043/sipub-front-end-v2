@@ -1,8 +1,8 @@
 <div class="container">
   <app-text class="title_create" text="Lista de Unidades Consumidoras" size="large"></app-text>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-dropdown class="selected_account" [options]="listAccounts"
+  <form [formGroup]="form">
+    <app-dropdown class="selected_account" [options]="accountOptions"
       placeholder="Selecione a conta referente a unidade consumidora" [size]="'medium'"
       [control]="form.get('selected_account')!" formControlName="selected_account"></app-dropdown>
   

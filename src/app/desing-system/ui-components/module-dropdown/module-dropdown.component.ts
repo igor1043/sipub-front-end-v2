@@ -11,32 +11,32 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./module-dropdown.component.css'],
   standalone: true,
   imports: [CommonModule, SvgIconComponent],
-  providers: [    {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => ModuleDropdownComponent),
-        multi: true,
-      },
-      {
-        provide: NG_VALIDATORS,
-        useExisting: forwardRef(() => ModuleDropdownComponent),
-        multi: true,
-      }]
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => ModuleDropdownComponent),
+    multi: true,
+  },
+  {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => ModuleDropdownComponent),
+    multi: true,
+  }]
 })
 export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   @Input() modules: Module[] = [];
   @Input() disabled = false;
   @Input() control!: AbstractControl;
-  
+
   isOpen = false;
 
-  selectedModule: Module | null = null; 
+  selectedModule: Module | null = null;
 
   private controlSubscription!: Subscription;
 
 
   toggleDropdown() {
-    if (!this.disabled) { 
+    if (!this.disabled) {
       this.isOpen = !this.isOpen;
     }
   }
@@ -50,7 +50,7 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
     this.onTouched();
     this.isOpen = false;
   }
-  
+
   ngOnInit(): void {
     this.controlSubscription = this.control.valueChanges.subscribe(value => {
       if (value === '' || value === null) {
@@ -69,7 +69,7 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
     return this.control ? this.control.invalid : false;
   }
 
-  
+
   ngOnDestroy(): void {
     if (this.controlSubscription) {
       this.controlSubscription.unsubscribe();
@@ -96,6 +96,6 @@ export class ModuleDropdownComponent implements ControlValueAccessor, OnInit, On
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-  private onChange: (value: any) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: any) => void = () => { };
+  private onTouched: () => void = () => { };
 }

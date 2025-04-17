@@ -5,7 +5,6 @@ import { LoadingComponent } from 'app/desing-system/ui-components/loading/loadin
 import { ConsumerUnit } from 'app/core/interfaces/modules/consumer-unit/list-consumer-unit.interface';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AccountsMockService } from 'app/core/mocks/accounts.mock';
 import { ConsumerUnitsListMockService } from 'app/core/mocks/consumer-unit/consumer.unit.list.mock';
 import { DropdownComponent } from "../../../../desing-system/ui-components/inputs/dropdown/dropdown.component";
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
@@ -13,7 +12,10 @@ import { NotificationComponent } from "../../../../desing-system/ui-components/n
 import { Account } from 'app/core/interfaces/account.interface';
 import { Router } from '@angular/router';
 import { DialogType, MessageDialogComponent } from "../../../../desing-system/ui-components/message-dialog/message-dialog.component";
-
+import { AccountResponse } from 'app/core/services/account/models/account.model';
+import { firstValueFrom } from 'rxjs';
+import { AccountService } from 'app/core/services/account/account.service';
+import { LocalStorageService } from 'app/core/local-storage/LocalStorageService';
 
 @Component({
   selector: 'app-list-consumer-unit',
@@ -25,7 +27,6 @@ import { DialogType, MessageDialogComponent } from "../../../../desing-system/ui
 export class ListConsumerUnitComponent implements OnInit {
   //mocks
   private listAccountsMock = inject(ConsumerUnitsListMockService);
-  private accountsMock = inject(AccountsMockService);
 
   form: FormGroup;
 
@@ -64,12 +65,18 @@ export class ListConsumerUnitComponent implements OnInit {
   @ViewChild('messageDialog') messageDialog!: MessageDialogComponent;
 
   ngOnInit(): void {
-    this.carregarContas();
+    this.loadListAccount();
   }
 
-  constructor(private fb: FormBuilder, private notificationService: NotificationService, private router: Router,) {
+  constructor(private fb: FormBuilder,
+    private localStorageService: LocalStorageService,
+    private accountService: AccountService,
+    private notificationService: NotificationService,
+    private router: Router,
+  ) {
     this.form = this.fb.group({
       selected_account: ['', Validators.required],
+
     });
     this.setupListeners();
   }
@@ -77,6 +84,7 @@ export class ListConsumerUnitComponent implements OnInit {
   private setupListeners(): void {
     this.form.get('selected_account')?.valueChanges.subscribe(accountId => {
 
+      console.log("a conta selecionada foi", accountId)
       this.allConsumerUnits = [];
       this.consumerUnitData = [];
       this.totalItems = 0;
@@ -86,18 +94,34 @@ export class ListConsumerUnitComponent implements OnInit {
       }
     });
   }
-  private carregarContas(): void {
+
+  async loadListAccount(): Promise<void> {
     this.isLoading = true;
-    this.accountsMock.getAccounts().subscribe({
-      next: (contas) => {
-        this.listAccounts = contas;
-        this.isLoading = false;
-      },
-      error: (erro) => {
-        console.error('Erro ao carregar contas:', erro);
-        this.isLoading = false;
+    try {
+      const response: AccountResponse = await firstValueFrom(
+        this.accountService.getAccounts()
+      );
+
+      this.listAccounts = response.data;
+
+      const accountSelected = this.localStorageService.getAccountSelected();
+      if (accountSelected && this.listAccounts.some(account => account.id === accountSelected.id)) {
+        this.form.patchValue({
+          selected_account: accountSelected
+        });
       }
-    });
+    } catch (error) {
+      console.error('Erro ao carregar a lista de contas', error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  get accountOptions(): { id: number, name: string }[] {
+    return this.listAccounts.map(account => ({
+      id: account.id,
+      name: account.name
+    }));
   }
 
   private updateConsumerUnitData(): void {
@@ -164,7 +188,7 @@ export class ListConsumerUnitComponent implements OnInit {
 
     const itemsCount = items.length;
     const itemsIds = items.map(item => item.id).join(', ');
-    
+
     this.messageDialog.open({
       title: 'Confirmar Exclusão em Lote',
       subtitle: `Você está prestes a excluir ${itemsCount} unidade(s) consumidora(s):
@@ -185,18 +209,4 @@ export class ListConsumerUnitComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    if (this.form.valid) {
-      
-    } else {
-      
-    }
-  }
-
-  get accountOptions(): { id: number, name: string }[] {
-    return this.listAccounts.map(account => ({
-      id: account.id,
-      name: account.name
-    }));
-  }
 }
