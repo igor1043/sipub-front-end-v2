@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, Self, Optional, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, forwardRef, Self, Optional, Output, EventEmitter, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../../svg-icon/svg-icon.component';
 import { Subscription } from 'rxjs';
@@ -44,17 +44,20 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
 
   ngOnInit(): void {
 
-    if(this.control) {
-      if(this.control.value !== null || this.control.value !== '') {
+    if (this.control) {
+      if (this.control.value !== null || this.control.value !== '') {
         this.writeValue(this.control.value)
-        this.control.setValue(this.control.value, {emitEvent:false})
+        this.control.setValue(this.control.value, { emitEvent: false })
       }
       this.controlSubscription = this.control.valueChanges.subscribe(value => {
         if (value === '' || value === null) {
           this.writeValue('');
-          this.control.setValue('', {emitEvent: false});
+          this.control.setValue('', { emitEvent: false });
+        } else {
+          this.writeValue(value); 
         }
       });
+      
     }
   }
 
@@ -71,24 +74,19 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
 
   writeValue(id: any): void {
     this.selectedId = id;
-  
-    console.log("to aqui", id)
+
     const selectedOption = this.options.find(option => option.id === id);
     if (selectedOption) {
-      console.log("to aqui selecionei a opção", id , selectedOption.name)
       this.displayText = selectedOption.name;
     } else {
-      console.log("to aqui deixei em branco", id)
       this.displayText = '';
     }
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['options'] && this.selectedId !== null) {
+      this.writeValue(this.selectedId);
+    }
   }
 
   onInputChange(event: Event): void {
@@ -105,6 +103,14 @@ export class DropdownComponent implements ControlValueAccessor, OnInit, OnDestro
         this.control.updateValueAndValidity();
       }
     }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
 
   onFocus(): void {
