@@ -4,7 +4,7 @@ import { ApexChartComponent } from "../../../../../../desing-system/ui-component
 import { LuminousPointCountComponent } from "../luminous-point-count/luminous-point-count.component";
 import { PublicIlluminationCountComponent } from "../public-illumination-count/public-illumination-count.component";
 import { EnergyConsumptionCardComponent } from "../energy-consumption-card/energy-consumption-card.component";
-import { GaugeMeterComponent } from "../gauge-meter/gauge-meter.component";
+import { GaugeMeterComponent } from "../../../../../../desing-system/ui-components/gauge-meter/gauge-meter.component";
 
 @Component({
   selector: 'app-dashboard-public-illumination',
