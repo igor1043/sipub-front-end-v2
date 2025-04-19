@@ -1,5 +1,5 @@
 <div class="gauge-container">
-  <svg viewBox="0 0 200 200" class="gauge">
+  <svg viewBox="0 0 200 120" class="gauge">
     <defs>
       <linearGradient id="gaugeGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="200" y2="0">
         <stop offset="0%" stop-color="#ff0000" />
@@ -7,16 +7,21 @@
         <stop offset="100%" stop-color="#00ff00" />
       </linearGradient>
     </defs>
-
-    <!-- Arco do medidor com 270 graus -->
-    <path d="M 41.42 158.58 A 80 80 0 1 1 158.58 158.58" fill="none" stroke="url(#gaugeGradient)" stroke-width="16"
+    <!-- Arco do medidor com bordas arredondadas -->
+    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGradient)" stroke-width="16"
       stroke-linecap="round" />
-
-    <!-- Agulha -->
-    <line [attr.x1]="100" [attr.y1]="100" [attr.x2]="needleX" [attr.y2]="needleY" stroke="#1a2a42" stroke-width="4"
-      stroke-linecap="round" class="needle" />
-
-    <!-- Centro da agulha -->
+    <!-- Agulha mais curta -->
+    <line
+      [attr.x1]="100"
+      [attr.y1]="100"
+      [attr.x2]="needleX"
+      [attr.y2]="needleY"
+      stroke="#1a2a42"
+      stroke-width="4"
+      stroke-linecap="round"
+      class="needle"
+    />
+    <!-- Centro do medidor -->
     <circle cx="100" cy="100" r="6" fill="#1a2a42" />
 
     <!-- Labels dos ticks -->

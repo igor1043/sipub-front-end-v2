@@ -1,0 +1,23 @@
+.gauge-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .gauge-track {
+    stroke: #eee;
+  }
+  
+  .gauge-fill {
+    stroke: #155368;
+    transition: stroke-dashoffset 0.6s ease;
+  }
+  
+  .gauge-text {
+    text-anchor: middle;
+    font-size: 24px;
+    fill: #333;
+    font-weight: bold;
+  }
+  
