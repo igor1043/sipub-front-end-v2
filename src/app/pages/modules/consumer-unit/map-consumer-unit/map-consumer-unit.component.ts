@@ -3,6 +3,7 @@ import { ConsumerUnit, ConsumerUnitsMapComponent } from "./components/consumer-u
 import { TextComponent } from "../../../../desing-system/ui-components/text/text.component";
 import { ConsumerUnitDetailComponent } from "./components/consumer-unit-detail/consumer-unit-detail.component";
 import { CommonModule } from '@angular/common';
+import { SpinnerComponent } from "../../../../desing-system/ui-components/spinner/spinner.component";
 
 export interface SelectedConsumerUnit {
   unitId: string | null;
@@ -13,7 +14,7 @@ export interface SelectedConsumerUnit {
   selector: 'app-map-consumer-unit',
   templateUrl: './map-consumer-unit.component.html',
   styleUrls: ['./map-consumer-unit.component.css'],
-  imports: [CommonModule,ConsumerUnitsMapComponent, TextComponent, ConsumerUnitDetailComponent]
+  imports: [CommonModule, ConsumerUnitsMapComponent, TextComponent, ConsumerUnitDetailComponent, SpinnerComponent]
 })
 export class MapConsumerUnitComponent implements OnInit {
   currentConsumerUnit: SelectedConsumerUnit = { unitId: null, accountId: null };

@@ -8,6 +8,8 @@ import { getConsumerUnitsInArea } from './points.mock';
 import { NotificationService } from 'app/desing-system/ui-components/notification/NotificationService';
 import { NotificationComponent } from "../../../../../../desing-system/ui-components/notification/notification.component";
 import { SelectedConsumerUnit } from '../../map-consumer-unit.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerComponent } from "../../../../../../desing-system/ui-components/spinner/spinner.component";
 
 
 export interface ConsumerUnit {
@@ -28,8 +30,17 @@ export interface ConsumerUnit {
   templateUrl: './consumer-units-map.component.html',
   styleUrls: ['./consumer-units-map.component.css'],
   standalone: true,
-  imports: [GoogleMapsModule, CommonModule, MatIconModule, VisibleUnitsSidebarComponent, NotificationComponent]
+  imports: [
+    GoogleMapsModule,
+    CommonModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    VisibleUnitsSidebarComponent,
+    NotificationComponent,
+    SpinnerComponent
+]
 })
+
 export class ConsumerUnitsMapComponent implements OnInit {
   @Input() consumerUnits: ConsumerUnit[] = [];
   @Output() selectedUnitChange = new EventEmitter<SelectedConsumerUnit>();
@@ -49,6 +60,9 @@ export class ConsumerUnitsMapComponent implements OnInit {
 
   readonly selectedIconUrl = 'assets/icons/ic_marker_consumer_unit_selected.svg';
   private selectedUnitId: string | null = null;
+
+
+  private isProgrammaticMove = false;
 
   mapOptions: google.maps.MapOptions = {
     streetViewControl: false,
@@ -170,7 +184,8 @@ export class ConsumerUnitsMapComponent implements OnInit {
     this.selectedUnitId = unit.id;
 
     if (this.map) {
-      this.map.panTo({ lat: unit.lat, lng: unit.lng });
+      this.isProgrammaticMove = true;
+      this.map?.panTo({ lat: unit.lat, lng: unit.lng });
     }
 
     this.updateMarkerIcons();
@@ -220,6 +235,13 @@ export class ConsumerUnitsMapComponent implements OnInit {
     if (this.showSidebar) {
       this.updateVisibleUnits();
     }
+
+    if (!this.isProgrammaticMove) {
+      this.clearSelection(); // Aqui limpamos só se for movimento manual
+    }
+
+    // Resetamos a flag após o idle
+    this.isProgrammaticMove = false;
   }
 
   loadUnitsInArea(boundingBox: {
@@ -235,10 +257,6 @@ export class ConsumerUnitsMapComponent implements OnInit {
         this.consumerUnits = units;
         this.createMarkers();
 
-        if (this.selectedUnitId) {
-          this.clearSelection();
-
-        }
         this.isLoading = false;
 
         if (this.map) {
@@ -253,9 +271,9 @@ export class ConsumerUnitsMapComponent implements OnInit {
   clearSelection() {
     this.selectedUnit = undefined;
     this.selectedUnitId = null;
-    // this.selectedUnitChange.emit({
-    //   unitId: null,
-    //   accountId: null
-    // });
+    this.selectedUnitChange.emit({
+      unitId: null,
+      accountId: null
+    });
   }
 }

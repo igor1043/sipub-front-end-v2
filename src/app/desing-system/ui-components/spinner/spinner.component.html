@@ -1,0 +1,32 @@
+@switch (type) {
+  @case ('classic') {
+    <div class="spinner-classic" [style]="getSpinnerStyle()"></div>
+  }
+  @case ('dots') {
+    <div class="spinner-dots" [style]="getSpinnerStyle()">
+      @for (dot of [1,2,3]; track dot) {
+        <div class="dot" [style]="getDotStyle(dot)"></div>
+      }
+    </div>
+  }
+  @case ('bars') {
+    <div class="spinner-bars" [style]="getSpinnerStyle()">
+      @for (bar of [1,2,3]; track bar) {
+        <div class="bar" [style]="getBarStyle(bar)"></div>
+      }
+    </div>
+  }
+  @case ('pulse') {
+    <div class="spinner-pulse" [style]="getSpinnerStyle()"></div>
+  }
+  @case ('progress') {
+    <div class="spinner-progress" [style]="getSpinnerStyle()">
+      <div class="progress-bar" [style]="getProgressStyle()"></div>
+    </div>
+  }
+  @case ('custom') {
+    <div class="spinner-custom" [style]="getSpinnerStyle()">
+      <ng-content></ng-content>
+    </div>
+  }
+}

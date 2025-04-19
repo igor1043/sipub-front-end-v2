@@ -16,10 +16,8 @@
     <!-- Loading indicator -->
     <div class="loading-indicator" *ngIf="isLoading">
       <div class="loading-content">
-        <div class="spinner">
-          <i class="material-icons spin">refresh</i>
-        </div>
-        <span>Carregando Pontos</span>
+        <app-spinner></app-spinner>
+        <span>Carregando Pontos ...</span>
       </div>
     </div>
   </div>

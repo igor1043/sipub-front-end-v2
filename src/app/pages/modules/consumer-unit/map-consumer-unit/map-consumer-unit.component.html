@@ -4,6 +4,7 @@
 
   <app-consumer-units-map  (selectedUnitChange)="onSelectedUnitChange($event)"> </app-consumer-units-map>
 
+  <app-spinner size="medium"></app-spinner>
   <app-consumer-unit-detail 
     *ngIf="currentConsumerUnit.unitId"
     [unitId]="currentConsumerUnit.unitId" 

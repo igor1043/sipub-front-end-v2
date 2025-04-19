@@ -118,7 +118,7 @@ export class ListConsumerUnitComponent implements OnInit {
         7000,
         () => { }
       );
-      console.error('Erro ao carregar a lista de contas', error);
+      this.isLoading = false;
     } 
   }
 
